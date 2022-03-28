@@ -10,4 +10,9 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Simplify.Project.API.Contracts\Simplify.Project.API.Contracts.csproj" />
+      <ProjectReference Include="..\Simplify.Project.Model\Simplify.Project.Model.csproj" />
+    </ItemGroup>
+
 </Project>

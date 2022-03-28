@@ -1,6 +1,8 @@
+using Simplify.Project.API.Repository;
+
 namespace Simplify.Project.API;
 
-public class Program
+public static class Program
 {
 	public static void Main(string[] args)
 	{
@@ -8,7 +10,12 @@ public class Program
 		
 		builder.Services.AddControllers();
 		builder.Services.AddEndpointsApiExplorer();
-		builder.Services.AddSwaggerGen();
+
+		if (builder.Environment.IsDevelopment())
+		{
+			builder.Services.AddSwaggerGen();
+			builder.Services.AddSingleton<IClientRepository, MockClientRepository>();
+		}
 
 		var app = builder.Build();
 

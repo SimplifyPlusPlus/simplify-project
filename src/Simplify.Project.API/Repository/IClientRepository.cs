@@ -1,0 +1,22 @@
+﻿using Simplify.Project.Model;
+
+namespace Simplify.Project.API.Repository;
+
+/// <summary>
+/// Интерфейс репозитория клиентов
+/// </summary>
+public interface IClientRepository
+{
+    /// <summary>
+    /// Получить клиентов
+    /// </summary>
+    /// <returns>Список клиентов</returns>
+    public IEnumerable<Client> GetClients();
+       
+    /// <summary>
+    /// Получить клиента по идентификатору
+    /// </summary>
+    /// <param name="id">Идентификатор</param>
+    /// <returns>Клиент</returns>
+    public Client? GetClient(Guid id);
+}
