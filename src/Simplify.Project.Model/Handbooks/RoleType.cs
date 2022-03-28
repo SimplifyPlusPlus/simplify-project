@@ -18,7 +18,7 @@ public static class RoleType
     /// <summary>
     /// Получить роли в виде списка
     /// </summary>
-    public static List<string> ToList() => new()
+    public static ICollection<string> ToCollection() => new List<string>()
     {
         Empty, Administrator
     };

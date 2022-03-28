@@ -34,5 +34,5 @@ public class House
     /// Идентификаторы подъездов
     /// </summary>
     [Required]
-    public IEnumerable<Guid> EntrancesIds { get; set; } = new List<Guid>();
+    public ICollection<Guid> EntrancesIds { get; set; } = new List<Guid>();
 }

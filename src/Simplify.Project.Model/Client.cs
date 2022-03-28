@@ -23,5 +23,5 @@ public class Client : UserBase
     /// Идентификаторы связей квартир клиента
     /// </summary>
     [Required]
-    public IEnumerable<Guid> ApartmentsRelationsIds { get; set; } = new List<Guid>();
+    public ICollection<Guid> ApartmentsRelationsIds { get; set; } = new List<Guid>();
 }

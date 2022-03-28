@@ -28,7 +28,7 @@ public static class ApartmentRelationType
 	/// <summary>
 	/// Получить связи в виде списка
 	/// </summary>
-	public static List<string> ToList() => new()
+	public static ICollection<string> ToCollection() => new List<string>()
 	{
 		Empty, Ownership, OwnershipFamily, Renter
 	};

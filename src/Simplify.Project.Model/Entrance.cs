@@ -23,5 +23,5 @@ public class Entrance
     /// Идентификаторы квартир
     /// </summary>
     [Required]
-    public IEnumerable<Guid> ApartmentsIds { get; set; } = new List<Guid>();
+    public ICollection<Guid> ApartmentsIds { get; set; } = new List<Guid>();
 }

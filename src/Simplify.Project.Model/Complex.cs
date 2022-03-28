@@ -28,5 +28,5 @@ public class Complex
     /// Идентификаторы домов
     /// </summary>
     [Required]
-    public IEnumerable<Guid> HousesIds { get; set; } = new List<Guid>();
+    public ICollection<Guid> HousesIds { get; set; } = new List<Guid>();
 }
