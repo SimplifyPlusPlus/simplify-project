@@ -1,4 +1,4 @@
-using Simplify.Project.API.Repository;
+using Simplify.Project.API.Repositories;
 
 namespace Simplify.Project.API;
 

@@ -1,6 +1,6 @@
 ﻿using Simplify.Project.Model;
 
-namespace Simplify.Project.API.Repository;
+namespace Simplify.Project.API.Repositories;
 
 /// <summary>
 /// Интерфейс репозитория клиентов

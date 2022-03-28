@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Simplify.Project.API.Contracts;
-using Simplify.Project.API.Repository;
+using Simplify.Project.API.Repositories;
 using Simplify.Project.Model;
 
 namespace Simplify.Project.API.Controllers;
