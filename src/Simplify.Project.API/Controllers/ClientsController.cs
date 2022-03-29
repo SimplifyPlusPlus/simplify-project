@@ -64,8 +64,7 @@ public class ClientsController : ControllerBase
             .Select(client => new ClientBaseDto
             {
                 Id = client.Id,
-                Lastname = client.Lastname,
-                Firstname = client.Firstname,
+                Name = $"{client.Lastname} {client.Firstname} {client.Patronymic}".Trim(),
                 Email = client.Email,
                 Phone = client.Phone,
                 IsBlocked = client.IsBlocked,

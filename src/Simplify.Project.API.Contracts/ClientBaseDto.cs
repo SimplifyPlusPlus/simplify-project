@@ -14,16 +14,10 @@ public class ClientBaseDto
 	public Guid Id { get; set; }
     
 	/// <summary>
-	/// Фамилия
-	/// </summary>
-	[Required]
-	public string Lastname { get; set; } = string.Empty;
-    
-	/// <summary>
 	/// Имя
 	/// </summary>
 	[Required]
-	public string Firstname { get; set; } = string.Empty;
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Электронная почта
