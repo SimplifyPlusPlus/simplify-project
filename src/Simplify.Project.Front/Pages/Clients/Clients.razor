@@ -48,7 +48,7 @@
     {
         _residents = await HttpClientHelper.GetJsonFromServer<List<ClientBaseDto>>(
             _httpClient,
-            "https://localhost:7011/clients-base-information",
+            "/clients-base-information",
             "Произошла ошибки при получении данных о клиентах.");
     }
 }

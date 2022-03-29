@@ -43,7 +43,8 @@ public static class HttpClientHelper
 
 		try
 		{
-			using var httpResponse = await httpClient.GetAsync(endpoint);
+			var url = $"https://localhost:7011{endpoint}";
+			using var httpResponse = await httpClient.GetAsync(url);
 
 			return httpResponse.StatusCode == HttpStatusCode.OK
 				? await httpResponse.Content.ReadFromJsonAsync<T>()
