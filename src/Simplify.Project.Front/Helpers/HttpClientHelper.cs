@@ -43,6 +43,7 @@ public static class HttpClientHelper
 
 		try
 		{
+			// TODO: Придумать, как сделать иначе
 			var url = $"https://localhost:7011{endpoint}";
 			using var httpResponse = await httpClient.GetAsync(url);
 
