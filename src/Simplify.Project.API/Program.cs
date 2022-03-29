@@ -31,6 +31,13 @@ public static class Program
 
 		app.MapControllers();
 
+		app.UseCors(option => option
+			.AllowAnyMethod()
+			.AllowAnyHeader()
+			.SetIsOriginAllowed(origin => true)
+			.AllowCredentials()
+		);
+		
 		app.Run();
 	}
 }
