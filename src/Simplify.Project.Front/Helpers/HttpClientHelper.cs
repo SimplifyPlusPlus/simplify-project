@@ -45,22 +45,8 @@ public static class HttpClientHelper
 		{
 			using var httpResponse = await httpClient.GetAsync(endpoint);
 
-			var options = new JsonSerializerOptions
-			{
-				PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-			};
-
-			if (httpResponse.StatusCode == HttpStatusCode.OK)
-			{
-				return await httpResponse.Content.ReadFromJsonAsync<T>(options);
-			}
-			else
-			{
-				return new T();
-			}
-			
 			return httpResponse.StatusCode == HttpStatusCode.OK
-				? await httpResponse.Content.ReadFromJsonAsync<T>(options)
+				? await httpResponse.Content.ReadFromJsonAsync<T>()
 				: new T();
 		}
 		catch (Exception e)
@@ -75,9 +61,7 @@ public static class HttpClientHelper
 
 	private static async Task WriteException(Exception e, string endpoint)
 	{
-		await Console.Error.WriteLineAsync("--- Начало ошибки --------------------");
 		await Console.Error.WriteLineAsync($"Обращение к эндпоинту {endpoint} привело к ошибке -> {e.Message}");
 		await Console.Error.WriteLineAsync($"{e.StackTrace}");
-		await Console.Error.WriteLineAsync("--- Конец ошибки ---------------------");
 	}
 }
