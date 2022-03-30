@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Simplify.Project.Model.Handbooks;
+using Simplify.Project.Model.Utils;
 
 namespace Simplify.Project.Model;
 

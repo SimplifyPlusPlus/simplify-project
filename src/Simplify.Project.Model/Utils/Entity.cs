@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 namespace Simplify.Project.Model.Utils;
 
 /// <summary>
-/// Интерфейс сущности системы
+/// Базовая модель сущности системы
 /// </summary>
-public interface IEntity
+public class Entity
 {
 	/// <summary>
 	/// Идентификатор

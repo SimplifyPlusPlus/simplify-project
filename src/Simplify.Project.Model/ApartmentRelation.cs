@@ -7,11 +7,8 @@ namespace Simplify.Project.Model;
 /// <summary>
 /// Модель связи клиента с квартирой
 /// </summary>
-public class ApartmentRelation : IEntity
+public class ApartmentRelation : Entity
 {
-	/// <inheritdoc cref="IEntity.Id"/>
-	public Guid Id { get; set; }
-	
 	/// <summary>
 	/// Идентификатор квартиры
 	/// </summary>

@@ -6,9 +6,9 @@ namespace Simplify.Project.Model;
 /// <summary>
 /// Квартира
 /// </summary>
-public class Apartment : IEntity
+public class Apartment : Entity
 {
-    /// <inheritdoc cref="IEntity.Id"/>
+    /// <inheritdoc cref="Entity.Id"/>
     public Guid Id { get; set; }
     
     /// <summary>

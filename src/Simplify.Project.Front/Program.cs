@@ -11,11 +11,8 @@ public static class Program
 		builder.RootComponents.Add<App>("#app");
 		builder.RootComponents.Add<HeadOutlet>("head::after");
 
-		if (builder.HostEnvironment.IsDevelopment())
-		{
-			var baseAddress = builder.Configuration.GetValue<string>("BaseAddressDevelopment") ?? builder.HostEnvironment.BaseAddress;
-			builder.Services.AddScoped(_ => new HttpClient {BaseAddress = new Uri(baseAddress)});
-		}
+		var baseAddress = builder.Configuration.GetValue<string>("BaseAddress") ?? builder.HostEnvironment.BaseAddress;
+		builder.Services.AddScoped(_ => new HttpClient {BaseAddress = new Uri(baseAddress)});
 
 		await builder.Build().RunAsync();
 	}

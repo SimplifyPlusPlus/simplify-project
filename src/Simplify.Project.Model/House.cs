@@ -6,11 +6,8 @@ namespace Simplify.Project.Model;
 /// <summary>
 /// Дом
 /// </summary>
-public class House : IEntity
+public class House : Entity
 {
-    /// <inheritdoc cref="IEntity.Id"/>
-    public Guid Id { get; set; }
-    
     /// <summary>
     /// Номер
     /// </summary>
