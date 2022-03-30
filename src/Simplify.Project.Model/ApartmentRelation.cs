@@ -1,17 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 using Simplify.Project.Model.Handbooks;
+using Simplify.Project.Model.Utils;
 
 namespace Simplify.Project.Model;
 
 /// <summary>
 /// Модель связи клиента с квартирой
 /// </summary>
-public class ApartmentRelation
+public class ApartmentRelation : IEntity
 {
-	/// <summary>
-	/// Идентификатор связи
-	/// </summary>
-	[Required]
+	/// <inheritdoc cref="IEntity.Id"/>
 	public Guid Id { get; set; }
 	
 	/// <summary>

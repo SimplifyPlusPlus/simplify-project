@@ -1,16 +1,14 @@
 using System.ComponentModel.DataAnnotations;
+using Simplify.Project.Model.Utils;
 
 namespace Simplify.Project.Model;
 
 /// <summary>
 /// Жилой комплекс
 /// </summary>
-public class Complex
+public class Estate : IEntity
 {
-    /// <summary>
-    /// Идентификатор
-    /// </summary>
-    [Required]
+    /// <inheritdoc cref="IEntity.Id"/>
     public Guid Id { get; set; }
 
     /// <summary>

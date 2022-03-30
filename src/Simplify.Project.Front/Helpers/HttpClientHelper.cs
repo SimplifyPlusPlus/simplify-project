@@ -20,7 +20,7 @@ public static class HttpClientHelper
 	public static async Task<T?> GetJsonFromServer<T>(HttpClient httpClient, string endpoint, string errorMessage)
 		where T : class, new()
 	{
-		var task = new Task(() => Console.Error.WriteLineAsync(errorMessage));
+		var task = new Task(() => Console.Error.WriteLine(errorMessage));
 		return await GetJsonFromServer<T>(httpClient, endpoint, task);
 	}
 	
@@ -43,9 +43,7 @@ public static class HttpClientHelper
 
 		try
 		{
-			// TODO: Придумать, как сделать иначе
-			var url = $"https://localhost:7011{endpoint}";
-			using var httpResponse = await httpClient.GetAsync(url);
+			using var httpResponse = await httpClient.GetAsync(endpoint);
 
 			return httpResponse.StatusCode == HttpStatusCode.OK
 				? await httpResponse.Content.ReadFromJsonAsync<T>()
@@ -55,15 +53,15 @@ public static class HttpClientHelper
 		{
 			errorTask.Start();
 			await errorTask;
-			await WriteException(e, endpoint);
+			WriteException(e, endpoint);
 		}
 
 		return null;
 	}
 
-	private static async Task WriteException(Exception e, string endpoint)
+	private static void WriteException(Exception e, string endpoint)
 	{
-		await Console.Error.WriteLineAsync($"Обращение к эндпоинту {endpoint} привело к ошибке -> {e.Message}");
-		await Console.Error.WriteLineAsync($"{e.StackTrace}");
+		Console.Error.WriteLine($"Обращение к эндпоинту {endpoint} привело к ошибке -> {e.Message}");
+		Console.Error.WriteLine($"{e.StackTrace}");
 	}
 }

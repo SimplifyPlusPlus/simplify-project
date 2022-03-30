@@ -1,16 +1,14 @@
 using System.ComponentModel.DataAnnotations;
+using Simplify.Project.Model.Utils;
 
 namespace Simplify.Project.Model;
 
 /// <summary>
 /// Базовый класс пользователя системы
 /// </summary>
-public abstract class UserBase
+public abstract class UserBase : IEntity
 {
-    /// <summary>
-    /// Идентификатор
-    /// </summary>
-    [Required]
+    /// <inheritdoc cref="IEntity.Id"/>
     public Guid Id { get; set; }
     
     /// <summary>

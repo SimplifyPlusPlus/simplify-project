@@ -31,6 +31,7 @@ public class ClientsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult GetClients()
     {
+        // TODO: Client преобразовать в ClientDetailedDto
         var clients = _clientRepository.GetClients();
         return Ok(clients);
     }
@@ -59,6 +60,7 @@ public class ClientsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult GetClientsBaseInformation()
     {
+        // TODO: Добавить маппер
         var clients = _clientRepository
             .GetClients()
             .Select(client => new ClientBaseDto

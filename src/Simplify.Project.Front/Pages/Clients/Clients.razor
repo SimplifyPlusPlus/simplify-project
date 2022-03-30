@@ -10,7 +10,7 @@
     <h2 class="mb-2">Клиенты</h2>
     <RadzenCard>
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <NavButton Href="/residents/create" Icon="add" Text="Добавить"
+            <NavButton Href="/clients/create" Icon="add" Text="Добавить"
                        Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Primary" />
             <div class="row">
                 <div class="col-md-2 align-items-center d-flex">
@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <DataTable TItem="ClientBaseDto" Data="_residents">
+        <DataTable TItem="ClientBaseDto" Data="_clients">
             <Body>
                 <RadzenDataGridColumn TItem="ClientBaseDto" Property="Name" Title="Имя"/>
                 <RadzenDataGridColumn TItem="ClientBaseDto" Property="Email" Title="Электронная почта"/>
@@ -41,14 +41,14 @@
 </div>
 
 @code {
-    private List<ClientBaseDto>? _residents;
+    private List<ClientBaseDto>? _clients;
     private string _filterPattern = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        _residents = await HttpClientHelper.GetJsonFromServer<List<ClientBaseDto>>(
+        _clients = await HttpClientHelper.GetJsonFromServer<List<ClientBaseDto>>(
             _httpClient,
-            "/clients-base-information",
-            "Произошла ошибки при получении данных о клиентах.");
+            "clients-base-information",
+            "Произошла ошибка при получении данных о клиентах.");
     }
 }

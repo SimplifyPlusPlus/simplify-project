@@ -1,16 +1,14 @@
 using System.ComponentModel.DataAnnotations;
+using Simplify.Project.Model.Utils;
 
 namespace Simplify.Project.Model;
 
 /// <summary>
 /// Подъезд
 /// </summary>
-public class Entrance
+public class Entrance : IEntity
 {
-    /// <summary>
-    /// Идентификатор
-    /// </summary>
-    [Required]
+    /// <inheritdoc cref="IEntity.Id"/>
     public Guid Id { get; set; }
     
     /// <summary>
