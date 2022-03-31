@@ -2,6 +2,9 @@ using Simplify.Project.Model;
 
 namespace Simplify.Project.API.Repositories;
 
+/// <summary>
+/// Репозиторий комплексов
+/// </summary>
 public class MockEstateRepository : IEstateRepository
 {
 	private readonly List<Estate> _estates;

@@ -8,9 +8,6 @@ namespace Simplify.Project.Model;
 /// </summary>
 public class Apartment : Entity
 {
-    /// <inheritdoc cref="Entity.Id"/>
-    public Guid Id { get; set; }
-    
     /// <summary>
     /// Номер
     /// </summary>

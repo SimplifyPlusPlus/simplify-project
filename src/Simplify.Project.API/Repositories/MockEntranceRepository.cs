@@ -2,6 +2,9 @@ using Simplify.Project.Model;
 
 namespace Simplify.Project.API.Repositories;
 
+/// <summary>
+/// Репозиторий подъездов
+/// </summary>
 public class MockEntranceRepository : IEntranceRepository
 {
 	private readonly List<Entrance> _entrances;
