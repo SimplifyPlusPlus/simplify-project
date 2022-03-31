@@ -15,6 +15,7 @@ public static class Program
 		{
 			builder.Services.AddSwaggerGen();
 			builder.Services.AddSingleton<IClientRepository, MockClientRepository>();
+			builder.Services.AddSingleton<IEstateRepository, MockEstateRepository>();
 		}
 
 		var app = builder.Build();

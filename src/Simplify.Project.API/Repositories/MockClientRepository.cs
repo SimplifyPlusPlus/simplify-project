@@ -81,16 +81,16 @@ public class MockClientRepository : IClientRepository
         };
     }
     
-    /// <inheritdoc cref="IClientRepository.GetClient(Guid)"/>
-    public Client? GetClient(Guid id)
-    {
-        var client = _clients.SingleOrDefault(x => x.Id == id);
-        return client;
-    }
-
     /// <inheritdoc cref="IClientRepository.GetClients()"/>
     public IEnumerable<Client> GetClients()
     {
         return _clients;
+    }
+    
+    /// <inheritdoc cref="IClientRepository.GetClient(Guid)"/>
+    public Client? GetClient(Guid id)
+    {
+        var client = _clients.SingleOrDefault(client => client.Id == id);
+        return client;
     }
 }

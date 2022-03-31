@@ -17,6 +17,7 @@ public class ClientsController : ControllerBase
     /// <summary>
     /// Конструктор класса <see cref="ClientsController"/>
     /// </summary>
+    /// <param name="repository">Репозиторий клиентов</param>
     public ClientsController(IClientRepository repository)
     {
         _clientRepository = repository;
