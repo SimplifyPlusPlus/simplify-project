@@ -8,31 +8,41 @@ namespace Simplify.Project.API.Repositories;
 public class MockEstateRepository : IEstateRepository
 {
 	private readonly List<Estate> _estates;
-
+	
+	/// <summary>
+	/// Конструктор класса <see cref="MockEstateRepository"/>
+	/// </summary>
 	public MockEstateRepository()
 	{
-		_estates = new List<Estate>
+		_estates = GenerateData();
+	}
+	
+	/// <inheritdoc cref="IEstateRepository.GetEstates()"/>
+	public IEnumerable<Estate> GetEstates()
+	{
+		return _estates;
+	}
+
+	/// <inheritdoc cref="IEstateRepository.GetEstate(Guid)"/>
+	public Estate? GetEstate(Guid id)
+	{
+		var estate = _estates.SingleOrDefault(estate => estate.Id == id);
+		return estate;
+	}
+
+	private static List<Estate> GenerateData()
+	{
+		return new List<Estate>
 		{
 			new()
 			{
 				Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6"),
-				Name = "Звезда",
+				Name = "Центральный",
 				HousesIds = new List<Guid>
 				{
 					Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6"),	
 				},
 			},
 		};
-	}
-	
-	public IEnumerable<Estate> GetEstates()
-	{
-		return _estates;
-	}
-
-	public Estate? GetEstate(Guid id)
-	{
-		var estate = _estates.SingleOrDefault(estate => estate.Id == id);
-		return estate;
 	}
 }

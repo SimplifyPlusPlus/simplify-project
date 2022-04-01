@@ -9,9 +9,30 @@ public class MockApartmentRepository : IApartmentRepository
 {
 	private readonly List<Apartment> _apartments;
 
+	/// <summary>
+	/// Конструктор класса <see cref="MockApartmentRepository"/>
+	/// </summary>
 	public MockApartmentRepository()
 	{
-		_apartments = new List<Apartment>();
+		_apartments = GenerateData();
+	}
+	
+	/// <inheritdoc cref="IApartmentRepository.GetApartments()"/>
+	public IEnumerable<Apartment> GetApartments()
+	{
+		return _apartments;
+	}
+
+	/// <inheritdoc cref="IApartmentRepository.GetApartment(Guid)"/>
+	public Apartment? GetApartment(Guid id)
+	{
+		var apartment = _apartments.SingleOrDefault(apartment => apartment.Id == id);
+		return apartment;
+	}
+
+	private static List<Apartment> GenerateData()
+	{
+		var apartments = new List<Apartment>();
 		const string guidTemplate = "{0}f64-5717-4562-b3fc-2c963f66afa6";
 
 		// Генерируем 300 квартир
@@ -30,18 +51,9 @@ public class MockApartmentRepository : IApartmentRepository
 				Number = i,
 			};
 			
-			_apartments.Add(item);
+			apartments.Add(item);
 		}
-	}
-	
-	public IEnumerable<Apartment> GetApartments()
-	{
-		return _apartments;
-	}
 
-	public Apartment? GetApartment(Guid id)
-	{
-		var apartment = _apartments.SingleOrDefault(apartment => apartment.Id == id);
-		return apartment;
+		return apartments;
 	}
 }

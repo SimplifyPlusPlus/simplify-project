@@ -19,4 +19,11 @@ public interface IApartmentRelationRepository
 	/// <param name="id">Идентификатор</param>
 	/// <returns>Отношение</returns>
 	public ApartmentRelation? GetRelation(Guid id);
+
+	/// <summary>
+	/// Получить все связи с квартирой
+	/// </summary>
+	/// <param name="id">Идентификатор квартиры</param>
+	/// <returns>Список связей с квартирой</returns>
+	public IEnumerable<ApartmentRelation> GetApartmentRelations(Guid id);
 }

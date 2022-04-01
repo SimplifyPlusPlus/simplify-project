@@ -9,9 +9,30 @@ public class MockHouseRepository : IHouseRepository
 {
 	private readonly List<House> _houses;
 
+	/// <summary>
+	/// Конструктор класса <see cref="MockHouseRepository"/>
+	/// </summary>
 	public MockHouseRepository()
 	{
-		_houses = new List<House>
+		_houses = GenerateData();
+	}
+	
+	/// <inheritdoc cref="IHouseRepository.GetHouses()"/>
+	public IEnumerable<House> GetHouses()
+	{
+		return _houses;
+	}
+
+	/// <inheritdoc cref="IHouseRepository.GetHouse(Guid)"/>
+	public House? GetHouse(Guid id)
+	{
+		var house = _houses.SingleOrDefault(house => house.Id == id);
+		return house;
+	}
+
+	private static List<House> GenerateData()
+	{
+		return new List<House>
 		{
 			new()
 			{
@@ -26,16 +47,5 @@ public class MockHouseRepository : IHouseRepository
 				},
 			},
 		};
-	}
-	
-	public IEnumerable<House> GetHouses()
-	{
-		return _houses;
-	}
-
-	public House? GetHouse(Guid id)
-	{
-		var house = _houses.SingleOrDefault(house => house.Id == id);
-		return house;
 	}
 }
