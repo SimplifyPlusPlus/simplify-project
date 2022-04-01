@@ -13,7 +13,7 @@ namespace Simplify.Project.API.Controllers;
 [Route("estates")]
 public class EstatesController : ControllerBase
 {
-	private IEstateRepository _repository;
+	private readonly IEstateRepository _repository;
 	private readonly IMapper _mapper;
 
 	/// <summary>
