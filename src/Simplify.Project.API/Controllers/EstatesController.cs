@@ -23,7 +23,7 @@ public class EstatesController : ControllerBase
 	}
 	
 	/// <summary>
-	/// Получить всех комплексов системы
+	/// Получить все комплексы
 	/// </summary>
 	/// <returns>Список комплексов</returns>
 	[HttpGet]

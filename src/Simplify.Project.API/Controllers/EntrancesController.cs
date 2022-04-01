@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Simplify.Project.API.Contracts;
 using Simplify.Project.API.Repositories;
+using Simplify.Project.Model;
 
 namespace Simplify.Project.API.Controllers;
 
@@ -27,7 +27,7 @@ public class EntrancesController : ControllerBase
 	/// </summary>
 	/// <returns>Список подъездов</returns>
 	[HttpGet]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EntranceBaseDto>))]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Entrance>))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 	public IActionResult GetEntrances()
 	{

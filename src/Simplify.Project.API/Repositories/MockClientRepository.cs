@@ -54,7 +54,7 @@ public class MockClientRepository : IClientRepository
             },
             new()
             {
-                Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6"),
+                Id = Guid.Parse("00002f64-5717-4562-b3fc-2c963f66afa6"),
                 Lastname = "Коколов", 
                 Firstname = "Андрей", 
                 Email = "", 
@@ -71,7 +71,7 @@ public class MockClientRepository : IClientRepository
             },
             new()
             {
-                Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6"),
+                Id = Guid.Parse("00003f64-5717-4562-b3fc-2c963f66afa6"),
                 Lastname = "Селимов", 
                 Firstname = "Загидин", 
                 Patronymic = "Мурадович", 
@@ -89,7 +89,7 @@ public class MockClientRepository : IClientRepository
             },
             new()
             {
-                Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6"),
+                Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6"),
                 Lastname = "Ефимов", 
                 Firstname = "Алексей", 
                 Email = "", 

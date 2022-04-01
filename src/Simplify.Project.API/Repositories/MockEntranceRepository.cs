@@ -36,7 +36,7 @@ public class MockEntranceRepository : IEntranceRepository
 		const string guidTemplate = "{0}f64-5717-4562-b3fc-2c963f66afa6";
 
 		// Генерируем подъезд и добавляем в него квартиры
-		for (var i = 1; i <= 3; i++)
+		for (var i = 1; i <= 4; i++)
 		{
 			var id = string.Format(guidTemplate, $"0000{i}");
 			var item = new Entrance

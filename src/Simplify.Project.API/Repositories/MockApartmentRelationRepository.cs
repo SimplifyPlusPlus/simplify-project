@@ -4,7 +4,7 @@ using Simplify.Project.Model.Handbooks;
 namespace Simplify.Project.API.Repositories;
 
 /// <summary>
-/// Репозиторий связией с квартирами
+/// Репозиторий отношений с квартирами
 /// </summary>
 public class MockApartmentRelationRepository : IApartmentRelationRepository
 {
@@ -15,7 +15,7 @@ public class MockApartmentRelationRepository : IApartmentRelationRepository
 	/// </summary>
 	public MockApartmentRelationRepository()
 	{
-		_apartmentRelations = GenerateMockData();
+		_apartmentRelations = GenerateData();
 	}
 	
 	/// <inheritdoc cref="IApartmentRelationRepository.GetRelations()"/>
@@ -38,7 +38,7 @@ public class MockApartmentRelationRepository : IApartmentRelationRepository
 		return relations;
 	}
 
-	private static List<ApartmentRelation> GenerateMockData()
+	private static List<ApartmentRelation> GenerateData()
 	{
 		return new List<ApartmentRelation>
 		{

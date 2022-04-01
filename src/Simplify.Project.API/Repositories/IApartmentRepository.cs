@@ -8,7 +8,7 @@ namespace Simplify.Project.API.Repositories;
 public interface IApartmentRepository
 {
 	/// <summary>
-	/// Получить квартиры
+	/// Получить все квартиры
 	/// </summary>
 	/// <returns>Список квартир</returns>
 	public IEnumerable<Apartment> GetApartments();

@@ -35,8 +35,8 @@ public class MockApartmentRepository : IApartmentRepository
 		var apartments = new List<Apartment>();
 		const string guidTemplate = "{0}f64-5717-4562-b3fc-2c963f66afa6";
 
-		// Генерируем 300 квартир
-		for (var i = 1; i <= 300; i++)
+		// Генерируем 400 квартир
+		for (var i = 1; i <= 400; i++)
 		{
 			var id = i switch
 			{

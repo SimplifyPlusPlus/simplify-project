@@ -21,7 +21,7 @@ public class ApartmentsController : ControllerBase
 	{
 		_repository = repository;
 	}
-	
+
 	/// <summary>
 	/// Получить все квартиры
 	/// </summary>
