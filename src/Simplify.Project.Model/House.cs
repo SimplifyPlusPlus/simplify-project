@@ -29,5 +29,5 @@ public class House : Entity
     /// Идентификаторы подъездов
     /// </summary>
     [Required]
-    public ICollection<Guid> EntrancesIds { get; set; } = new List<Guid>();
+    public ICollection<Entrance> Entrances { get; set; } = new List<Entrance>();
 }

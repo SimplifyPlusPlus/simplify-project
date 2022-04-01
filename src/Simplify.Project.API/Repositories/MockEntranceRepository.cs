@@ -56,7 +56,7 @@ public class MockEntranceRepository : IEntranceRepository
 					_ => string.Format(guidTemplate, $"0000{j}")
 				};
 
-				item.ApartmentsIds.Add(Guid.Parse(apartmentId));
+				item.Apartments.Add(new Apartment { Id = Guid.Parse(apartmentId) });
 			}
 
 			entrances.Add(item);

@@ -2,6 +2,7 @@
 using Simplify.Project.API.Contracts;
 using Simplify.Project.API.Repositories;
 using Simplify.Project.Model;
+using AutoMapper;
 
 namespace Simplify.Project.API.Controllers;
 
@@ -13,14 +14,16 @@ namespace Simplify.Project.API.Controllers;
 public class ClientsController : ControllerBase
 {
     private IClientRepository _clientRepository;
-    
+    private readonly IMapper _mapper;
     /// <summary>
     /// Конструктор класса <see cref="ClientsController"/>
     /// </summary>
     /// <param name="repository">Репозиторий клиентов</param>
-    public ClientsController(IClientRepository repository)
+    /// <param name="mapper">Маппер</param>
+    public ClientsController(IClientRepository repository, IMapper mapper)
     {
         _clientRepository = repository;
+        _mapper = mapper;
     }
     
     /// <summary>
@@ -28,13 +31,13 @@ public class ClientsController : ControllerBase
     /// </summary>
     /// <returns>Список клиентов</returns>
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Client>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClientBaseDto>))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult GetClients()
     {
         // TODO: Client преобразовать в ClientDetailedDto
         var clients = _clientRepository.GetClients();
-        return Ok(clients);
+        return Ok(_mapper.Map<ClientBaseDto[]>(clients));
     }
     
     /// <summary>
@@ -43,13 +46,13 @@ public class ClientsController : ControllerBase
     /// <param name="id">Идентификатор</param>
     /// <returns>Клиента</returns>
     [HttpGet("{id:Guid}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Client))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClientBaseDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult GetClient(Guid id)
     {
         var client = _clientRepository.GetClient(id);
-        return client == null ? NotFound() : Ok(client);
+        return client == null ? NotFound() : Ok(_mapper.Map<ClientBaseDto>(client));
     }
     
     /// <summary>
@@ -61,17 +64,8 @@ public class ClientsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult GetClientsBaseInformation()
     {
-        // TODO: Добавить маппер
         var clients = _clientRepository
-            .GetClients()
-            .Select(client => new ClientBaseDto
-            {
-                Id = client.Id,
-                Name = $"{client.Lastname} {client.Firstname} {client.Patronymic}".Trim(),
-                Email = client.Email,
-                Phone = client.Phone,
-                IsBlocked = client.IsBlocked,
-            });
-        return Ok(clients);
+            .GetClients();
+        return Ok(_mapper.Map<ClientBaseDto[]>(clients));
     }
 }

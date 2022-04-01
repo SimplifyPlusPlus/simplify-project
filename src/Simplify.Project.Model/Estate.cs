@@ -23,5 +23,5 @@ public class Estate : Entity
     /// Идентификаторы домов
     /// </summary>
     [Required]
-    public ICollection<Guid> HousesIds { get; set; } = new List<Guid>();
+    public ICollection<House> Houses { get; set; } = new List<House>();
 }

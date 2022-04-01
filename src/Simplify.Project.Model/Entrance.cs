@@ -18,5 +18,5 @@ public class Entrance : Entity
     /// Идентификаторы квартир
     /// </summary>
     [Required]
-    public ICollection<Guid> ApartmentsIds { get; set; } = new List<Guid>();
+    public ICollection<Apartment> Apartments { get; set; } = new List<Apartment>();
 }
