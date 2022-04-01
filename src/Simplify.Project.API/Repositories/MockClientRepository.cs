@@ -14,11 +14,29 @@ public class MockClientRepository : IClientRepository
     /// </summary>
     public MockClientRepository()
     {
-        _clients = new List<Client>
+        _clients = GenerateData();
+    }
+    
+    /// <inheritdoc cref="IClientRepository.GetClients()"/>
+    public IEnumerable<Client> GetClients()
+    {
+        return _clients;
+    }
+    
+    /// <inheritdoc cref="IClientRepository.GetClient(Guid)"/>
+    public Client? GetClient(Guid id)
+    {
+        var client = _clients.SingleOrDefault(client => client.Id == id);
+        return client;
+    }
+
+    private static List<Client> GenerateData()
+    {
+        return new List<Client>
         {
             new()
             {
-                Id = Guid.NewGuid(), 
+                Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6"), 
                 Lastname = "Маркелов", 
                 Firstname = "Павел", 
                 Patronymic = "Николаевич", 
@@ -26,7 +44,9 @@ public class MockClientRepository : IClientRepository
                 Phone = "", 
                 ApartmentsRelationsIds = new List<Guid>
                 {
-                    Guid.NewGuid(),
+                    Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6"),
+                    Guid.Parse("00002f64-5717-4562-b3fc-2c963f66afa6"),
+                    Guid.Parse("00003f64-5717-4562-b3fc-2c963f66afa6"),
                 },
                 Created = DateTime.Now, 
                 IsBlocked = false, 
@@ -34,14 +54,16 @@ public class MockClientRepository : IClientRepository
             },
             new()
             {
-                Id = Guid.NewGuid(), 
+                Id = Guid.Parse("00002f64-5717-4562-b3fc-2c963f66afa6"),
                 Lastname = "Коколов", 
                 Firstname = "Андрей", 
                 Email = "", 
                 Phone = "", 
                 ApartmentsRelationsIds = new List<Guid>
                 {
-                    Guid.NewGuid(),
+                    Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6"),
+                    Guid.Parse("00005f64-5717-4562-b3fc-2c963f66afa6"),
+                    Guid.Parse("00006f64-5717-4562-b3fc-2c963f66afa6"),
                 },
                 Created = DateTime.Now, 
                 IsBlocked = false, 
@@ -49,7 +71,7 @@ public class MockClientRepository : IClientRepository
             },
             new()
             {
-                Id = Guid.NewGuid(), 
+                Id = Guid.Parse("00003f64-5717-4562-b3fc-2c963f66afa6"),
                 Lastname = "Селимов", 
                 Firstname = "Загидин", 
                 Patronymic = "Мурадович", 
@@ -57,7 +79,9 @@ public class MockClientRepository : IClientRepository
                 Phone = "", 
                 ApartmentsRelationsIds = new List<Guid>
                 {
-                    Guid.NewGuid(),
+                    Guid.Parse("00007f64-5717-4562-b3fc-2c963f66afa6"),
+                    Guid.Parse("00008f64-5717-4562-b3fc-2c963f66afa6"),
+                    Guid.Parse("00009f64-5717-4562-b3fc-2c963f66afa6"),
                 },
                 Created = DateTime.Now, 
                 IsBlocked = false, 
@@ -65,32 +89,21 @@ public class MockClientRepository : IClientRepository
             },
             new()
             {
-                Id = Guid.NewGuid(), 
+                Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6"),
                 Lastname = "Ефимов", 
                 Firstname = "Алексей", 
                 Email = "", 
                 Phone = "", 
                 ApartmentsRelationsIds = new List<Guid>
                 {
-                    Guid.NewGuid(),
+                    Guid.Parse("00010f64-5717-4562-b3fc-2c963f66afa6"),
+                    Guid.Parse("00011f64-5717-4562-b3fc-2c963f66afa6"),
+                    Guid.Parse("00012f64-5717-4562-b3fc-2c963f66afa6"),
                 },
                 Created = DateTime.Now, 
                 IsBlocked = false, 
                 Note = "Frontend и Design разработчик"
             }
         };
-    }
-    
-    /// <inheritdoc cref="IClientRepository.GetClient(Guid)"/>
-    public Client? GetClient(Guid id)
-    {
-        var client = _clients.SingleOrDefault(x => x.Id == id);
-        return client;
-    }
-
-    /// <inheritdoc cref="IClientRepository.GetClients()"/>
-    public IEnumerable<Client> GetClients()
-    {
-        return _clients;
     }
 }

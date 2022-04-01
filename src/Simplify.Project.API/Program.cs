@@ -15,6 +15,11 @@ public static class Program
 		{
 			builder.Services.AddSwaggerGen();
 			builder.Services.AddSingleton<IClientRepository, MockClientRepository>();
+			builder.Services.AddSingleton<IEstateRepository, MockEstateRepository>();
+			builder.Services.AddSingleton<IHouseRepository, MockHouseRepository>();
+			builder.Services.AddSingleton<IEntranceRepository, MockEntranceRepository>();
+			builder.Services.AddSingleton<IApartmentRepository, MockApartmentRepository>();
+			builder.Services.AddSingleton<IApartmentRelationRepository, MockApartmentRelationRepository>();
 		}
 
 		var app = builder.Build();
