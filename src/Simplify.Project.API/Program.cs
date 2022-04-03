@@ -1,4 +1,6 @@
 using Simplify.Project.API.Repositories;
+using Simplify.Project.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace Simplify.Project.API;
 
@@ -10,6 +12,7 @@ public static class Program
 		
 		builder.Services.AddControllers();
 		builder.Services.AddEndpointsApiExplorer();
+		builder.Services.AddDbContext<SimplifyContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("SimplifyContext")));
 
 		if (builder.Environment.IsDevelopment())
 		{

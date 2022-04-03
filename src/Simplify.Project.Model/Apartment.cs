@@ -8,9 +8,9 @@ namespace Simplify.Project.Model;
 /// </summary>
 public class Apartment : Entity
 {
-    /// <summary>
-    /// Номер
-    /// </summary>
-    [Required]
-    public int Number { get; set; }
+	/// <summary>
+	/// Номер
+	/// </summary>
+	[Required]
+	public int Number { get; set; }
 }

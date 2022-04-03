@@ -13,7 +13,7 @@ public class ApartmentRelation : Entity
 	/// Идентификатор квартиры
 	/// </summary>
 	[Required]
-	public Guid ApartmentId { get; set; }
+	public Apartment Apartment { get; set; } = new();
 
 	/// <summary>
 	/// Тип связи

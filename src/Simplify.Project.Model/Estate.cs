@@ -8,20 +8,20 @@ namespace Simplify.Project.Model;
 /// </summary>
 public class Estate : Entity
 {
-    /// <summary>
-    /// Наименование
-    /// </summary>
-    [Required]
-    public string Name { get; set; } = string.Empty;
+	/// <summary>
+	/// Наименование
+	/// </summary>
+	[Required]
+	public string Name { get; set; } = string.Empty;
     
-    /// <summary>
-    /// Примечание
-    /// </summary>
-    public string? Note { get; set; }
+	/// <summary>
+	/// Примечание
+	/// </summary>
+	public string? Note { get; set; }
     
-    /// <summary>
-    /// Идентификаторы домов
-    /// </summary>
-    [Required]
-    public ICollection<Guid> HousesIds { get; set; } = new List<Guid>();
+	/// <summary>
+	/// Идентификаторы домов
+	/// </summary>
+	[Required]
+	public virtual ICollection<House> Houses { get; set; } = new List<House>();
 }

@@ -9,21 +9,21 @@ namespace Simplify.Project.Model;
 /// </summary>
 public class Employee : UserBase
 {
-    /// <summary>
-    /// Роль в системе
-    /// </summary>
-    [Required]
-    public string Role { get; set; } = RoleType.Empty;
+	/// <summary>
+	/// Роль в системе
+	/// </summary>
+	[Required]
+	public string Role { get; set; } = RoleType.Empty;
     
-    /// <summary>
-    /// Логин
-    /// </summary>
-    [Required]
-    public string Login { get; set; } = string.Empty;
+	/// <summary>
+	/// Логин
+	/// </summary>
+	[Required]
+	public string Login { get; set; } = string.Empty;
     
-    /// <summary>
-    /// Пароль 
-    /// </summary>
-    [Required]
-    public string Password { get; set; } = string.Empty;
+	/// <summary>
+	/// Пароль 
+	/// </summary>
+	[Required]
+	public string Password { get; set; } = string.Empty;
 }

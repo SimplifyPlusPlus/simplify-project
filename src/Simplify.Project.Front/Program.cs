@@ -17,4 +17,3 @@ public static class Program
 		await builder.Build().RunAsync();
 	}
 }
-

@@ -11,7 +11,7 @@ namespace Simplify.Project.API.Controllers;
 [Route("estates")]
 public class EstatesController : ControllerBase
 {
-	private IEstateRepository _repository;
+	private readonly IEstateRepository _repository;
 
 	/// <summary>
 	/// Конструктор класса <see cref="EstatesController"/>

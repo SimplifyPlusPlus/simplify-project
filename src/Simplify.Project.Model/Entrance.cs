@@ -8,15 +8,15 @@ namespace Simplify.Project.Model;
 /// </summary>
 public class Entrance : Entity
 {
-    /// <summary>
-    /// Номер
-    /// </summary>
-    [Required]
-    public int Number { get; set; }
+	/// <summary>
+	/// Номер
+	/// </summary>
+	[Required]
+	public int Number { get; set; }
 
-    /// <summary>
-    /// Идентификаторы квартир
-    /// </summary>
-    [Required]
-    public ICollection<Guid> ApartmentsIds { get; set; } = new List<Guid>();
+	/// <summary>
+	/// Идентификаторы квартир
+	/// </summary>
+	[Required]
+	public virtual ICollection<Apartment> Apartments { get; set; } = new List<Apartment>();
 }

@@ -1,55 +1,55 @@
 @typeparam TItem
 
 <style>
-    .rz-switch {
-      position: relative;
-      display: inline-block;
-      width: 1.5rem;
-      min-width: 1.5rem;
-      height: 1rem;
-    }
-    .rz-switch .rz-switch-circle:before {
-      background: #ffffff;
-      width: 0.5rem;
-      height: 0.5rem;
-      left: 0.27rem;
-      margin-top: -0.27rem;
-      border-radius: 50%;
-      transition-duration: 0.2s;
-      box-shadow: none;
-    }
+		.rz-switch {
+			position: relative;
+			display: inline-block;
+			width: 1.5rem;
+			min-width: 1.5rem;
+			height: 1rem;
+		}
+		.rz-switch .rz-switch-circle:before {
+			background: #ffffff;
+			width: 0.5rem;
+			height: 0.5rem;
+			left: 0.27rem;
+			margin-top: -0.27rem;
+			border-radius: 50%;
+			transition-duration: 0.2s;
+			box-shadow: none;
+		}
     
-    .rz-switch.rz-switch-checked .rz-switch-circle:before {
-      transform: translateX(0.5rem);
-    }
+		.rz-switch.rz-switch-checked .rz-switch-circle:before {
+			transform: translateX(0.5rem);
+		}
 </style>
 
 <RadzenDataGrid TItem="TItem" Data="@Data"
-                AllowPaging="@_allowPaging" AllowSorting="@_allowSorting" PagerHorizontalAlign="HorizontalAlign.Right" 
-                PageSizeOptions="@_pageSizeOptions" PageSizeText="@_pageSizeText" 
-                ShowPagingSummary="@_showPagerSummary" PagingSummaryFormat="@_pagingSummaryFormat">
-    <Columns>
-        @Body
-    </Columns>
+								AllowPaging="@_allowPaging" AllowSorting="@_allowSorting" PagerHorizontalAlign="HorizontalAlign.Right" 
+								PageSizeOptions="@_pageSizeOptions" PageSizeText="@_pageSizeText" 
+								ShowPagingSummary="@_showPagerSummary" PagingSummaryFormat="@_pagingSummaryFormat">
+		<Columns>
+				@Body
+		</Columns>
 </RadzenDataGrid>
 
 @code {
-    private bool _allowPaging = true;
-    private bool _allowSorting = true;
-    private const bool _showPagerSummary = true;
-    private const string _pagingSummaryFormat = "Показана страница {0} из {1} (всего {2} записей)";
+		private bool _allowPaging = true;
+		private bool _allowSorting = true;
+		private const bool _showPagerSummary = true;
+		private const string _pagingSummaryFormat = "Показана страница {0} из {1} (всего {2} записей)";
 
-    private readonly IEnumerable<int> _pageSizeOptions = new[] { 10, 25, 50, 100 };
-    private const string _pageSizeText = "записей на странице";
+		private readonly IEnumerable<int> _pageSizeOptions = new[] { 10, 25, 50, 100 };
+		private const string _pageSizeText = "записей на странице";
     
-    protected override void OnParametersSet()
-    {
-        _allowPaging = Data != null && Data.Count() > _pageSizeOptions.First();
-    }
+		protected override void OnParametersSet()
+		{
+				_allowPaging = Data != null && Data.Count() > _pageSizeOptions.First();
+		}
     
-    [Parameter]
-    public IEnumerable<TItem>? Data { get; set; }
+		[Parameter]
+		public IEnumerable<TItem>? Data { get; set; }
     
-    [Parameter]
-    public RenderFragment? Body { get; set; }
+		[Parameter]
+		public RenderFragment? Body { get; set; }
 }
