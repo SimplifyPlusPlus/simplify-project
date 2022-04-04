@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Simplify.Project.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace Simplify.Project.Model;
+namespace Simplify.Project.API;
 	
 public class SimplifyContext : DbContext
 {

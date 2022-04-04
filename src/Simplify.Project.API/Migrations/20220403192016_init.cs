@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Simplify.Project.Model.Migrations
+namespace Simplify.Project.API.Migrations
 {
     public partial class init : Migration
     {
