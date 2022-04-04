@@ -44,9 +44,9 @@ public class MockClientRepository : IClientRepository
 				Phone = "",
 				ApartmentsRelations = new List<ApartmentRelation>
 				{
-					new ApartmentRelation {Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
+					new ApartmentRelation {Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6") },
+					new ApartmentRelation {Id = Guid.Parse("00002f64-5717-4562-b3fc-2c963f66afa6") },
+					new ApartmentRelation {Id = Guid.Parse("00003f64-5717-4562-b3fc-2c963f66afa6") },
 				},
 				Created = DateTime.Now, 
 				IsBlocked = false, 
@@ -62,8 +62,8 @@ public class MockClientRepository : IClientRepository
 				ApartmentsRelations = new List<ApartmentRelation>
 				{
 					new ApartmentRelation {Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
+					new ApartmentRelation {Id = Guid.Parse("00005f64-5717-4562-b3fc-2c963f66afa6") },
+					new ApartmentRelation {Id = Guid.Parse("00006f64-5717-4562-b3fc-2c963f66afa6") },
 				},
 				Created = DateTime.Now, 
 				IsBlocked = false, 
@@ -79,9 +79,9 @@ public class MockClientRepository : IClientRepository
 				Phone = "",
 				ApartmentsRelations = new List<ApartmentRelation>
 				{
-					new ApartmentRelation {Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
+					new ApartmentRelation {Id = Guid.Parse("00007f64-5717-4562-b3fc-2c963f66afa6") },
+					new ApartmentRelation {Id = Guid.Parse("00008f64-5717-4562-b3fc-2c963f66afa6") },
+					new ApartmentRelation {Id = Guid.Parse("00009f64-5717-4562-b3fc-2c963f66afa6") },
 				},
 				Created = DateTime.Now, 
 				IsBlocked = false, 
@@ -96,9 +96,9 @@ public class MockClientRepository : IClientRepository
 				Phone = "",
 				ApartmentsRelations = new List<ApartmentRelation>
 				{
-					new ApartmentRelation {Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
+					new ApartmentRelation {Id = Guid.Parse("00010f64-5717-4562-b3fc-2c963f66afa6") },
+					new ApartmentRelation {Id = Guid.Parse("00011f64-5717-4562-b3fc-2c963f66afa6") },
+					new ApartmentRelation {Id = Guid.Parse("00012f64-5717-4562-b3fc-2c963f66afa6") },
 				},
 				Created = DateTime.Now, 
 				IsBlocked = false, 

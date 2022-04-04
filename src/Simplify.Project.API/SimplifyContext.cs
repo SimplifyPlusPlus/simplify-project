@@ -3,23 +3,49 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Simplify.Project.API;
 	
+/// <summary>
+/// Контекст базы данных
+/// </summary>
 public class SimplifyContext : DbContext
 {
+	/// <summary>
+	/// Коллекция квартир
+	/// </summary>
 	public DbSet<Apartment> Apartments { get; set; } = null!;
+	
+	/// <summary>
+	/// Коллекция отношений квартир и жильцов
+	/// </summary>
 	public DbSet<ApartmentRelation> ApartmentRelations { get; set; } = null!;
+
+	/// <summary>
+	/// Коллекция клиентов
+	/// </summary>
 	public DbSet<Client> Clients { get; set; } = null!;
+
+	/// <summary>
+	/// Коллекция работников
+	/// </summary>
 	public DbSet<Employee> Employees { get; set; } = null!;
+
+	/// <summary>
+	/// Коллекция подъездов
+	/// </summary>
 	public DbSet<Entrance> Entrances { get; set; } = null!;
+	
+	/// <summary>
+	/// Коллеция комплексов
+	/// </summary>
 	public DbSet<Estate> Estates { get; set; } = null!;
+
+	/// <summary>
+	/// Коллекция домов
+	/// </summary>
 	public DbSet<House> Houses { get; set; } = null!;
 
 
 	public SimplifyContext() { }
 	public SimplifyContext(DbContextOptions<SimplifyContext> options) : base(options) { }
-	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-	{
-
-	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
