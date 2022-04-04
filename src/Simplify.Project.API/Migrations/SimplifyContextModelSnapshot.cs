@@ -7,275 +7,275 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 namespace Simplify.Project.API.Migrations
 {
 	[DbContext(typeof(SimplifyContext))]
-    partial class SimplifyContextModelSnapshot : ModelSnapshot
-    {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
+	partial class SimplifyContextModelSnapshot : ModelSnapshot
+	{
+		protected override void BuildModel(ModelBuilder modelBuilder)
+		{
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.3")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+			modelBuilder
+				.HasAnnotation("ProductVersion", "6.0.3")
+				.HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+			NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Simplify.Project.Model.Apartment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+			modelBuilder.Entity("Simplify.Project.Model.Apartment", b =>
+				{
+					b.Property<Guid>("Id")
+						.ValueGeneratedOnAdd()
+						.HasColumnType("uuid");
 
-                    b.Property<Guid?>("EntranceId")
-                        .HasColumnType("uuid");
+					b.Property<Guid?>("EntranceId")
+						.HasColumnType("uuid");
 
-                    b.Property<int>("Number")
-                        .HasColumnType("integer");
+					b.Property<int>("Number")
+						.HasColumnType("integer");
 
-                    b.HasKey("Id");
+					b.HasKey("Id");
 
-                    b.HasIndex("EntranceId");
+					b.HasIndex("EntranceId");
 
-                    b.ToTable("Apartments");
-                });
+					b.ToTable("Apartments");
+				});
 
-            modelBuilder.Entity("Simplify.Project.Model.ApartmentRelation", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+			modelBuilder.Entity("Simplify.Project.Model.ApartmentRelation", b =>
+				{
+					b.Property<Guid>("Id")
+						.ValueGeneratedOnAdd()
+						.HasColumnType("uuid");
 
-                    b.Property<Guid>("ApartmentId")
-                        .HasColumnType("uuid");
+					b.Property<Guid>("ApartmentId")
+						.HasColumnType("uuid");
 
-                    b.Property<Guid?>("ClientId")
-                        .HasColumnType("uuid");
+					b.Property<Guid?>("ClientId")
+						.HasColumnType("uuid");
 
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("now()");
+					b.Property<DateTime>("Created")
+						.ValueGeneratedOnAdd()
+						.HasColumnType("timestamp with time zone")
+						.HasDefaultValueSql("now()");
 
-                    b.Property<string>("RelationType")
-                        .IsRequired()
-                        .HasColumnType("text");
+					b.Property<string>("RelationType")
+						.IsRequired()
+						.HasColumnType("text");
 
-                    b.HasKey("Id");
+					b.HasKey("Id");
 
-                    b.HasIndex("ApartmentId");
+					b.HasIndex("ApartmentId");
 
-                    b.HasIndex("ClientId");
+					b.HasIndex("ClientId");
 
-                    b.ToTable("ApartmentRelations");
-                });
+					b.ToTable("ApartmentRelations");
+				});
 
-            modelBuilder.Entity("Simplify.Project.Model.Client", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+			modelBuilder.Entity("Simplify.Project.Model.Client", b =>
+				{
+					b.Property<Guid>("Id")
+						.ValueGeneratedOnAdd()
+						.HasColumnType("uuid");
 
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("now()");
+					b.Property<DateTime>("Created")
+						.ValueGeneratedOnAdd()
+						.HasColumnType("timestamp with time zone")
+						.HasDefaultValueSql("now()");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
+					b.Property<string>("Email")
+						.IsRequired()
+						.HasColumnType("text");
 
-                    b.Property<string>("Firstname")
-                        .IsRequired()
-                        .HasColumnType("text");
+					b.Property<string>("Firstname")
+						.IsRequired()
+						.HasColumnType("text");
 
-                    b.Property<bool>("IsBlocked")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValueSql("false");
+					b.Property<bool>("IsBlocked")
+						.ValueGeneratedOnAdd()
+						.HasColumnType("boolean")
+						.HasDefaultValueSql("false");
 
-                    b.Property<string>("Lastname")
-                        .IsRequired()
-                        .HasColumnType("text");
+					b.Property<string>("Lastname")
+						.IsRequired()
+						.HasColumnType("text");
 
-                    b.Property<string>("Note")
-                        .HasColumnType("text");
+					b.Property<string>("Note")
+						.HasColumnType("text");
 
-                    b.Property<string>("Patronymic")
-                        .HasColumnType("text");
+					b.Property<string>("Patronymic")
+						.HasColumnType("text");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("text");
+					b.Property<string>("Phone")
+						.IsRequired()
+						.HasColumnType("text");
 
-                    b.HasKey("Id");
+					b.HasKey("Id");
 
-                    b.ToTable("Clients");
-                });
+					b.ToTable("Clients");
+				});
 
-            modelBuilder.Entity("Simplify.Project.Model.Employee", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+			modelBuilder.Entity("Simplify.Project.Model.Employee", b =>
+				{
+					b.Property<Guid>("Id")
+						.ValueGeneratedOnAdd()
+						.HasColumnType("uuid");
 
-                    b.Property<DateTime>("Created")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("now()");
+					b.Property<DateTime>("Created")
+						.ValueGeneratedOnAdd()
+						.HasColumnType("timestamp with time zone")
+						.HasDefaultValueSql("now()");
 
-                    b.Property<string>("Firstname")
-                        .IsRequired()
-                        .HasColumnType("text");
+					b.Property<string>("Firstname")
+						.IsRequired()
+						.HasColumnType("text");
 
-                    b.Property<bool>("IsBlocked")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValueSql("false");
+					b.Property<bool>("IsBlocked")
+						.ValueGeneratedOnAdd()
+						.HasColumnType("boolean")
+						.HasDefaultValueSql("false");
 
-                    b.Property<string>("Lastname")
-                        .IsRequired()
-                        .HasColumnType("text");
+					b.Property<string>("Lastname")
+						.IsRequired()
+						.HasColumnType("text");
 
-                    b.Property<string>("Login")
-                        .IsRequired()
-                        .HasColumnType("text");
+					b.Property<string>("Login")
+						.IsRequired()
+						.HasColumnType("text");
 
-                    b.Property<string>("Note")
-                        .HasColumnType("text");
+					b.Property<string>("Note")
+						.HasColumnType("text");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("text");
+					b.Property<string>("Password")
+						.IsRequired()
+						.HasColumnType("text");
 
-                    b.Property<string>("Patronymic")
-                        .HasColumnType("text");
+					b.Property<string>("Patronymic")
+						.HasColumnType("text");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("text");
+					b.Property<string>("Role")
+						.IsRequired()
+						.HasColumnType("text");
 
-                    b.HasKey("Id");
+					b.HasKey("Id");
 
-                    b.ToTable("Employees");
-                });
+					b.ToTable("Employees");
+				});
 
-            modelBuilder.Entity("Simplify.Project.Model.Entrance", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+			modelBuilder.Entity("Simplify.Project.Model.Entrance", b =>
+				{
+					b.Property<Guid>("Id")
+						.ValueGeneratedOnAdd()
+						.HasColumnType("uuid");
 
-                    b.Property<Guid?>("HouseId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("integer");
+					b.Property<Guid?>("HouseId")
+						.HasColumnType("uuid");
+
+					b.Property<int>("Number")
+						.HasColumnType("integer");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("HouseId");
+					b.HasKey("Id");
+
+					b.HasIndex("HouseId");
 
-                    b.ToTable("Entrances");
-                });
-
-            modelBuilder.Entity("Simplify.Project.Model.Estate", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Estates");
-                });
-
-            modelBuilder.Entity("Simplify.Project.Model.House", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Building")
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("EstateId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EstateId");
-
-                    b.ToTable("Houses");
-                });
-
-            modelBuilder.Entity("Simplify.Project.Model.Apartment", b =>
-                {
-                    b.HasOne("Simplify.Project.Model.Entrance", null)
-                        .WithMany("Apartments")
-                        .HasForeignKey("EntranceId");
-                });
-
-            modelBuilder.Entity("Simplify.Project.Model.ApartmentRelation", b =>
-                {
-                    b.HasOne("Simplify.Project.Model.Apartment", "Apartment")
-                        .WithMany()
-                        .HasForeignKey("ApartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Simplify.Project.Model.Client", null)
-                        .WithMany("ApartmentsRelations")
-                        .HasForeignKey("ClientId");
-
-                    b.Navigation("Apartment");
-                });
-
-            modelBuilder.Entity("Simplify.Project.Model.Entrance", b =>
-                {
-                    b.HasOne("Simplify.Project.Model.House", null)
-                        .WithMany("Entrances")
-                        .HasForeignKey("HouseId");
-                });
-
-            modelBuilder.Entity("Simplify.Project.Model.House", b =>
-                {
-                    b.HasOne("Simplify.Project.Model.Estate", null)
-                        .WithMany("Houses")
-                        .HasForeignKey("EstateId");
-                });
-
-            modelBuilder.Entity("Simplify.Project.Model.Client", b =>
-                {
-                    b.Navigation("ApartmentsRelations");
-                });
-
-            modelBuilder.Entity("Simplify.Project.Model.Entrance", b =>
-                {
-                    b.Navigation("Apartments");
-                });
-
-            modelBuilder.Entity("Simplify.Project.Model.Estate", b =>
-                {
-                    b.Navigation("Houses");
-                });
-
-            modelBuilder.Entity("Simplify.Project.Model.House", b =>
-                {
-                    b.Navigation("Entrances");
-                });
+					b.ToTable("Entrances");
+				});
+
+			modelBuilder.Entity("Simplify.Project.Model.Estate", b =>
+				{
+					b.Property<Guid>("Id")
+						.ValueGeneratedOnAdd()
+						.HasColumnType("uuid");
+
+					b.Property<string>("Name")
+						.IsRequired()
+						.HasColumnType("text");
+
+					b.Property<string>("Note")
+						.HasColumnType("text");
+
+					b.HasKey("Id");
+
+					b.ToTable("Estates");
+				});
+
+			modelBuilder.Entity("Simplify.Project.Model.House", b =>
+				{
+					b.Property<Guid>("Id")
+						.ValueGeneratedOnAdd()
+						.HasColumnType("uuid");
+
+					b.Property<string>("Building")
+						.HasColumnType("text");
+
+					b.Property<Guid?>("EstateId")
+						.HasColumnType("uuid");
+
+					b.Property<int>("Number")
+						.HasColumnType("integer");
+
+					b.Property<string>("Street")
+						.IsRequired()
+						.HasColumnType("text");
+
+					b.HasKey("Id");
+
+					b.HasIndex("EstateId");
+
+					b.ToTable("Houses");
+				});
+
+			modelBuilder.Entity("Simplify.Project.Model.Apartment", b =>
+				{
+					b.HasOne("Simplify.Project.Model.Entrance", null)
+						.WithMany("Apartments")
+						.HasForeignKey("EntranceId");
+				});
+
+			modelBuilder.Entity("Simplify.Project.Model.ApartmentRelation", b =>
+				{
+					b.HasOne("Simplify.Project.Model.Apartment", "Apartment")
+						.WithMany()
+						.HasForeignKey("ApartmentId")
+						.OnDelete(DeleteBehavior.Cascade)
+						.IsRequired();
+
+					b.HasOne("Simplify.Project.Model.Client", null)
+						.WithMany("ApartmentsRelations")
+						.HasForeignKey("ClientId");
+
+					b.Navigation("Apartment");
+				});
+
+			modelBuilder.Entity("Simplify.Project.Model.Entrance", b =>
+				{
+					b.HasOne("Simplify.Project.Model.House", null)
+						.WithMany("Entrances")
+						.HasForeignKey("HouseId");
+				});
+
+			modelBuilder.Entity("Simplify.Project.Model.House", b =>
+				{
+					b.HasOne("Simplify.Project.Model.Estate", null)
+						.WithMany("Houses")
+						.HasForeignKey("EstateId");
+				});
+
+			modelBuilder.Entity("Simplify.Project.Model.Client", b =>
+				{
+					b.Navigation("ApartmentsRelations");
+				});
+
+			modelBuilder.Entity("Simplify.Project.Model.Entrance", b =>
+				{
+					b.Navigation("Apartments");
+				});
+
+			modelBuilder.Entity("Simplify.Project.Model.Estate", b =>
+				{
+					b.Navigation("Houses");
+				});
+
+			modelBuilder.Entity("Simplify.Project.Model.House", b =>
+				{
+					b.Navigation("Entrances");
+				});
 #pragma warning restore 612, 618
-        }
-    }
+		}
+	}
 }

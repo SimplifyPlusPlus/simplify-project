@@ -12,7 +12,7 @@ namespace Simplify.Project.API.Controllers;
 [Route("clients")]
 public class ClientsController : ControllerBase
 {
-	private IClientRepository _clientRepository;
+	private readonly IClientRepository _clientRepository;
     
 	/// <summary>
 	/// Конструктор класса <see cref="ClientsController"/>

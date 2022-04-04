@@ -1,25 +1,25 @@
 <NavLink href="@Href">
-	<RadzenButton Icon="@Icon" Text="@Text"
-				class="@Classes"
-				Size="@Size" ButtonStyle="@ButtonStyle" />
+  <RadzenButton Icon="@Icon" Text="@Text"
+        class="@Classes"
+        Size="@Size" ButtonStyle="@ButtonStyle" />
 </NavLink>
 
 @code {
-	[Parameter]
-	public string? Href { get; set; }
+  [Parameter]
+  public string? Href { get; set; }
     
-	[Parameter]
-	public string? Icon { get; set; }
+  [Parameter]
+  public string? Icon { get; set; }
     
-	[Parameter]
-	public string? Text { get; set; }
+  [Parameter]
+  public string? Text { get; set; }
     
-	[Parameter]
-	public string? Classes { get; set; }
+  [Parameter]
+  public string? Classes { get; set; }
     
-	[Parameter]
-	public ButtonSize Size { get; set; }
+  [Parameter]
+  public ButtonSize Size { get; set; }
     
-	[Parameter]
-	public ButtonStyle ButtonStyle { get; set; }
+  [Parameter]
+  public ButtonStyle ButtonStyle { get; set; }
 }
