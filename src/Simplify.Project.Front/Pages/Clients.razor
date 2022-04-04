@@ -7,48 +7,48 @@
 <PageTitle>Клиенты</PageTitle>
 
 <div class="column">
-    <h2 class="mb-2">Клиенты</h2>
-    <RadzenCard>
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <NavButton Href="/clients/create" Icon="add" Text="Добавить"
-                       Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Primary" />
-            <div class="row">
-                <div class="col-md-2 align-items-center d-flex">
-                    <RadzenLabel Text="Поиск:"/>
-                </div>
-                <div class="col-md-10">
-                    <RadzenTextBox @oninput="args => _filterPattern = args?.Value.ToString()" Class="w-100"/>
-                </div>
-            </div>
+  <h2 class="mb-2">Клиенты</h2>
+  <RadzenCard>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <NavButton Href="/clients/create" Icon="add" Text="Добавить"
+            Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Primary" />
+      <div class="row">
+        <div class="col-md-2 align-items-center d-flex">
+          <RadzenLabel Text="Поиск:"/>
         </div>
-        <DataTable TItem="ClientBaseDto" Data="_clients">
-            <Body>
-                <RadzenDataGridColumn TItem="ClientBaseDto" Property="Name" Title="Имя"/>
-                <RadzenDataGridColumn TItem="ClientBaseDto" Property="Email" Title="Электронная почта"/>
-                <RadzenDataGridColumn TItem="ClientBaseDto" Property="Phone" Title="Номер телефона"/>
-                <RadzenDataGridColumn TItem="ClientBaseDto" Title="Действия" Width="10%">
-                    <Template>
-                        <div class="d-flex justify-content-start align-items-center">
-                            <NavButton Href="@($"/clients/edit/{context.Id}")" Icon="edit" Classes="mr-2"
-                                       Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Primary" />
-                            <RadzenSwitch @bind-Value="@context.IsBlocked"/>
-                        </div>
-                    </Template>
-                </RadzenDataGridColumn>
-            </Body>
-        </DataTable>
-    </RadzenCard>
+        <div class="col-md-10">
+          <RadzenTextBox @oninput="args => _filterPattern = args?.Value.ToString()" Class="w-100"/>
+        </div>
+      </div>
+    </div>
+    <DataTable TItem="ClientBaseDto" Data="_clients">
+      <Body>
+        <RadzenDataGridColumn TItem="ClientBaseDto" Property="Name" Title="Имя"/>
+        <RadzenDataGridColumn TItem="ClientBaseDto" Property="Email" Title="Электронная почта"/>
+        <RadzenDataGridColumn TItem="ClientBaseDto" Property="Phone" Title="Номер телефона"/>
+        <RadzenDataGridColumn TItem="ClientBaseDto" Title="Действия" Width="10%">
+          <Template>
+            <div class="d-flex justify-content-start align-items-center">
+              <NavButton Href="@($"/clients/edit/{context.Id}")" Icon="edit" Classes="mr-2"
+                    Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Primary" />
+              <RadzenSwitch @bind-Value="@context.IsBlocked"/>
+            </div>
+          </Template>
+        </RadzenDataGridColumn>
+      </Body>
+    </DataTable>
+  </RadzenCard>
 </div>
 
 @code {
-    private List<ClientBaseDto>? _clients;
-    private string _filterPattern = string.Empty;
+  private List<ClientBaseDto>? _clients;
+  private string _filterPattern = string.Empty;
 
-    protected override async Task OnInitializedAsync()
-    {
-        _clients = await HttpClientHelper.GetJsonFromServer<List<ClientBaseDto>>(
-            _httpClient,
-            "clients-base-information",
-            "Произошла ошибка при получении данных о клиентах.");
-    }
+  protected override async Task OnInitializedAsync()
+  {
+    _clients = await HttpClientHelper.GetJsonFromServer<List<ClientBaseDto>>(
+      _httpClient,
+      "clients-base-information",
+      "Произошла ошибка при получении данных о клиентах.");
+  }
 }

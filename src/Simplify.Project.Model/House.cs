@@ -8,26 +8,26 @@ namespace Simplify.Project.Model;
 /// </summary>
 public class House : Entity
 {
-    /// <summary>
-    /// Номер
-    /// </summary>
-    [Required]
-    public int Number { get; set; }
+	/// <summary>
+	/// Номер
+	/// </summary>
+	[Required]
+	public int Number { get; set; }
 
-    /// <summary>
-    /// Улица
-    /// </summary>
-    [Required]
-    public string Street { get; set; } = string.Empty;
+	/// <summary>
+	/// Улица
+	/// </summary>
+	[Required]
+	public string Street { get; set; } = string.Empty;
     
-    /// <summary>
-    /// Корпус
-    /// </summary>
-    public string? Building { get; set; }
+	/// <summary>
+	/// Корпус
+	/// </summary>
+	public string? Building { get; set; }
 
-    /// <summary>
-    /// Идентификаторы подъездов
-    /// </summary>
-    [Required]
-    public ICollection<Guid> EntrancesIds { get; set; } = new List<Guid>();
+	/// <summary>
+	/// Идентификаторы подъездов
+	/// </summary>
+	[Required]
+	public virtual ICollection<Entrance> Entrances { get; set; } = new List<Entrance>();
 }
