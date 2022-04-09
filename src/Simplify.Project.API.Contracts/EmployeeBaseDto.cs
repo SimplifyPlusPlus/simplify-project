@@ -21,4 +21,10 @@ public class EmployeeBaseDto
 	/// </summary>
 	[Required]
 	public string Role { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Флаг блокировки
+	/// </summary>
+	[Required]
+	public bool IsBlocked { get; set; }
 }

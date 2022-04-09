@@ -17,6 +17,21 @@ internal class MapsterConfig
 			.Map(dest => dest.Name, src => $"{src.Lastname} {src.Firstname} {src.Patronymic}".Trim())
 			.Map(dest => dest.Email, src => src.Email)
 			.Map(dest => dest.Phone, src => src.Phone)
+			.Map(dest => dest.IsBlocked, src => src.IsBlocked)
+			.Map(dest => dest.Note, src => src.Note);
+
+		TypeAdapterConfig<Employee, EmployeeBaseDto>.NewConfig()
+			.Map(dest => dest.Id, src => src.Id)
+			.Map(dest => dest.Name, src => $"{src.Lastname} {src.Firstname} {src.Patronymic}".Trim())
+			.Map(dest => dest.Role, src => src.Role)
+			.Map(dest => dest.IsBlocked, src => src.IsBlocked);
+
+		TypeAdapterConfig<Employee, EmployeeDetailedDto>.NewConfig()
+			.Map(dest => dest.Id, src => src.Id)
+			.Map(dest => dest.Name, src => $"{src.Lastname} {src.Firstname} {src.Patronymic}".Trim())
+			.Map(dest => dest.Role, src => src.Role)
+			.Map(dest => dest.Login, src => src.Login)
+			.Map(dest => dest.IsBlocked, src => src.IsBlocked)
 			.Map(dest => dest.Note, src => src.Note);
 
 		TypeAdapterConfig<Apartment, ApartmentBaseDto>.NewConfig()

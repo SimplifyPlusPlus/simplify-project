@@ -18,4 +18,10 @@ public class ClientBaseDto
 	/// </summary>
 	[Required]
 	public string Name { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Флаг блокировки
+	/// </summary>
+	[Required]
+	public bool IsBlocked { get; set; }
 }
