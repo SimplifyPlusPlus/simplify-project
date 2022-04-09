@@ -11,7 +11,7 @@ public interface IClientRepository
 	/// Получить клиентов
 	/// </summary>
 	/// <returns>Список клиентов</returns>
-	public IEnumerable<Client> GetClients();
+	public IEnumerable<Client> GetClients(); // заменить тут и в всех остальных на IQueryable?
        
 	/// <summary>
 	/// Получить клиента по идентификатору

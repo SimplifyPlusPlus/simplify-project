@@ -59,10 +59,13 @@ public class SimplifyContext : DbContext
 		{
 			entity.HasKey(x => x.Id);
 			entity.HasOne(x => x.Apartment).WithMany();
+			entity.HasOne(x => x.Client).WithMany();
+
 			entity.Property(x => x.RelationType).IsRequired();
 			entity.Property(x => x.Created).IsRequired().HasDefaultValueSql("now()");
 
 			entity.Navigation(x => x.Apartment).AutoInclude();
+			entity.Navigation(x => x.Client).AutoInclude();
 		});
 
 		modelBuilder.Entity<Client>(entity =>
@@ -74,7 +77,8 @@ public class SimplifyContext : DbContext
 
 			entity.Property(x => x.Email).IsRequired();
 			entity.Property(x => x.Phone).IsRequired();
-			entity.HasMany(x => x.ApartmentsRelations).WithOne();
+
+			entity.HasMany(x => x.ApartmentsRelations).WithOne(x => x.Client);
 
 			entity.Property(x => x.Created).IsRequired().HasDefaultValueSql("now()");
 			entity.Property(x => x.IsBlocked).IsRequired().HasDefaultValueSql("false");
@@ -103,6 +107,8 @@ public class SimplifyContext : DbContext
 			entity.Property(x => x.Number).IsRequired();
 
 			entity.HasMany(x => x.Apartments).WithOne();
+
+			entity.HasMany(x => x.ApartmentRelations).WithOne();
 		});
 
 		modelBuilder.Entity<Estate>(entity => 

@@ -2,20 +2,23 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Simplify.Project.API.Contracts;
 
-/// <summary>
-/// Базовая информация по клиенту
-/// </summary>
-public class ClientBaseDto
+public class EmployeeBaseDto
 {
 	/// <summary>
 	/// Идентификатор
 	/// </summary>
 	[Required]
 	public Guid Id { get; set; }
-    
+
 	/// <summary>
 	/// Имя
 	/// </summary>
 	[Required]
 	public string Name { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Роль в системе
+	/// </summary>
+	[Required]
+	public string Role { get; set; } = string.Empty;
 }

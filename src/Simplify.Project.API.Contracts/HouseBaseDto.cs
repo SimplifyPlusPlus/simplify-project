@@ -14,21 +14,10 @@ public class HouseBaseDto
 	public Guid Id { get; set; }
 	
 	/// <summary>
-	/// Номер
+	/// Местонахождение (улица, номер, корпус)
 	/// </summary>
 	[Required]
-	public int Number { get; set; }
-
-	/// <summary>
-	/// Улица
-	/// </summary>
-	[Required]
-	public string Street { get; set; } = string.Empty;
-    
-	/// <summary>
-	/// Корпус
-	/// </summary>
-	public string? Building { get; set; }
+	public string Location { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Коллекция подъездов дома

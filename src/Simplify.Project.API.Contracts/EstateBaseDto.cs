@@ -28,5 +28,5 @@ public class EstateBaseDto
 	/// Коллекция домов комплекса
 	/// </summary>
 	[Required]
-	public ICollection<HouseBaseDto> HousesIds { get; set; } = new List<HouseBaseDto>();
+	public ICollection<HouseBaseDto> Houses { get; set; } = new List<HouseBaseDto>();
 }

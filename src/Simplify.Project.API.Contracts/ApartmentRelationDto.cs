@@ -1,25 +1,29 @@
 using System.ComponentModel.DataAnnotations;
-using Simplify.Project.Model.Handbooks;
-using Simplify.Project.Model.Utils;
 
-namespace Simplify.Project.Model;
+namespace Simplify.Project.API.Contracts;
 
 /// <summary>
 /// Модель связи клиента с квартирой
 /// </summary>
-public class ApartmentRelation : Entity
+public class ApartmentRelationDto
 {
+	/// <summary>
+	/// Идентификатор
+	/// </summary>
+	[Required]
+	public Guid Id { get; set; }
+
 	/// <summary>
 	/// Квартира
 	/// </summary>
 	[Required]
-	public Apartment Apartment { get; set; } = new();
+	public ApartmentBaseDto Apartment { get; set; } = new();
 
 	/// <summary>
 	/// Тип связи
 	/// </summary>
 	[Required] 
-	public string RelationType { get; set; } = ApartmentRelationType.Empty;
+	public string RelationType { get; set; } = string.Empty;
 	
 	/// <summary>
 	/// Дата добавления связи
@@ -31,5 +35,5 @@ public class ApartmentRelation : Entity
 	/// Клиент
 	/// </summary>
 	[Required]
-	public Client Client { get; set; } = new();
+	public ClientBaseDto Client { get; set; } = new();
 }

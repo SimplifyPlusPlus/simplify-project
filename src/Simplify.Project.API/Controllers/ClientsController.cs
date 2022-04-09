@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Simplify.Project.API.Contracts;
 using Simplify.Project.API.Repositories;
 using Simplify.Project.Model;
-
+using Mapster;
 namespace Simplify.Project.API.Controllers;
 
 /// <summary>
@@ -43,13 +43,13 @@ public class ClientsController : ControllerBase
 	/// <param name="id">Идентификатор</param>
 	/// <returns>Клиента</returns>
 	[HttpGet("{id:Guid}")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Client))]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClientBaseDto))]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 	public IActionResult GetClient(Guid id)
 	{
 		var client = _clientRepository.GetClient(id);
-		return client == null ? NotFound() : Ok(client);
+		return client == null ? NotFound() : Ok(client.Adapt<ClientDetailedDto>());
 	}
     
 	/// <summary>
@@ -61,17 +61,9 @@ public class ClientsController : ControllerBase
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 	public IActionResult GetClientsBaseInformation()
 	{
-		// TODO: Добавить маппер
 		var clients = _clientRepository
 			.GetClients()
-			.Select(client => new ClientBaseDto
-			{
-				Id = client.Id,
-				Name = $"{client.Lastname} {client.Firstname} {client.Patronymic}".Trim(),
-				Email = client.Email,
-				Phone = client.Phone,
-				IsBlocked = client.IsBlocked,
-			});
+			.Adapt<ClientBaseDto[]>();
 		return Ok(clients);
 	}
 }

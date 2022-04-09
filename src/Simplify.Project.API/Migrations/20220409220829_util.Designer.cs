@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Simplify.Project.API;
@@ -11,9 +12,10 @@ using Simplify.Project.API;
 namespace Simplify.Project.API.Migrations
 {
     [DbContext(typeof(SimplifyContext))]
-    partial class SimplifyContextModelSnapshot : ModelSnapshot
+    [Migration("20220409220829_util")]
+    partial class util
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

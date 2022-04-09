@@ -23,5 +23,5 @@ public class EntranceBaseDto
 	/// Коллекция квартир подъезда
 	/// </summary>
 	[Required]
-	public ICollection<ApartmentBaseDto> Apartments { get; set; } = new List<ApartmentBaseDto>();
+	public ICollection<ApartmentRelationDto> Apartments { get; set; } = new List<ApartmentRelationDto>();
 }
