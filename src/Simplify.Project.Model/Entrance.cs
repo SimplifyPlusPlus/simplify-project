@@ -15,7 +15,7 @@ public class Entrance : Entity
 	public int Number { get; set; }
 
 	/// <summary>
-	/// Квартиры
+	/// Коллекция квартир
 	/// </summary>
 	[Required]
 	public virtual ICollection<Apartment> Apartments { get; set; } = new List<Apartment>();

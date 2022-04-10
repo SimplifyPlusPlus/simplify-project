@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Simplify.Project.API.Contracts;
 
 /// <summary>
-/// Модель связи клиента с квартирой
+/// Объект передачи данных для отношения квартиры и пользователя
 /// </summary>
 public class ApartmentRelationDto
 {

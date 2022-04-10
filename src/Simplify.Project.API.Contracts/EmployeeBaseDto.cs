@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Simplify.Project.API.Contracts;
 
+/// <summary>
+/// Базовая информация по сотруднику
+/// </summary>
 public class EmployeeBaseDto
 {
 	/// <summary>

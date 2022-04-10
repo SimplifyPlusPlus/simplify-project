@@ -1,6 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace Simplify.Project.API.Contracts;
+
+/// <summary>
+/// Детальная информация по клиенту
+/// </summary>
 public class ClientDetailedDto : ClientBaseDto
 {
 	/// <summary>
