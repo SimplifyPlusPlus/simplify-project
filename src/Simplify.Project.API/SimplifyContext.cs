@@ -58,8 +58,9 @@ public class SimplifyContext : DbContext
 		modelBuilder.Entity<ApartmentRelation>(entity => 
 		{
 			entity.HasKey(x => x.Id);
-			entity.HasOne(x => x.Apartment).WithMany();
-			entity.HasOne(x => x.Client).WithMany();
+			entity.HasOne(x => x.Apartment).WithMany(x => x.ApartmentsRelations);
+			entity.HasOne(x => x.Client).WithMany(x => x.ApartmentsRelations);
+			entity.HasOne(x => x.Entrance).WithMany(x => x.ApartmentRelations);
 
 			entity.Property(x => x.RelationType).IsRequired();
 			entity.Property(x => x.Created).IsRequired().HasDefaultValueSql("now()");
@@ -106,9 +107,9 @@ public class SimplifyContext : DbContext
 			entity.HasKey(x => x.Id);
 			entity.Property(x => x.Number).IsRequired();
 
-			entity.HasMany(x => x.Apartments).WithOne();
+			entity.HasMany(x => x.Apartments).WithOne(x => x.Entrance);
 
-			entity.HasMany(x => x.ApartmentRelations).WithOne();
+			entity.HasMany(x => x.ApartmentRelations).WithOne(x => x.Entrance);
 		});
 
 		modelBuilder.Entity<Estate>(entity => 
@@ -117,7 +118,7 @@ public class SimplifyContext : DbContext
 			entity.Property(x => x.Name).IsRequired();
 			entity.Property(x => x.Note).IsRequired(false);
 
-			entity.HasMany(x => x.Houses).WithOne();
+			entity.HasMany(x => x.Houses).WithOne(x => x.Estate);
 		});
 
 		modelBuilder.Entity<House>(entity =>
@@ -127,7 +128,7 @@ public class SimplifyContext : DbContext
 			entity.Property(x => x.Number).IsRequired();
 			entity.Property(x => x.Building).IsRequired(false);
 
-			entity.HasMany(x => x.Entrances).WithOne();
+			entity.HasMany(x => x.Entrances).WithOne(x => x.House);
 		});
 	}
 }
