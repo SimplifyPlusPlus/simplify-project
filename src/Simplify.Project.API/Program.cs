@@ -14,6 +14,8 @@ public static class Program
 		builder.Services.AddEndpointsApiExplorer();
 		builder.Services.AddDbContext<SimplifyContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("SimplifyContext")));
 
+		MapsterConfig.Config();
+
 		if (builder.Environment.IsDevelopment())
 		{
 			builder.Services.AddSwaggerGen();

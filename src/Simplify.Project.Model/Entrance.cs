@@ -15,8 +15,19 @@ public class Entrance : Entity
 	public int Number { get; set; }
 
 	/// <summary>
-	/// Идентификаторы квартир
+	/// Здание
+	/// </summary>
+	public virtual House House { get; set; } = new();
+
+	/// <summary>
+	/// Коллекция квартир
 	/// </summary>
 	[Required]
 	public virtual ICollection<Apartment> Apartments { get; set; } = new List<Apartment>();
+
+	/// <summary>
+	/// Связи клиента с квартирами подъезда
+	/// </summary>
+	[Required]
+	public virtual ICollection<ApartmentRelation> ApartmentRelations { get; set; } = new List<ApartmentRelation>();
 }

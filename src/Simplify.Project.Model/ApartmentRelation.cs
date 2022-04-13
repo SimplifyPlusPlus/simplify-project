@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Simplify.Project.Model.Handbooks;
 using Simplify.Project.Model.Utils;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Simplify.Project.Model;
 
@@ -10,7 +11,7 @@ namespace Simplify.Project.Model;
 public class ApartmentRelation : Entity
 {
 	/// <summary>
-	/// Идентификатор квартиры
+	/// Квартира
 	/// </summary>
 	[Required]
 	public Apartment Apartment { get; set; } = new();
@@ -26,4 +27,17 @@ public class ApartmentRelation : Entity
 	/// </summary>
 	[Required]
 	public DateTime Created { get; set; }
+
+	/// <summary>
+	/// Клиент
+	/// </summary>
+	[Required]
+	public Client Client { get; set; } = new();
+
+	/// <summary>
+	/// Подъезд
+	/// </summary>
+	[NotMapped]
+	public Entrance Entrance { get => Apartment.Entrance; set => Apartment.Entrance = value; }
+
 }

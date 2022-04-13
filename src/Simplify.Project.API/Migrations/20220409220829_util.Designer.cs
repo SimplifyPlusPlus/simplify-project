@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Simplify.Project.API;
@@ -11,9 +12,10 @@ using Simplify.Project.API;
 namespace Simplify.Project.API.Migrations
 {
     [DbContext(typeof(SimplifyContext))]
-    partial class SimplifyContextModelSnapshot : ModelSnapshot
+    [Migration("20220409220829_util")]
+    partial class util
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,7 +30,7 @@ namespace Simplify.Project.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("EntranceId")
+                    b.Property<Guid?>("EntranceId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Number")
@@ -58,7 +60,7 @@ namespace Simplify.Project.API.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("now()");
 
-                    b.Property<Guid>("EntranceId")
+                    b.Property<Guid?>("EntranceId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("RelationType")
@@ -172,7 +174,7 @@ namespace Simplify.Project.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("HouseId")
+                    b.Property<Guid?>("HouseId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Number")
@@ -212,7 +214,7 @@ namespace Simplify.Project.API.Migrations
                     b.Property<string>("Building")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("EstateId")
+                    b.Property<Guid?>("EstateId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Number")
@@ -231,19 +233,15 @@ namespace Simplify.Project.API.Migrations
 
             modelBuilder.Entity("Simplify.Project.Model.Apartment", b =>
                 {
-                    b.HasOne("Simplify.Project.Model.Entrance", "Entrance")
+                    b.HasOne("Simplify.Project.Model.Entrance", null)
                         .WithMany("Apartments")
-                        .HasForeignKey("EntranceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Entrance");
+                        .HasForeignKey("EntranceId");
                 });
 
             modelBuilder.Entity("Simplify.Project.Model.ApartmentRelation", b =>
                 {
                     b.HasOne("Simplify.Project.Model.Apartment", "Apartment")
-                        .WithMany("ApartmentsRelations")
+                        .WithMany()
                         .HasForeignKey("ApartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -254,44 +252,27 @@ namespace Simplify.Project.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Simplify.Project.Model.Entrance", "Entrance")
+                    b.HasOne("Simplify.Project.Model.Entrance", null)
                         .WithMany("ApartmentRelations")
-                        .HasForeignKey("EntranceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EntranceId");
 
                     b.Navigation("Apartment");
 
                     b.Navigation("Client");
-
-                    b.Navigation("Entrance");
                 });
 
             modelBuilder.Entity("Simplify.Project.Model.Entrance", b =>
                 {
-                    b.HasOne("Simplify.Project.Model.House", "House")
+                    b.HasOne("Simplify.Project.Model.House", null)
                         .WithMany("Entrances")
-                        .HasForeignKey("HouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("House");
+                        .HasForeignKey("HouseId");
                 });
 
             modelBuilder.Entity("Simplify.Project.Model.House", b =>
                 {
-                    b.HasOne("Simplify.Project.Model.Estate", "Estate")
+                    b.HasOne("Simplify.Project.Model.Estate", null)
                         .WithMany("Houses")
-                        .HasForeignKey("EstateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Estate");
-                });
-
-            modelBuilder.Entity("Simplify.Project.Model.Apartment", b =>
-                {
-                    b.Navigation("ApartmentsRelations");
+                        .HasForeignKey("EstateId");
                 });
 
             modelBuilder.Entity("Simplify.Project.Model.Client", b =>

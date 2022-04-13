@@ -20,19 +20,7 @@ public class ClientBaseDto
 	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Электронная почта
-	/// </summary>
-	[Required]
-	public string Email { get; set; } = string.Empty;
-    
-	/// <summary>
-	/// Номер телефона
-	/// </summary>
-	[Required]
-	public string Phone { get; set; } = string.Empty;
-	
-	/// <summary>
-	/// Признак блокировки пользователя
+	/// Флаг блокировки
 	/// </summary>
 	[Required]
 	public bool IsBlocked { get; set; }

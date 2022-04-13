@@ -13,4 +13,14 @@ public class Apartment : Entity
 	/// </summary>
 	[Required]
 	public int Number { get; set; }
+
+	/// <summary>
+	/// Подъезд
+	/// </summary>
+	public Entrance Entrance { get; set; } = new();
+
+	/// <summary>
+	/// Отношения
+	/// </summary>
+	public virtual ICollection<ApartmentRelation> ApartmentsRelations { get; set; } = new List<ApartmentRelation>();
 }

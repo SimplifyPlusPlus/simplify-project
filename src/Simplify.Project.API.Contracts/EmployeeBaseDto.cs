@@ -3,30 +3,31 @@ using System.ComponentModel.DataAnnotations;
 namespace Simplify.Project.API.Contracts;
 
 /// <summary>
-/// Базовая информация по жилому комплексу
+/// Базовая информация по сотруднику
 /// </summary>
-public class EstateBaseDto
+public class EmployeeBaseDto
 {
 	/// <summary>
 	/// Идентификатор
 	/// </summary>
 	[Required]
 	public Guid Id { get; set; }
-	
+
 	/// <summary>
-	/// Наименование
+	/// Имя
 	/// </summary>
 	[Required]
 	public string Name { get; set; } = string.Empty;
-    
+
 	/// <summary>
-	/// Примечание
-	/// </summary>
-	public string? Note { get; set; }
-    
-	/// <summary>
-	/// Коллекция домов комплекса
+	/// Роль в системе
 	/// </summary>
 	[Required]
-	public ICollection<HouseBaseDto> Houses { get; set; } = new List<HouseBaseDto>();
+	public string Role { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Флаг блокировки
+	/// </summary>
+	[Required]
+	public bool IsBlocked { get; set; }
 }

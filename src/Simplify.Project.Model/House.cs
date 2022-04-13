@@ -26,6 +26,11 @@ public class House : Entity
 	public string? Building { get; set; }
 
 	/// <summary>
+	/// Жилой комплекс
+	/// </summary>
+	public virtual Estate Estate { get; set; } = new();
+
+	/// <summary>
 	/// Идентификаторы подъездов
 	/// </summary>
 	[Required]
