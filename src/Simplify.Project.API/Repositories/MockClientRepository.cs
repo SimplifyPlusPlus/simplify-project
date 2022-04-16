@@ -42,7 +42,7 @@ public class MockClientRepository : IClientRepository
 				Patronymic = "Николаевич", 
 				Email = "pmarkelo77@gmail.com", 
 				Phone = "",
-				ApartmentsRelations = new List<ApartmentRelation>
+				ApartmentRelations = new List<ApartmentRelation>
 				{
 					new ApartmentRelation {Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6") },
 					new ApartmentRelation {Id = Guid.Parse("00002f64-5717-4562-b3fc-2c963f66afa6") },
@@ -59,7 +59,7 @@ public class MockClientRepository : IClientRepository
 				Firstname = "Андрей", 
 				Email = "", 
 				Phone = "", 
-				ApartmentsRelations = new List<ApartmentRelation>
+				ApartmentRelations = new List<ApartmentRelation>
 				{
 					new ApartmentRelation {Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
 					new ApartmentRelation {Id = Guid.Parse("00005f64-5717-4562-b3fc-2c963f66afa6") },
@@ -77,7 +77,7 @@ public class MockClientRepository : IClientRepository
 				Patronymic = "Мурадович", 
 				Email = "", 
 				Phone = "",
-				ApartmentsRelations = new List<ApartmentRelation>
+				ApartmentRelations = new List<ApartmentRelation>
 				{
 					new ApartmentRelation {Id = Guid.Parse("00007f64-5717-4562-b3fc-2c963f66afa6") },
 					new ApartmentRelation {Id = Guid.Parse("00008f64-5717-4562-b3fc-2c963f66afa6") },
@@ -94,7 +94,7 @@ public class MockClientRepository : IClientRepository
 				Firstname = "Алексей", 
 				Email = "", 
 				Phone = "",
-				ApartmentsRelations = new List<ApartmentRelation>
+				ApartmentRelations = new List<ApartmentRelation>
 				{
 					new ApartmentRelation {Id = Guid.Parse("00010f64-5717-4562-b3fc-2c963f66afa6") },
 					new ApartmentRelation {Id = Guid.Parse("00011f64-5717-4562-b3fc-2c963f66afa6") },

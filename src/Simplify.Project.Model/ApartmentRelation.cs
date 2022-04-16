@@ -33,11 +33,4 @@ public class ApartmentRelation : Entity
 	/// </summary>
 	[Required]
 	public Client Client { get; set; } = new();
-
-	/// <summary>
-	/// Подъезд
-	/// </summary>
-	[NotMapped]
-	public Entrance Entrance { get => Apartment.Entrance; set => Apartment.Entrance = value; }
-
 }
