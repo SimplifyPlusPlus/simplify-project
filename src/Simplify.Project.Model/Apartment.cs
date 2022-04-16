@@ -22,5 +22,5 @@ public class Apartment : Entity
 	/// <summary>
 	/// Отношения
 	/// </summary>
-	public virtual ICollection<ApartmentRelation> ApartmentsRelations { get; set; } = new List<ApartmentRelation>();
+	public virtual ICollection<ApartmentRelation> ApartmentRelations { get; set; } = new List<ApartmentRelation>();
 }
