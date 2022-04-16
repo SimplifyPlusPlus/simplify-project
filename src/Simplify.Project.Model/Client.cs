@@ -24,5 +24,5 @@ public class Client : UserBase
 	/// Идентификаторы связей квартир клиента
 	/// </summary>
 	[Required]
-	public virtual ICollection<ApartmentRelation> ApartmentsRelations { get; set; } = new List<ApartmentRelation>();
+	public virtual ICollection<ApartmentRelation> ApartmentRelations { get; set; } = new List<ApartmentRelation>();
 }
