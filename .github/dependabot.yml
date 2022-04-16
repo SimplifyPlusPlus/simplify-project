@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/src/Simplify.Project.API"
+    reviewers: 
+      - "iamquoz"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "nuget"
+    directory: "/src/Simplify.Project.Front"
+    reviewers: 
+      - "iamquoz"
+    schedule:
+      interval: "weekly"
