@@ -1,0 +1,106 @@
+@using Simplify.Project.Shared
+<style>
+	.create-employee-card {
+		background: linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), #27D056;
+	}
+	
+	.employee-search-field {
+		width: 100%;
+		outline: 0;
+		border: 0;
+		border-bottom: 1px solid black;
+	}
+	
+	.employee-list-title {
+		color: black;
+		font-weight: 500;
+		margin-top: 3rem;
+		margin-bottom: 1rem;
+	}
+	
+	.employee-list-item {
+		color: #8943B5;
+		font-weight: 500;
+		margin-bottom: 0.5rem;
+		text-decoration: underline;
+		cursor: pointer;
+	}
+	
+	.employee-roles-title {
+		color: black;
+		text-align: center;
+		font-weight: 500;
+		font-size: 1.25rem;
+		margin-top: 12rem;
+		margin-bottom: 2rem;
+	}
+	
+	.employee-roles {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.employee-role-btn {
+		width: 75%;
+		height: 36px;
+		margin-bottom: 1rem;
+		color: white;
+		border: 0;
+		background: #8943B5;
+        box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+        border-radius: 6px;
+	}
+	
+	.employee-role-description {
+		color: rgba(0, 0, 0, 0.35);
+		font-weight: 500;
+		font-size: 1.25rem;
+		margin-top: 4rem;
+		padding: 0 2rem;
+	}
+</style>
+
+<div class="row h-100">
+	<div class="col-6 h-100">
+		<input type="text" class="employee-search-field" placeholder="Имя сотрудника или роль...">
+
+		<div>
+			@foreach (var group in _employees.GroupBy(employee => employee.Role))
+			{
+				<p class="employee-list-title">@(group.Count() == 1 ? group.Key : $"{group.Key}ы")</p>
+				@foreach (var employee in group)
+				{
+					<p class="employee-list-item" @onclick="() => SelectEmployee(employee)">
+						@employee.Name
+					</p>
+				}
+			}
+		</div>
+	</div>
+	<div class="col-6 h-100 create-employee-card">
+		@if (_employeeDetailedDto == null)
+		{
+			<div class="d-flex flex-column justify-content-center">
+				<p class="employee-roles-title">Новый сотрудник</p>
+				<div class="row">
+					@foreach (var (role, index) in RoleType.ToCollection().Select((name, index) => (name, index)))
+					{
+						<div class="col employee-roles">
+							<button class="employee-role-btn" @onmouseover="() => _roleMouseUp = role" @onmouseout="() => _roleMouseUp = string.Empty">
+								@role
+							</button>
+						</div>
+						
+						@if ((index + 1) % 2 == 0)
+						{
+							<div class="w-100"></div>
+						}
+					}
+				</div>
+				
+				<p class="employee-role-description">@GetRoleDescription(_roleMouseUp)</p>
+			</div>
+		}
+	</div>
+</div>

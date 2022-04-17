@@ -1,17 +1,28 @@
 @inherits LayoutComponentBase
 
+<style>
+  .border-column {
+    background: #@BrandColor;
+    width: 250px;
+    height: 100vh;
+  }
+  
+  main {
+    padding: 1rem 3rem;
+  }
+</style>
+
 <div class="page">
-  <div class="sidebar">
-    <NavMenu/>
-  </div>
-
+  <BorderColumn></BorderColumn>
+  
   <main>
-    <div class="top-row px-4">
-      <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-    </div>
-
-    <article class="content px-4">
-      @Body
-    </article>
+    @Body
   </main>
+
+  <BorderColumn></BorderColumn>
 </div>
+
+@code {
+  [Parameter]
+  public string BrandColor { get; set; } = "27D056";
+}

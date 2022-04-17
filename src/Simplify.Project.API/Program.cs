@@ -1,5 +1,4 @@
 using Simplify.Project.API.Repositories;
-using Simplify.Project.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace Simplify.Project.API;
@@ -20,6 +19,7 @@ public static class Program
 		{
 			builder.Services.AddSwaggerGen();
 			builder.Services.AddSingleton<IClientRepository, MockClientRepository>();
+			builder.Services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
 			builder.Services.AddSingleton<IEstateRepository, MockEstateRepository>();
 			builder.Services.AddSingleton<IHouseRepository, MockHouseRepository>();
 			builder.Services.AddSingleton<IEntranceRepository, MockEntranceRepository>();

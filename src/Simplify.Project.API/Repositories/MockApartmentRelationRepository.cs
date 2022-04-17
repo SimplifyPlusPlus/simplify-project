@@ -1,5 +1,5 @@
 using Simplify.Project.Model;
-using Simplify.Project.Model.Handbooks;
+using Simplify.Project.Shared;
 
 namespace Simplify.Project.API.Repositories;
 

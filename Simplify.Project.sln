@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplify.Project.Model", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplify.Project.API.Contracts", "src\Simplify.Project.API.Contracts\Simplify.Project.API.Contracts.csproj", "{BC75FECA-A473-4FB5-AA08-ED1ACA2BB9E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplify.Project.Shared", "src\Simplify.Project.Shared\Simplify.Project.Shared.csproj", "{7E120E23-726C-4C0D-8AB9-5683420F1C76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,11 +37,16 @@ Global
 		{BC75FECA-A473-4FB5-AA08-ED1ACA2BB9E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC75FECA-A473-4FB5-AA08-ED1ACA2BB9E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC75FECA-A473-4FB5-AA08-ED1ACA2BB9E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E120E23-726C-4C0D-8AB9-5683420F1C76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E120E23-726C-4C0D-8AB9-5683420F1C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E120E23-726C-4C0D-8AB9-5683420F1C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E120E23-726C-4C0D-8AB9-5683420F1C76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{83B49FD1-6C91-461D-9794-A4424CD05758} = {E03DC4AC-229F-4051-8B6B-5534E94792F2}
 		{5DF113E9-D861-4477-BC5A-198879B23489} = {E03DC4AC-229F-4051-8B6B-5534E94792F2}
 		{B14BD917-76A5-44ED-AAD5-28C81D8CC771} = {E03DC4AC-229F-4051-8B6B-5534E94792F2}
 		{BC75FECA-A473-4FB5-AA08-ED1ACA2BB9E8} = {E03DC4AC-229F-4051-8B6B-5534E94792F2}
+		{7E120E23-726C-4C0D-8AB9-5683420F1C76} = {E03DC4AC-229F-4051-8B6B-5534E94792F2}
 	EndGlobalSection
 EndGlobal
