@@ -37,5 +37,5 @@ public class House : Entity, ISearchable
 	public virtual ICollection<Entrance> Entrances { get; set; } = new List<Entrance>();
 
 	///<inheritdoc/>
-	public double Score(string searchValue) => JaroWinklerDistance.Proximity(Street + Number + Building, searchValue);
+	public double Score(string searchValue) => JaroWinklerDistance.Proximity($"{Street} {Number} {Building}".Trim(), searchValue);
 }

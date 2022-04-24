@@ -1,5 +1,8 @@
 namespace Simplify.Project.Model.Utils;
 
+/// <summary>
+/// Инструментарий для алгоритма Джаро-Винклера
+/// </summary>
 public static class JaroWinklerDistance
 {
 	/// <summary>
