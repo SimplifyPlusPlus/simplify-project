@@ -6,7 +6,7 @@ namespace Simplify.Project.Model;
 /// <summary>
 /// Клиент
 /// </summary>
-public class Client : UserBase
+public class Client : UserBase 
 {
 	/// <summary>
 	/// Электронная почта
