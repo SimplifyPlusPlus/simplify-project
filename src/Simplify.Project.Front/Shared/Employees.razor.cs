@@ -12,7 +12,8 @@ public partial class Employees
 	private string _roleMouseUp = string.Empty;
 	private string _filterPattern = string.Empty;
 
-	[Inject] private HttpClient HttpClient { get; set; }
+	[Inject] 
+	private HttpClient HttpClient { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -33,11 +34,19 @@ public partial class Employees
 	{
 		return await HttpClientHelper.GetJsonFromServer<EmployeeDetailedDto>(
 			       HttpClient,
-			       "api/employee/base-information",
-			       $"Произошла ошибка при получении детальной информации о сотруднике {employee.GetHashCode()}") ??
+			       $"api/employee/{employee.Id}/detailed",
+			       $"Произошла ошибка при получении детальной информации о сотруднике {employee.Name}") ??
 		       new EmployeeDetailedDto();
 	}
 
+	private void EmployeeSaveOnClick()
+	{
+		if (_employeeDetailedDto?.Id != Guid.Empty)
+		{
+			return;
+		}
+	}
+	
 	private async Task SelectEmployee(EmployeeBaseDto employee)
 	{
 		_employeeDetailedDto = await GetEmployeesDetailedInfoFromServer(employee);
