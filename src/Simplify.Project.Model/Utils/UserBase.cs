@@ -5,7 +5,7 @@ namespace Simplify.Project.Model.Utils;
 /// <summary>
 /// Базовый класс пользователя системы
 /// </summary>
-public abstract class UserBase : Entity
+public abstract class UserBase : Entity, ISearchable
 {
 	/// <summary>
 	/// Фамилия
@@ -40,4 +40,7 @@ public abstract class UserBase : Entity
 	/// Примечание
 	/// </summary>
 	public string? Note { get; set; }
+
+	///<inheritdoc/>
+	public double Score(string searchValue) => JaroWinklerDistance.Proximity(Lastname + Firstname + Patronymic, searchValue);
 }
