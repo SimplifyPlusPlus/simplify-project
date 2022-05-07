@@ -1,0 +1,59 @@
+@using Microsoft.AspNetCore.Components
+@using Simplify.Project.Shared
+
+<div class="employee-card">
+	<div class="employee-create-body">
+		<div class="employee-create-name">
+			<div class="employee-create-name-item">
+				<label for="employeeLastname">Фамилия</label>
+				<input id="employeeLastname" type="text" class="employee-search-field" @bind="@_employeeEditDto.Lastname" />
+			</div>
+			<div class="employee-create-name-item">
+				<label for="employeeFirstname">Имя</label>
+				<input id="employeeFirstname" type="text" class="employee-search-field" @bind="@_employeeEditDto.Firstname" />
+			</div>
+			<div class="employee-create-name-item">
+				<label for="employeePatronymic">Отчество</label>
+				<input id="employeePatronymic" type="text" class="employee-search-field" @bind="@_employeeEditDto.Patronymic" />
+			</div>
+		</div>
+    				
+		<div class="employee-create-other">
+			<div class="employee-create-other-item">
+				<div class="employee-create-personal-item">
+					<p class="employee-create-personal-item-title">Роль</p>
+					<select class="simplify-dropdown" @bind="@_employeeEditDto.Role">
+						@foreach (var item in RoleType.ToCollection())
+						{
+							<option value="@item">@item</option>
+						}
+					</select>
+				</div>
+				<div class="employee-create-personal-item" style="margin-top: 1rem;">
+					<p class="employee-create-personal-item-title">Имя пользователя</p>
+					<input type="text" class="employee-search-field" @bind="@_employeeEditDto.Login">
+				</div>
+				<div class="employee-create-personal-item" style="margin-top: 1rem;">
+					<p class="employee-create-personal-item-title">Пароль</p>
+					<input type="text" class="employee-search-field" @bind="@_employeeEditDto.Password">
+				</div>
+				<div class="employee-create-personal-item" style="margin-top: 1rem;">
+					<p class="employee-create-personal-item-title"></p>
+					@if (_employeeEditDto.IsBlocked)
+					{
+						<a class="employee-list-item" style="width: 100%;">Разблокировать</a>
+					}
+					else
+					{
+						<a class="employee-list-item" style="width: 100%;">Заблокировать</a>
+					}
+				</div>
+			</div>
+			<div class="employee-create-other-item">
+				<button class="simplify-btn" style="width: 30%;">
+					Сохранить
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

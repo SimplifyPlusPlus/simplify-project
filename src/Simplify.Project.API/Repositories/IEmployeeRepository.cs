@@ -20,4 +20,6 @@ public interface IEmployeeRepository
 	/// <param name="id">Идентификатор</param>
 	/// <returns>Сотрудник</returns>
 	public Employee? GetEmployee(Guid id);
+
+	public void AddEmployee(Employee employee);
 }

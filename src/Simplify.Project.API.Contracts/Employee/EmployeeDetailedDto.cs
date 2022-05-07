@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Simplify.Project.API.Contracts;
+namespace Simplify.Project.API.Contracts.Employee;
 
 /// <summary>
 /// Детальная информация по сотруднику

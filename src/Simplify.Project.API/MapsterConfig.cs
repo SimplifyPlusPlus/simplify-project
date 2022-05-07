@@ -1,6 +1,7 @@
 using Mapster;
 using Simplify.Project.Model;
 using Simplify.Project.API.Contracts;
+using Simplify.Project.API.Contracts.Employee;
 
 namespace Simplify.Project.API;
 
@@ -33,6 +34,17 @@ internal class MapsterConfig
 			.Map(dest => dest.Login, src => src.Login)
 			.Map(dest => dest.IsBlocked, src => src.IsBlocked)
 			.Map(dest => dest.Note, src => src.Note);
+		
+		TypeAdapterConfig<Employee, EmployeeEditDto>.NewConfig()
+			.Map(dest => dest.Id, src => src.Id)
+			.Map(dest => dest.Lastname, src => src.Lastname)
+			.Map(dest => dest.Firstname, src => src.Firstname)
+			.Map(dest => dest.Patronymic, src => src.Patronymic)
+			.Map(dest => dest.Role, src => src.Role)
+			.Map(dest => dest.Login, src => src.Login)
+			.Map(dest => dest.Password, src => src.Password)
+			.Map(dest => dest.Note, src => src.Note)
+			.Map(dest => dest.IsBlocked, src => src.IsBlocked);
 
 		TypeAdapterConfig<Apartment, ApartmentBaseDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)

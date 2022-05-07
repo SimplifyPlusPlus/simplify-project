@@ -1,103 +1,9 @@
 @using Simplify.Project.Shared
 @using Simplify.Project.API.Contracts
-<style>
-	.main-frame {
-		display:grid;
-		grid:auto/1fr 1fr;
-		column-gap: 2rem;
-	}
-	
-	.left ul li {
-		height: 1rem;
-		margin-top: 1.5rem;
-	}
+@using Simplify.Project.API.Contracts.Employee
 
-	.right {
-		padding: 0 1rem;
-		margin-top: -1rem;
-		height: 50rem;
-	}
-
-	.create-employee-card {
-		background: linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), #27D056;
-	}
-	
-	.employee-search-field {
-		width: 100%;
-		outline: 0;
-		border: 0;
-		border-bottom: 1px solid black;
-	}
-	
-	.employee-list-title {
-		color: black;
-		font-weight: 500;
-		margin-top: 2.5rem;
-		margin-bottom: 1rem;
-	}
-	
-	.employee-list-item {
-		width: max-content;
-		color: #8943B5;
-		font-weight: 500;
-		margin-bottom: 0.5rem;
-		cursor: pointer;
-        text-decoration: underline #8943B5 dashed;
-	}
-	
-	.employee-list-item.selected {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 1rem 0.25rem;
-		background: #8943B5;
-		color: white;
-		font-weight: 600;
-		text-decoration: none;
-	}
-	
-	.employee-roles-title {
-		color: black;
-		text-align: center;
-		font-weight: 500;
-		font-size: 1.25rem;
-		margin-top: 12rem;
-		margin-bottom: 2rem;
-	}
-	
-	.employee-roles {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	
-	.employee-role-btn {
-		width: 75%;
-		height: 36px;
-		margin-bottom: 1rem;
-		color: white;
-		border: 0;
-		background: #8943B5;
-        box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.25);
-        border-radius: 6px;
-	}
-	
-	.employee-role-description {
-		color: rgba(0, 0, 0, 0.35);
-		font-weight: 500;
-		font-size: 1.25rem;
-		margin-top: 4rem;
-		padding: 0 2rem;
-	}
-	
-	.main-frame ul {
-		padding-left: 0;
-		list-style-type: none;
-	}
-</style>
-
-<div class="main-frame h-100" @onclick="() => _employeeDetailedDto = null">
-	<div class="left h-100">
+<div class="main-frame">
+	<div class="left">
 		<input type="text" class="employee-search-field" placeholder="Имя сотрудника или роль...">
 
 		@foreach (var group in _employees.GroupBy(employee => employee.Role))
@@ -106,71 +12,22 @@
 			<ul>
 				@foreach (var employee in group)
 				{
-					<li class="employee-list-item @(_employeeDetailedDto?.Id == employee.Id ? "selected" : "")" 
-					    @onclick="() => SelectEmployee(employee)">
+					<li class="employee-list-item @(_selectedEmployeeId == employee.Id ? "selected" : "")" 
+					    @onclick="() => SelectEmployee(employee.Id)">
 						@employee.Name
 					</li>
 				}
 			</ul>
 		}
 	</div>
-	<div class="right h-100 create-employee-card">
-		@if (_employeeDetailedDto == null)
+	<div class="right">
+		@if (_selectedEmployeeId == Guid.Empty)
 		{
-			<div class="d-flex flex-column justify-content-center">
-				<p class="employee-roles-title">Новый сотрудник</p>
-				<div class="row">
-					@foreach (var (role, index) in RoleType.ToCollection().Select((name, index) => (name, index)))
-					{
-						<div class="col employee-roles">
-							<button class="employee-role-btn" @onmouseover="() => _roleMouseUp = role" @onmouseout="() => _roleMouseUp = string.Empty"
-							        @onclick="() => _employeeDetailedDto = new EmployeeDetailedDto { Role = role }" @onclick:stopPropagation>
-								@role
-							</button>
-						</div>
-
-						@if ((index + 1) % 2 == 0)
-						{
-							<div class="w-100"></div>
-						}
-					}
-				</div>
-
-				<p class="employee-role-description">@GetRoleDescription(_roleMouseUp)</p>
-			</div>
+			<EmployeeCreateCard />
 		}
 		else
 		{
-			<div class="h-100 d-flex flex-column justify-content-center" style="padding: 1.5rem;">
-				<input type="text" class="employee-search-field" style="background: transparent; font-size: 1.5rem;" @bind="@_employeeDetailedDto.Name" placeholder="Как зовут сотрудника?">
-				
-				<div class="h-100 d-flex flex-column justify-content-between" style="margin-top: 2.5rem;">
-					<div class="d-flex flex-column">
-						<div class="d-flex flex-row w-100">
-							<p class="w-100 align-self-end m-0">Роль</p>
-							<select class="w-100" @bind="@_employeeDetailedDto.Role">
-								@foreach (var item in RoleType.ToCollection())
-								{
-									<option value="@item">@item</option>
-								}
-							</select>
-						</div>
-						<div class="d-flex flex-row w-100" style="margin-top: 1rem;">
-							<p class="w-100 align-self-end m-0">Имя пользователя</p>
-							<input type="text" class="employee-search-field" style="background: transparent; font-size: 1.25rem;" @bind="@_employeeDetailedDto.Login" placeholder="Укажите логин">
-						</div>
-						<div class="d-flex flex-row w-100" style="margin-top: 1rem;">
-							<p class="w-100 align-self-end m-0"></p>
-							<a class="w-100 employee-list-item">Сменить пароль...</a>
-						</div>
-					</div>
-					<div class="d-flex flex-column">
-						<button class="employee-role-btn" style="width: 30%;">
-							Сохранить
-						</button>
-					</div>
-				</div>
-			</div>
+			<EmployeeEditCard EmployeeId="_selectedEmployeeId" />
 		}
 	</div>
 </div>

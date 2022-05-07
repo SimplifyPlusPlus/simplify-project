@@ -1,7 +1,9 @@
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Simplify.Project.API.Contracts;
+using Simplify.Project.API.Contracts.Employee;
 using Simplify.Project.API.Repositories;
+using Simplify.Project.Model;
 
 namespace Simplify.Project.API.Controllers;
 
@@ -43,14 +45,50 @@ public class EmployeeController : ControllerBase
 	/// </summary>
 	/// <param name="id">Идентификатор</param>
 	/// <returns>Детальная информация по сотруднику</returns>
-	[HttpGet("{id:Guid}/detailed")]
+	[HttpGet]
+	[Route("{id:Guid}/detailed")]
 	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EmployeeDetailedDto))]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 	public IActionResult GetEmployeeDetailed(Guid id)
 	{
 		var employee = _repository.GetEmployee(id);
-		return employee == null ? NotFound() : Ok(employee.Adapt<EmployeeDetailedDto>());
+		return employee == null 
+			? NotFound(nameof(EmployeeDetailedDto)) 
+			: Ok(employee.Adapt<EmployeeDetailedDto>());
+	}
+
+	/// <summary>
+	/// Добавить нового пользователя
+	/// </summary>
+	/// <param name="employeeCreateDto">Данные по сотруднику</param>
+	/// <returns>Созданный сотрудник</returns>
+	[HttpPost]
+	[Route("add")]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EmployeeDetailedDto))]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+	public IActionResult AddNewEmployee([FromBody] EmployeeCreateDto? employeeCreateDto)
+	{
+		if (employeeCreateDto == null)
+			return BadRequest();
+		
+		var employee = new Employee
+		{
+			Id = Guid.NewGuid(),
+			Created = DateTime.Now,
+			Lastname = employeeCreateDto.Lastname,
+			Firstname = employeeCreateDto.Firstname,
+			Patronymic = employeeCreateDto.Patronymic,
+			IsBlocked = false,
+			Role = employeeCreateDto.Role,
+			Login = employeeCreateDto.Login,
+			Password = employeeCreateDto.Password,
+			Note = employeeCreateDto.Note,
+		};
+		_repository.AddEmployee(employee);
+		return Ok(employee.Adapt<EmployeeDetailedDto>());
 	}
     
 	/// <summary>

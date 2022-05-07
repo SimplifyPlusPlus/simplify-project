@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Simplify.Project.API.Contracts;
+using Simplify.Project.API.Contracts.Employee;
 using Simplify.Project.Front.Helpers;
 using Simplify.Project.Shared;
 
@@ -7,13 +8,14 @@ namespace Simplify.Project.Front.Shared;
 
 public partial class Employees
 {
-	private List<EmployeeBaseDto> _employees = new();
-	private EmployeeDetailedDto? _employeeDetailedDto;
-	private string _roleMouseUp = string.Empty;
-	private string _filterPattern = string.Empty;
+	[Inject] private HttpClient? HttpClient { get; set; }
 
-	[Inject] 
-	private HttpClient HttpClient { get; set; }
+	private List<EmployeeBaseDto> _employees = new();
+	private EmployeeCreateCard? _employeeCreateCard;
+	private EmployeeEditCard? _employeeEditCard;
+
+	private Guid _selectedEmployeeId = Guid.Empty;
+	private string _filterPattern = string.Empty;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -22,8 +24,15 @@ public partial class Employees
 		await base.OnInitializedAsync();
 	}
 
+	public void ResetView()
+	{
+		_employeeCreateCard?.ResetView();
+		_selectedEmployeeId = Guid.Empty;
+	}
+
 	private async Task<List<EmployeeBaseDto>> GetEmployeesFromServer()
 	{
+		ArgumentNullException.ThrowIfNull(HttpClient);
 		return await HttpClientHelper.GetJsonFromServer<List<EmployeeBaseDto>>(
 			HttpClient,
 			"api/employee/base-information",
@@ -32,6 +41,7 @@ public partial class Employees
 
 	private async Task<EmployeeDetailedDto> GetEmployeesDetailedInfoFromServer(EmployeeBaseDto employee)
 	{
+		ArgumentNullException.ThrowIfNull(HttpClient);
 		return await HttpClientHelper.GetJsonFromServer<EmployeeDetailedDto>(
 			       HttpClient,
 			       $"api/employee/{employee.Id}/detailed",
@@ -39,29 +49,10 @@ public partial class Employees
 		       new EmployeeDetailedDto();
 	}
 
-	private void EmployeeSaveOnClick()
+	private void SelectEmployee(Guid employeeId)
 	{
-		if (_employeeDetailedDto?.Id != Guid.Empty)
-		{
-			return;
-		}
-	}
-	
-	private async Task SelectEmployee(EmployeeBaseDto employee)
-	{
-		_employeeDetailedDto = await GetEmployeesDetailedInfoFromServer(employee);
+		_selectedEmployeeId = employeeId;
+		_employeeCreateCard?.ResetView();
 		StateHasChanged();
-	}
-
-	private static string GetRoleDescription(string role)
-	{
-		return role switch
-		{
-			RoleType.Administrator => "",
-			RoleType.Manager => "",
-			RoleType.Editor => "",
-			RoleType.Dispatcher => "Диспетчер имеет доступ к заявкам пользователей и может отвечать на них. Также диспетчер может посылать уведомления.",
-			_ => string.Empty,
-		};
 	}
 }

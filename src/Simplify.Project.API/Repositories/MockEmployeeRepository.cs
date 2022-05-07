@@ -31,6 +31,11 @@ public class MockEmployeeRepository : IEmployeeRepository
 		return employee;
 	}
 
+	public void AddEmployee(Employee employee)
+	{
+		_employees.Add(employee);
+	}
+
 	private static List<Employee> GenerateData()
 	{
 		return new List<Employee>
