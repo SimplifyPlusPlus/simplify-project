@@ -101,6 +101,51 @@ public static class HttpClientHelper
 			WriteException(e, endpoint);
 		}
 	}
+	
+	/// <summary>
+	/// Отправить данные на частичное изменение на http-сервер
+	/// </summary>
+	/// <param name="httpClient">http-клиент</param>
+	/// <param name="endpoint">эндпоинт</param>
+	/// <param name="body">Тело запроса</param>
+	/// <param name="errorMessage">Сообщение об ошибке</param>
+	public static async Task PatchJsonToServer(HttpClient httpClient, string endpoint, object? body, string errorMessage)
+	{
+		var task = new Task(() => Console.Error.WriteLine(errorMessage));
+		await PatchJsonToServer(httpClient, endpoint, body, task);
+	}
+        
+	/// <summary>
+	/// Отправить данные на частичное изменение на http-сервер
+	/// </summary>
+	/// <param name="httpClient">http-клиент</param>
+	/// <param name="endpoint">эндпоинт</param>
+	/// <param name="body">Тело запроса</param>
+	/// <param name="errorAction">Действие при возникновении ошибки</param>
+	public static async Task PatchJsonToServer(HttpClient httpClient, string endpoint, object? body, Task errorAction)
+	{
+		ArgumentNullException.ThrowIfNull(httpClient);
+		ArgumentNullException.ThrowIfNull(endpoint);
+
+		try
+		{
+			var httpContent = new StringContent(body == null ? string.Empty : JsonSerializer.Serialize(body));
+			httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+			var response = await httpClient.PatchAsync(endpoint, httpContent);
+			response.EnsureSuccessStatusCode();
+
+			if (response.StatusCode is HttpStatusCode.NoContent) return;
+                
+			errorAction.Start();
+			await errorAction;
+		}
+		catch (Exception e)
+		{
+			errorAction.Start();
+			await  errorAction;
+			WriteException(e, endpoint);
+		}
+	}
 
 	private static void WriteException(Exception e, string endpoint)
 	{

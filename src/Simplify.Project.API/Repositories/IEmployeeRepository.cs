@@ -22,4 +22,6 @@ public interface IEmployeeRepository
 	public Employee? GetEmployee(Guid id);
 
 	public void AddEmployee(Employee employee);
+
+	public void UpdateEmployee(Guid id, Employee newEmployee);
 }

@@ -9,10 +9,7 @@ public partial class EmployeeCreateCard
 {
 	[Inject] 
 	private HttpClient? HttpClient { get; set; }
-	
-	[Inject]
-	private NavigationManager? NavigationManager { get; set; }
-	
+
 	[CascadingParameter]
 	public Employees? EmployeesBase { get; set; }
 	
@@ -48,7 +45,6 @@ public partial class EmployeeCreateCard
 
 	private async Task EmployeeAddOnClick()
 	{
-		ArgumentNullException.ThrowIfNull(NavigationManager);
 		await SendEmployeesCreateDataToServer(_employeeCreateDto);
 		ResetView();
 		if (EmployeesBase != null)

@@ -36,6 +36,13 @@ public class MockEmployeeRepository : IEmployeeRepository
 		_employees.Add(employee);
 	}
 
+	public void UpdateEmployee(Guid id, Employee newEmployee)
+	{
+		var employee = _employees.Single(employee => employee.Id ==  id);
+		_employees.Remove(employee);
+		_employees.Add(newEmployee);
+	}
+
 	private static List<Employee> GenerateData()
 	{
 		return new List<Employee>

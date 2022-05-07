@@ -65,9 +65,8 @@ public class EmployeeController : ControllerBase
 	/// <returns>Созданный сотрудник</returns>
 	[HttpPost]
 	[Route("add")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EmployeeDetailedDto))]
+	[ProducesResponseType(StatusCodes.Status204NoContent)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
-	[ProducesResponseType(StatusCodes.Status404NotFound)]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 	public IActionResult AddNewEmployee([FromBody] EmployeeCreateDto? employeeCreateDto)
 	{
@@ -87,7 +86,69 @@ public class EmployeeController : ControllerBase
 			Password = employeeCreateDto.Password,
 			Note = employeeCreateDto.Note,
 		};
+		
 		_repository.AddEmployee(employee);
+		return NoContent();
+	}
+
+	/// <summary>
+	/// Получить данные пользователя для изменения
+	/// </summary>
+	/// <param name="id"></param>
+	/// <returns>Созданный сотрудник</returns>
+	[HttpGet]
+	[Route("{id:Guid}/for-edit")]
+	[ProducesResponseType(StatusCodes.Status204NoContent)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+	public IActionResult ForEditEmployee([FromRoute] Guid? id)
+	{
+		if (id == null || id == Guid.Empty)
+			return BadRequest();
+
+		var employee = _repository.GetEmployee(id.Value);
+		return employee == null 
+			? NotFound(nameof(employee)) 
+			: Ok(employee.Adapt<EmployeeEditDto>());
+	}
+	
+	/// <summary>
+	/// Частичное изменение данных пользователя
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="employeeEditDto"></param>
+	/// <returns>Созданный сотрудник</returns>
+	[HttpPatch]
+	[Route("{id:Guid}/edit")]
+	[ProducesResponseType(StatusCodes.Status204NoContent)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+	public IActionResult EditEmployee([FromRoute] Guid? id, [FromBody] EmployeeEditDto? employeeEditDto)
+	{
+		if (id == null || id == Guid.Empty || employeeEditDto == null)
+			return BadRequest();
+		
+		var oldEmployee = _repository.GetEmployee(id.Value);
+		if (oldEmployee == null)
+			return NotFound(nameof(oldEmployee));
+		
+		var employee = new Employee
+		{
+			Id = employeeEditDto.Id,
+			Created = oldEmployee.Created,
+			Lastname = employeeEditDto.Lastname,
+			Firstname = employeeEditDto.Firstname,
+			Patronymic = employeeEditDto.Patronymic,
+			IsBlocked = employeeEditDto.IsBlocked,
+			Role = employeeEditDto.Role,
+			Login = employeeEditDto.Login,
+			Password = employeeEditDto.Password,
+			Note = employeeEditDto.Note,
+		};
+		
+		_repository.UpdateEmployee(id.Value, employee);
 		return NoContent();
 	}
     
