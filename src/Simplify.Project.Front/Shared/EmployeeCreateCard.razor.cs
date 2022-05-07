@@ -10,6 +10,12 @@ public partial class EmployeeCreateCard
 	[Inject] 
 	private HttpClient? HttpClient { get; set; }
 	
+	[Inject]
+	private NavigationManager? NavigationManager { get; set; }
+	
+	[CascadingParameter]
+	public Employees? EmployeesBase { get; set; }
+	
 	private EmployeeCreateDto _employeeCreateDto = new();
 	private string _roleMouseUp = string.Empty;
 	private bool _showCreateForm = false;
@@ -38,6 +44,15 @@ public partial class EmployeeCreateCard
 		_employeeCreateDto = new EmployeeCreateDto { Role = role };
 		_roleMouseUp = string.Empty;
 		StateHasChanged();
+	}
+
+	private async Task EmployeeAddOnClick()
+	{
+		ArgumentNullException.ThrowIfNull(NavigationManager);
+		await SendEmployeesCreateDataToServer(_employeeCreateDto);
+		ResetView();
+		if (EmployeesBase != null)
+			await EmployeesBase.ResetView();
 	}
 
 	private static string GetRoleDescription(string role)

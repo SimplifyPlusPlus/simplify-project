@@ -17,17 +17,18 @@ public partial class Employees
 	private Guid _selectedEmployeeId = Guid.Empty;
 	private string _filterPattern = string.Empty;
 
+	public async Task ResetView()
+	{
+		_employees = await GetEmployeesFromServer();
+		_selectedEmployeeId = Guid.Empty;
+		StateHasChanged();
+	}
+	
 	protected override async Task OnInitializedAsync()
 	{
 		_employees = await GetEmployeesFromServer();
 
 		await base.OnInitializedAsync();
-	}
-
-	public void ResetView()
-	{
-		_employeeCreateCard?.ResetView();
-		_selectedEmployeeId = Guid.Empty;
 	}
 
 	private async Task<List<EmployeeBaseDto>> GetEmployeesFromServer()
@@ -43,10 +44,10 @@ public partial class Employees
 	{
 		ArgumentNullException.ThrowIfNull(HttpClient);
 		return await HttpClientHelper.GetJsonFromServer<EmployeeDetailedDto>(
-			       HttpClient,
-			       $"api/employee/{employee.Id}/detailed",
-			       $"Произошла ошибка при получении детальной информации о сотруднике {employee.Name}") ??
-		       new EmployeeDetailedDto();
+	       HttpClient,
+	       $"api/employee/{employee.Id}/detailed",
+	       $"Произошла ошибка при получении детальной информации о сотруднике {employee.Name}") 
+		       ?? new EmployeeDetailedDto();
 	}
 
 	private void SelectEmployee(Guid employeeId)

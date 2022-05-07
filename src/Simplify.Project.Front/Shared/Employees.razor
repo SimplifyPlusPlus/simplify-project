@@ -2,32 +2,34 @@
 @using Simplify.Project.API.Contracts
 @using Simplify.Project.API.Contracts.Employee
 
-<div class="main-frame">
-	<div class="left">
-		<input type="text" class="employee-search-field" placeholder="Имя сотрудника или роль...">
-
-		@foreach (var group in _employees.GroupBy(employee => employee.Role))
-		{
-			<p class="employee-list-title">@(group.Count() == 1 ? group.Key : $"{group.Key}ы")</p>
-			<ul>
-				@foreach (var employee in group)
-				{
-					<li class="employee-list-item @(_selectedEmployeeId == employee.Id ? "selected" : "")" 
-					    @onclick="() => SelectEmployee(employee.Id)">
-						@employee.Name
-					</li>
-				}
-			</ul>
-		}
+<CascadingValue TValue="Employees" Value="this">
+	<div class="main-frame">
+		<div class="left">
+			<input type="text" class="employee-search-field" placeholder="Имя сотрудника или роль...">
+    
+			@foreach (var group in _employees.GroupBy(employee => employee.Role))
+			{
+				<p class="employee-list-title">@(group.Count() == 1 ? group.Key : $"{group.Key}ы")</p>
+				<ul>
+					@foreach (var employee in group)
+					{
+						<li class="employee-list-item @(_selectedEmployeeId == employee.Id ? "selected" : "")" 
+						    @onclick="() => SelectEmployee(employee.Id)">
+							@employee.Name
+						</li>
+					}
+				</ul>
+			}
+		</div>
+		<div class="right">
+			@if (_selectedEmployeeId == Guid.Empty)
+			{
+				<EmployeeCreateCard />
+			}
+			else
+			{
+				<EmployeeEditCard EmployeeId="_selectedEmployeeId" />
+			}
+		</div>
 	</div>
-	<div class="right">
-		@if (_selectedEmployeeId == Guid.Empty)
-		{
-			<EmployeeCreateCard />
-		}
-		else
-		{
-			<EmployeeEditCard EmployeeId="_selectedEmployeeId" />
-		}
-	</div>
-</div>
+</CascadingValue>

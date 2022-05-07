@@ -175,6 +175,7 @@ main {
 .employee-search-field {
   width: 100%;
   height: 1.5rem;
+  font-size: 1.25rem;
   outline: 0;
   border: 0;
   border-bottom: 1px solid var(--gray);
@@ -267,9 +268,8 @@ main {
   margin-right: 0.5rem;
 }
 
-.employee-create-name-item input {
+.employee-create-name-item {
   background: transparent;
-  font-size: 1.25rem;
 }
 
 .employee-create-other {

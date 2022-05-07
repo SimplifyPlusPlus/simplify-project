@@ -88,7 +88,7 @@ public class EmployeeController : ControllerBase
 			Note = employeeCreateDto.Note,
 		};
 		_repository.AddEmployee(employee);
-		return Ok(employee.Adapt<EmployeeDetailedDto>());
+		return NoContent();
 	}
     
 	/// <summary>
