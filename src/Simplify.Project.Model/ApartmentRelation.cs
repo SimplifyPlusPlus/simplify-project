@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Simplify.Project.Model.Handbooks;
 using Simplify.Project.Model.Utils;
 using System.ComponentModel.DataAnnotations.Schema;
+using Simplify.Project.Shared;
 
 namespace Simplify.Project.Model;
 

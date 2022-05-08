@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Simplify.Project.API.Contracts;
+namespace Simplify.Project.API.Contracts.Employee;
 
 /// <summary>
 /// Детальная информация по сотруднику
@@ -14,7 +14,7 @@ public class EmployeeDetailedDto : EmployeeBaseDto
 	public string Login { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Заметка
+	/// Примечание
 	/// </summary>
 	public string? Note { get; set; }
 }

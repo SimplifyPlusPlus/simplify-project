@@ -2,4 +2,19 @@
 
 <PageTitle>Домашняя страница</PageTitle>
 
-<h2>Домашняя страница</h2>
+<div style="flex-direction: column;">
+	<div class="nav">
+		@foreach (var item in NavItem.ToEnumerable())
+		{
+			<a href="#@item" class="nav-item @(item != _selectedNavItem ? "" : "selected")" @onclick="() => _selectedNavItem = item">
+				@item
+			</a>
+		}
+	</div>
+	<div class="focus-territory">
+		@if (_selectedNavItem == NavItem.Employees)
+		{
+			<Employees></Employees>
+		}
+	</div>
+</div>

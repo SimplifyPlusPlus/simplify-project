@@ -24,6 +24,6 @@ public class Apartment : Entity, ISearchable
 	/// </summary>
 	public virtual ICollection<ApartmentRelation> ApartmentRelations { get; set; } = new List<ApartmentRelation>();
 
-	///<inheritdoc/>
+	///<inheritdoc cref="ISearchable.Score(string)"/>
 	public double Score(string searchValue) => JaroWinklerDistance.Proximity($"{Entrance.House.Street} {Entrance.House.Number} {Entrance.House.Building} {Number}", searchValue);
 }

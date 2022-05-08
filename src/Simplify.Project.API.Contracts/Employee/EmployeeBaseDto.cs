@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Simplify.Project.API.Contracts;
+namespace Simplify.Project.API.Contracts.Employee;
 
 /// <summary>
 /// Базовая информация по сотруднику
@@ -26,7 +26,7 @@ public class EmployeeBaseDto
 	public string Role { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Флаг блокировки
+	/// Признак блокировки пользователя
 	/// </summary>
 	[Required]
 	public bool IsBlocked { get; set; }

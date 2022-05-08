@@ -8,5 +8,6 @@ public interface ISearchable
 	/// <summary>
 	/// Значение от 0 до 1, показывающее точность совпадения, 1 - полное, 0 - нет совпадения
 	/// </summary>
+	/// <param name="searchValue">Исследуемая строка</param>
 	double Score(string searchValue);
 }

@@ -1,12 +1,18 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Simplify.Project.Model.Utils;
+namespace Simplify.Project.API.Contracts.Employee;
 
 /// <summary>
-/// Базовый класс пользователя системы
+/// Модель данных для создания сотрудника
 /// </summary>
-public abstract class UserBase : Entity, ISearchable
+public class EmployeeCreateDto
 {
+	/// <summary>
+	/// Идентификатор
+	/// </summary>
+	[Required]
+	public Guid Id { get; set; }
+
 	/// <summary>
 	/// Фамилия
 	/// </summary>
@@ -23,24 +29,27 @@ public abstract class UserBase : Entity, ISearchable
 	/// Отчество
 	/// </summary>
 	public string? Patronymic { get; set; }
-    
+
 	/// <summary>
-	/// Дата добавления клиента
+	/// Роль в системе
 	/// </summary>
 	[Required]
-	public DateTime Created { get; set; }
-    
+	public string Role { get; set; } = string.Empty;
+	
 	/// <summary>
-	/// Признак блокировки пользователя
+	/// Логин
 	/// </summary>
 	[Required]
-	public bool IsBlocked { get; set; }
-    
+	public string Login { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Пароль 
+	/// </summary>
+	[Required]
+	public string Password { get; set; } = string.Empty;
+	
 	/// <summary>
 	/// Примечание
 	/// </summary>
 	public string? Note { get; set; }
-
-	///<inheritdoc cref="ISearchable.Score(string)"/>
-	public double Score(string searchValue) => JaroWinklerDistance.Proximity(Lastname + Firstname + Patronymic + Note, searchValue);
 }

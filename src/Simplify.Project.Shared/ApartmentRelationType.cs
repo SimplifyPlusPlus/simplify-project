@@ -1,4 +1,4 @@
-namespace Simplify.Project.Model.Handbooks;
+namespace Simplify.Project.Shared;
 
 /// <summary>
 /// Тип связи клиента с квартирой

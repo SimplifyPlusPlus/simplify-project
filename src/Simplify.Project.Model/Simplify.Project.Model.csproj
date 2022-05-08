@@ -5,4 +5,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Simplify.Project.Shared\Simplify.Project.Shared.csproj" />
+	</ItemGroup>
 </Project>
