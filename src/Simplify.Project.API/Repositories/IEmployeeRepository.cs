@@ -31,6 +31,6 @@ public interface IEmployeeRepository
 	/// Обновить данные сотрудника по идентификатору
 	/// </summary>
 	/// <param name="id">Идентификатор сотрудника</param>
-	/// <param name="newEmployee">Измененные данные сотрудника</param>
-	public void UpdateEmployee(Guid id, Employee newEmployee);
+	/// <param name="updatedEmployee">Измененные данные сотрудника</param>
+	public void UpdateEmployee(Guid id, Employee updatedEmployee);
 }

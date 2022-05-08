@@ -17,10 +17,4 @@
 		<ProjectReference Include="..\Simplify.Project.API.Contracts\Simplify.Project.API.Contracts.csproj" />
 		<ProjectReference Include="..\Simplify.Project.Shared\Simplify.Project.Shared.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<_ContentIncludedByDefault Remove="wwwroot\sample-data\weather.json" />
-		<_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css" />
-		<_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css.map" />
-	</ItemGroup>
 </Project>

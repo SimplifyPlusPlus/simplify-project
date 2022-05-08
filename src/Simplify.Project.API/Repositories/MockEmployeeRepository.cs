@@ -38,11 +38,11 @@ public class MockEmployeeRepository : IEmployeeRepository
 	}
 
 	/// <inheritdoc cref="IEmployeeRepository.UpdateEmployee(Guid, Employee)"/>
-	public void UpdateEmployee(Guid id, Employee newEmployee)
+	public void UpdateEmployee(Guid id, Employee updatedEmployee)
 	{
 		var employee = _employees.Single(employee => employee.Id ==  id);
 		_employees.Remove(employee);
-		_employees.Add(newEmployee);
+		_employees.Add(updatedEmployee);
 	}
 
 	private static List<Employee> GenerateData()

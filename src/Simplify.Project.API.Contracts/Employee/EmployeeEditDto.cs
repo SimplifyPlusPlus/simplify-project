@@ -8,7 +8,7 @@ namespace Simplify.Project.API.Contracts.Employee;
 public class EmployeeEditDto : EmployeeCreateDto
 {
 	/// <summary>
-	/// Флаг блокировки
+	/// Признак блокировки пользователя
 	/// </summary>
 	[Required]
 	public bool IsBlocked { get; set; }

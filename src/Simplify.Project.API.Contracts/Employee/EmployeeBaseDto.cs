@@ -26,7 +26,7 @@ public class EmployeeBaseDto
 	public string Role { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Флаг блокировки
+	/// Признак блокировки пользователя
 	/// </summary>
 	[Required]
 	public bool IsBlocked { get; set; }
