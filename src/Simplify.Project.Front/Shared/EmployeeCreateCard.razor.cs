@@ -17,6 +17,9 @@ public partial class EmployeeCreateCard
 	private string _roleMouseUp = string.Empty;
 	private bool _showCreateForm = false;
 
+	/// <summary>
+	/// Сброс представления
+	/// </summary>
 	public void ResetView()
 	{
 		_showCreateForm = false;

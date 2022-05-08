@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Components;
-
 namespace Simplify.Project.Front.Pages;
 
 public partial class Index

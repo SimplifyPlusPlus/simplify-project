@@ -14,7 +14,7 @@ public class EmployeeDetailedDto : EmployeeBaseDto
 	public string Login { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Заметка
+	/// Примечание
 	/// </summary>
 	public string? Note { get; set; }
 }

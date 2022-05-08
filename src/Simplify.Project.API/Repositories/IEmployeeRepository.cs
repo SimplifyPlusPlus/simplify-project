@@ -21,7 +21,16 @@ public interface IEmployeeRepository
 	/// <returns>Сотрудник</returns>
 	public Employee? GetEmployee(Guid id);
 
+	/// <summary>
+	/// Добавить сотрудника
+	/// </summary>
+	/// <param name="employee">Данные сотрудника</param>
 	public void AddEmployee(Employee employee);
 
+	/// <summary>
+	/// Обновить данные сотрудника по идентификатору
+	/// </summary>
+	/// <param name="id">Идентификатор сотрудника</param>
+	/// <param name="newEmployee">Измененные данные сотрудника</param>
 	public void UpdateEmployee(Guid id, Employee newEmployee);
 }

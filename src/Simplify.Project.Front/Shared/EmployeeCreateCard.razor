@@ -6,7 +6,7 @@
 		<div class="employee-roles-body">
 			<p class="employee-roles-title">Новый сотрудник</p>
 			<div class="employee-roles-grid">
-				@foreach (var (role, index) in RoleType.ToCollection().Select((name, index) => (name, index)))
+				@foreach (var role in RoleType.ToCollection())
 				{
 					<button class="simplify-btn" style="margin-bottom: 1rem;" @onmouseover="() => _roleMouseUp = role" @onmouseout="() => _roleMouseUp = string.Empty"
 					        @onclick="() => NewEmployeeRolePicked(role)">

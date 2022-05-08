@@ -49,7 +49,7 @@ public class EmployeeCreateDto
 	public string Password { get; set; } = string.Empty;
 	
 	/// <summary>
-	/// Заметка
+	/// Примечание
 	/// </summary>
 	public string? Note { get; set; }
 }

@@ -23,6 +23,9 @@ public partial class EmployeeEditCard
 		await base.OnParametersSetAsync();
 	}
 
+	/// <summary>
+	/// Сброс представления
+	/// </summary>
 	public void ResetView()
 	{
 		_employeeEditDto = new EmployeeEditDto();

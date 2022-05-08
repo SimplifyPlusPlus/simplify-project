@@ -18,6 +18,9 @@ public partial class Employees
 	private Guid _selectedEmployeeId = Guid.Empty;
 	private string _filterPattern = string.Empty;
 
+	/// <summary>
+	/// Сброс представления
+	/// </summary>
 	public async Task ResetView()
 	{
 		_employees = await GetEmployeesFromServer();

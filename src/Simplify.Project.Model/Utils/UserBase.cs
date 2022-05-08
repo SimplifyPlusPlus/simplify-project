@@ -41,6 +41,6 @@ public abstract class UserBase : Entity, ISearchable
 	/// </summary>
 	public string? Note { get; set; }
 
-	///<inheritdoc/>
-	public double Score(string searchValue) => JaroWinklerDistance.Proximity(Lastname + Firstname + Patronymic, searchValue);
+	///<inheritdoc cref="ISearchable.Score(string)"/>
+	public double Score(string searchValue) => JaroWinklerDistance.Proximity(Lastname + Firstname + Patronymic + Note, searchValue);
 }

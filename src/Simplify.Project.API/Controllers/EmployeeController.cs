@@ -1,6 +1,5 @@
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
-using Simplify.Project.API.Contracts;
 using Simplify.Project.API.Contracts.Employee;
 using Simplify.Project.API.Repositories;
 using Simplify.Project.Model;
@@ -43,7 +42,7 @@ public class EmployeeController : ControllerBase
 	/// <summary>
 	/// Получить детальную информацию по сотруднику по идентификатору 
 	/// </summary>
-	/// <param name="id">Идентификатор</param>
+	/// <param name="id">Идентификатор сотрудника</param>
 	/// <returns>Детальная информация по сотруднику</returns>
 	[HttpGet]
 	[Route("{id:Guid}/detailed")]
@@ -62,7 +61,6 @@ public class EmployeeController : ControllerBase
 	/// Добавить нового пользователя
 	/// </summary>
 	/// <param name="employeeCreateDto">Данные по сотруднику</param>
-	/// <returns>Созданный сотрудник</returns>
 	[HttpPost]
 	[Route("add")]
 	[ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -94,11 +92,11 @@ public class EmployeeController : ControllerBase
 	/// <summary>
 	/// Получить данные пользователя для изменения
 	/// </summary>
-	/// <param name="id"></param>
-	/// <returns>Созданный сотрудник</returns>
+	/// <param name="id">Идентификатор сотрудника</param>
+	/// <returns>Данные сотрудника</returns>
 	[HttpGet]
 	[Route("{id:Guid}/for-edit")]
-	[ProducesResponseType(StatusCodes.Status204NoContent)]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EmployeeEditDto))]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -116,9 +114,8 @@ public class EmployeeController : ControllerBase
 	/// <summary>
 	/// Частичное изменение данных пользователя
 	/// </summary>
-	/// <param name="id"></param>
-	/// <param name="employeeEditDto"></param>
-	/// <returns>Созданный сотрудник</returns>
+	/// <param name="id">Идентификатор сотрудника</param>
+	/// <param name="employeeEditDto">Измененные данные сотрудника</param>
 	[HttpPatch]
 	[Route("{id:Guid}/edit")]
 	[ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -156,7 +153,8 @@ public class EmployeeController : ControllerBase
 	/// Получить базовую информацию по сотрудникам системы
 	/// </summary>
 	/// <returns>Базовая информация по всем сотрудникам</returns>
-	[HttpGet("base-information")]
+	[HttpGet]
+	[Route("base-information")]
 	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmployeeBaseDto>))]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 	public IActionResult GetEmployeesBaseInformation()

@@ -31,11 +31,13 @@ public class MockEmployeeRepository : IEmployeeRepository
 		return employee;
 	}
 
+	/// <inheritdoc cref="IEmployeeRepository.AddEmployee(Employee)"/>
 	public void AddEmployee(Employee employee)
 	{
 		_employees.Add(employee);
 	}
 
+	/// <inheritdoc cref="IEmployeeRepository.UpdateEmployee(Guid, Employee)"/>
 	public void UpdateEmployee(Guid id, Employee newEmployee)
 	{
 		var employee = _employees.Single(employee => employee.Id ==  id);
