@@ -8,7 +8,8 @@ namespace Simplify.Project.Front.Shared;
 
 public partial class Employees
 {
-	[Inject] private HttpClient? HttpClient { get; set; }
+	[Inject] 
+	private HttpClient? HttpClient { get; set; }
 
 	private List<EmployeeBaseDto> _employees = new();
 	private EmployeeCreateCard? _employeeCreateCard;
@@ -27,7 +28,6 @@ public partial class Employees
 	protected override async Task OnInitializedAsync()
 	{
 		_employees = await GetEmployeesFromServer();
-
 		await base.OnInitializedAsync();
 	}
 
@@ -52,8 +52,9 @@ public partial class Employees
 
 	private void SelectEmployee(Guid employeeId)
 	{
-		_selectedEmployeeId = employeeId;
 		_employeeCreateCard?.ResetView();
+		_employeeEditCard?.ResetView();
+		_selectedEmployeeId = employeeId;
 		StateHasChanged();
 	}
 }

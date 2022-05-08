@@ -17,12 +17,19 @@ public partial class EmployeeEditCard
 	
 	private EmployeeEditDto _employeeEditDto = new();
 
-	protected override async Task OnInitializedAsync()
+	protected override async Task OnParametersSetAsync()
 	{
 		_employeeEditDto = await GetEmployeeForEditDataFromServer();
-		await base.OnInitializedAsync();
+		await base.OnParametersSetAsync();
 	}
 
+	public void ResetView()
+	{
+		_employeeEditDto = new EmployeeEditDto();
+		EmployeeId = null;
+		StateHasChanged();
+	}
+	
 	private async Task<EmployeeEditDto> GetEmployeeForEditDataFromServer()
 	{
 		ArgumentNullException.ThrowIfNull(EmployeeId);
@@ -50,11 +57,5 @@ public partial class EmployeeEditCard
 		ResetView();
 		if (EmployeesBase != null)
 			await EmployeesBase.ResetView();
-	}
-	
-	private void ResetView()
-	{
-		_employeeEditDto = new EmployeeEditDto();
-		StateHasChanged();
 	}
 }

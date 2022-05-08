@@ -38,15 +38,14 @@
 					<input type="text" class="employee-search-field" @bind="@_employeeEditDto.Password">
 				</div>
 				<div class="employee-create-personal-item" style="margin-top: 1rem;">
+					<p class="employee-create-personal-item-title">Примечание</p>
+					<input type="text" class="employee-search-field" @bind="@_employeeEditDto.Note">
+				</div>
+				<div class="employee-create-personal-item" style="margin-top: 1rem;">
 					<p class="employee-create-personal-item-title"></p>
-					@if (_employeeEditDto.IsBlocked)
-					{
-						<a class="employee-list-item" style="width: 100%;">Разблокировать</a>
-					}
-					else
-					{
-						<a class="employee-list-item" style="width: 100%;">Заблокировать</a>
-					}
+					<a class="employee-list-item" style="width: 100%;" @onclick="() => _employeeEditDto.IsBlocked = !_employeeEditDto.IsBlocked">
+						@(_employeeEditDto.IsBlocked ? "Разблокировать" : "Заблокировать")
+					</a>
 				</div>
 			</div>
 			<div class="employee-create-other-item">

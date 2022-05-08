@@ -57,6 +57,10 @@ else
 						<p class="employee-create-personal-item-title">Пароль</p>
 						<input type="text" class="employee-search-field" @bind="@_employeeCreateDto.Password">
 					</div>
+					<div class="employee-create-personal-item" style="margin-top: 1rem;">
+						<p class="employee-create-personal-item-title">Примечание</p>
+						<input type="text" class="employee-search-field" @bind="@_employeeCreateDto.Note">
+					</div>
 				</div>
 				<div class="employee-create-other-item">
 					<button class="simplify-btn" style="width: 30%;" @onclick="async () => await EmployeeAddOnClick()">
