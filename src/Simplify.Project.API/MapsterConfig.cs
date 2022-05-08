@@ -35,7 +35,30 @@ internal class MapsterConfig
 			.Map(dest => dest.IsBlocked, src => src.IsBlocked)
 			.Map(dest => dest.Note, src => src.Note);
 		
+		TypeAdapterConfig<EmployeeCreateDto, Employee>.NewConfig()
+			.Map(dest => dest.Id, src => Guid.NewGuid())
+			.Map(dest => dest.Lastname, src => src.Lastname)
+			.Map(dest => dest.Firstname, src => src.Firstname)
+			.Map(dest => dest.Patronymic, src => src.Patronymic)
+			.Map(dest => dest.Created, src => DateTime.Now)
+			.Map(dest => dest.Role, src => src.Role)
+			.Map(dest => dest.Login, src => src.Login)
+			.Map(dest => dest.Password, src => src.Password)
+			.Map(dest => dest.Note, src => src.Note)
+			.Map(dest => dest.IsBlocked, src => false);
+		
 		TypeAdapterConfig<Employee, EmployeeEditDto>.NewConfig()
+			.Map(dest => dest.Id, src => src.Id)
+			.Map(dest => dest.Lastname, src => src.Lastname)
+			.Map(dest => dest.Firstname, src => src.Firstname)
+			.Map(dest => dest.Patronymic, src => src.Patronymic)
+			.Map(dest => dest.Role, src => src.Role)
+			.Map(dest => dest.Login, src => src.Login)
+			.Map(dest => dest.Password, src => src.Password)
+			.Map(dest => dest.Note, src => src.Note)
+			.Map(dest => dest.IsBlocked, src => src.IsBlocked);
+		
+		TypeAdapterConfig<EmployeeEditDto, Employee>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Lastname, src => src.Lastname)
 			.Map(dest => dest.Firstname, src => src.Firstname)

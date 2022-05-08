@@ -43,16 +43,6 @@ public partial class Employees
 			"Произошла ошибка при получении данных о сотрудниках") ?? new List<EmployeeBaseDto>();
 	}
 
-	private async Task<EmployeeDetailedDto> GetEmployeesDetailedInfoFromServer(EmployeeBaseDto employee)
-	{
-		ArgumentNullException.ThrowIfNull(HttpClient);
-		return await HttpClientHelper.GetJsonFromServer<EmployeeDetailedDto>(
-	       HttpClient,
-	       $"api/employee/{employee.Id}/detailed",
-	       $"Произошла ошибка при получении детальной информации о сотруднике {employee.Name}") 
-		       ?? new EmployeeDetailedDto();
-	}
-
 	private void SelectEmployee(Guid employeeId)
 	{
 		_employeeCreateCard?.ResetView();

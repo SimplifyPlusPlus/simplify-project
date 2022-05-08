@@ -58,7 +58,7 @@ public class EmployeeController : ControllerBase
 	}
 
 	/// <summary>
-	/// Добавить нового пользователя
+	/// Добавить нового сотрудника
 	/// </summary>
 	/// <param name="employeeCreateDto">Данные по сотруднику</param>
 	[HttpPost]
@@ -70,22 +70,10 @@ public class EmployeeController : ControllerBase
 	{
 		if (employeeCreateDto == null)
 			return BadRequest();
-		
-		var employee = new Employee
-		{
-			Id = Guid.NewGuid(),
-			Created = DateTime.Now,
-			Lastname = employeeCreateDto.Lastname,
-			Firstname = employeeCreateDto.Firstname,
-			Patronymic = employeeCreateDto.Patronymic,
-			IsBlocked = false,
-			Role = employeeCreateDto.Role,
-			Login = employeeCreateDto.Login,
-			Password = employeeCreateDto.Password,
-			Note = employeeCreateDto.Note,
-		};
-		
+
+		var employee = employeeCreateDto.Adapt<Employee>();
 		_repository.AddEmployee(employee);
+		
 		return NoContent();
 	}
 
@@ -112,7 +100,7 @@ public class EmployeeController : ControllerBase
 	}
 	
 	/// <summary>
-	/// Частичное изменение данных пользователя
+	/// Частичное изменение данных сотрудника
 	/// </summary>
 	/// <param name="id">Идентификатор сотрудника</param>
 	/// <param name="employeeEditDto">Измененные данные сотрудника</param>
@@ -130,22 +118,11 @@ public class EmployeeController : ControllerBase
 		var oldEmployee = _repository.GetEmployee(id.Value);
 		if (oldEmployee == null)
 			return NotFound(nameof(oldEmployee));
-		
-		var employee = new Employee
-		{
-			Id = employeeEditDto.Id,
-			Created = oldEmployee.Created,
-			Lastname = employeeEditDto.Lastname,
-			Firstname = employeeEditDto.Firstname,
-			Patronymic = employeeEditDto.Patronymic,
-			IsBlocked = employeeEditDto.IsBlocked,
-			Role = employeeEditDto.Role,
-			Login = employeeEditDto.Login,
-			Password = employeeEditDto.Password,
-			Note = employeeEditDto.Note,
-		};
-		
+
+		var employee = employeeEditDto.Adapt<Employee>();
+		employee.Created = oldEmployee.Created;
 		_repository.UpdateEmployee(id.Value, employee);
+		
 		return NoContent();
 	}
     
