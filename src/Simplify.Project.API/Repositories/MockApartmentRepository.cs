@@ -18,9 +18,9 @@ public class MockApartmentRepository : IApartmentRepository
 	}
 	
 	/// <inheritdoc cref="IApartmentRepository.GetApartments()"/>
-	public IEnumerable<Apartment> GetApartments()
+	public IQueryable<Apartment> GetApartments()
 	{
-		return _apartments;
+		return _apartments.AsQueryable();
 	}
 
 	/// <inheritdoc cref="IApartmentRepository.GetApartment(Guid)"/>

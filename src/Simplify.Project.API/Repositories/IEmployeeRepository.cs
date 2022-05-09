@@ -12,7 +12,7 @@ public interface IEmployeeRepository
 	/// Получить список сотрудников
 	/// </summary>
 	/// <returns>Список сотрудников</returns>
-	public IEnumerable<Employee> GetEmployees();
+	public IQueryable<Employee> GetEmployees();
        
 	/// <summary>
 	/// Получить сотрудника по идентификатору

@@ -11,7 +11,7 @@ public interface IApartmentRelationRepository
 	/// Получить все отношения
 	/// </summary>
 	/// <returns>Список отношений</returns>
-	public IEnumerable<ApartmentRelation> GetRelations();
+	public IQueryable<ApartmentRelation> GetRelations();
        
 	/// <summary>
 	/// Получить отношение по идентификатору
@@ -25,5 +25,5 @@ public interface IApartmentRelationRepository
 	/// </summary>
 	/// <param name="id">Идентификатор квартиры</param>
 	/// <returns>Список отношений с квартирой</returns>
-	public IEnumerable<ApartmentRelation> GetApartmentRelations(Guid id);
+	public IQueryable<ApartmentRelation> GetApartmentRelations(Guid id);
 }

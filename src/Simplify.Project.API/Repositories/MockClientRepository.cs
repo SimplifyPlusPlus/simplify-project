@@ -18,9 +18,9 @@ public class MockClientRepository : IClientRepository
 	}
     
 	/// <inheritdoc cref="IClientRepository.GetClients()"/>
-	public IEnumerable<Client> GetClients()
+	public IQueryable<Client> GetClients()
 	{
-		return _clients;
+		return _clients.AsQueryable();
 	}
     
 	/// <inheritdoc cref="IClientRepository.GetClient(Guid)"/>

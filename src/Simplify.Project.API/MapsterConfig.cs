@@ -107,14 +107,9 @@ internal class MapsterConfig
 			.Map(dest => dest.Name, src => $"{src.Lastname} {src.Firstname} {src.Patronymic}".Trim())
 			.Map(dest => dest.Type, src => src.GetType().Name);
 
-		TypeAdapterConfig<Employee, SearchResultDto>.NewConfig()
-			.Map(dest => dest.Id, src => src.Id)
-			.Map(dest => dest.Name, src => $"{src.Lastname} {src.Firstname} {src.Patronymic}".Trim())
-			.Map(dest => dest.Type, src => src.GetType().Name);
-
 		TypeAdapterConfig<Apartment, SearchResultDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
-			.Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number} {src.Entrance.House.Building}".Trim() + $"{ src.Number}")
+			.Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number} {src.Entrance.House.Building}".Trim() + $"{src.Number}")
 			.Map(dest => dest.Type, src => src.GetType().Name);
 	}
 }

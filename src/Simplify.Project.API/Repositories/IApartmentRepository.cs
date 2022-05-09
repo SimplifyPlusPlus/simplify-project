@@ -11,7 +11,7 @@ public interface IApartmentRepository
 	/// Получить все квартиры
 	/// </summary>
 	/// <returns>Список квартир</returns>
-	public IEnumerable<Apartment> GetApartments();
+	public IQueryable<Apartment> GetApartments();
        
 	/// <summary>
 	/// Получить квартиру по идентификатору

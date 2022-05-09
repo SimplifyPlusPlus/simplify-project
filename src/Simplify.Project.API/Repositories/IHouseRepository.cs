@@ -11,7 +11,7 @@ public interface IHouseRepository
 	/// Получить все дома
 	/// </summary>
 	/// <returns>Список домов</returns>
-	public IEnumerable<House> GetHouses();
+	public IQueryable<House> GetHouses();
        
 	/// <summary>
 	/// Получить дом по идентификатору

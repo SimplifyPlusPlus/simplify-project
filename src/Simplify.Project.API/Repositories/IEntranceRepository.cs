@@ -11,7 +11,7 @@ public interface IEntranceRepository
 	/// Получить все подъезды
 	/// </summary>
 	/// <returns>Список подъездов</returns>
-	public IEnumerable<Entrance> GetEntrances();
+	public IQueryable<Entrance> GetEntrances();
        
 	/// <summary>
 	/// Получить подъезд по идентификатору
