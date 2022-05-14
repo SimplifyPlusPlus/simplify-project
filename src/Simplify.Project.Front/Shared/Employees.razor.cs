@@ -34,6 +34,12 @@ public partial class Employees
 		await base.OnInitializedAsync();
 	}
 
+	private bool EmployeeVerifyFilterPattern(EmployeeBaseDto employeeBaseDto)
+	{
+		var employee = (employeeBaseDto.Name + employeeBaseDto.Role).ToLower();
+		return employee.Contains(_filterPattern.ToLower());
+	}
+
 	private async Task<List<EmployeeBaseDto>> GetEmployeesFromServer()
 	{
 		ArgumentNullException.ThrowIfNull(HttpClient);
