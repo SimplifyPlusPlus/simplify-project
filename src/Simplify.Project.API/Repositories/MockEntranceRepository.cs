@@ -18,9 +18,9 @@ public class MockEntranceRepository : IEntranceRepository
 	}
 
 	/// <inheritdoc cref="IEntranceRepository.GetEntrances()"/>
-	public IEnumerable<Entrance> GetEntrances()
+	public IQueryable<Entrance> GetEntrances()
 	{
-		return _entrances;
+		return _entrances.AsQueryable();
 	}
 
 	/// <inheritdoc cref="IEntranceRepository.GetEntrance(Guid)"/>

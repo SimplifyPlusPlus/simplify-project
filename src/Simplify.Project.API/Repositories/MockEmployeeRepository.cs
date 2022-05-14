@@ -19,9 +19,9 @@ public class MockEmployeeRepository : IEmployeeRepository
 	}
     
 	/// <inheritdoc cref="IEmployeeRepository.GetEmployees()"/>
-	public IEnumerable<Employee> GetEmployees()
+	public IQueryable<Employee> GetEmployees()
 	{
-		return _employees;
+		return _employees.AsQueryable();
 	}
     
 	/// <inheritdoc cref="IEmployeeRepository.GetEmployee(Guid)"/>

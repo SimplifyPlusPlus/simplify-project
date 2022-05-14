@@ -11,7 +11,7 @@ public interface IEstateRepository
 	/// Получить все комплексы
 	/// </summary>
 	/// <returns>Список комплексов</returns>
-	public IEnumerable<Estate> GetEstates();
+	public IQueryable<Estate> GetEstates();
        
 	/// <summary>
 	/// Получить комплекс по идентификатору

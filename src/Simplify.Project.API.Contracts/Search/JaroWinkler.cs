@@ -1,4 +1,4 @@
-namespace Simplify.Project.Model.Utils;
+namespace Simplify.Project.API.Contracts.Search;
 
 /// <summary>
 /// Инструментарий для алгоритма Джаро-Винклера

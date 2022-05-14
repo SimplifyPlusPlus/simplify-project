@@ -19,9 +19,9 @@ public class MockApartmentRelationRepository : IApartmentRelationRepository
 	}
 	
 	/// <inheritdoc cref="IApartmentRelationRepository.GetRelations()"/>
-	public IEnumerable<ApartmentRelation> GetRelations()
+	public IQueryable<ApartmentRelation> GetRelations()
 	{
-		return _apartmentRelations;
+		return _apartmentRelations.AsQueryable();
 	}
 
 	/// <inheritdoc cref="IApartmentRelationRepository.GetRelation(Guid)"/>
@@ -32,10 +32,10 @@ public class MockApartmentRelationRepository : IApartmentRelationRepository
 	}
 
 	/// <inheritdoc cref="IApartmentRelationRepository.GetApartmentRelations(Guid)"/>
-	public IEnumerable<ApartmentRelation> GetApartmentRelations(Guid id)
+	public IQueryable<ApartmentRelation> GetApartmentRelations(Guid id)
 	{
 		var relations = _apartmentRelations.Where(relation => relation.Apartment.Id == id);
-		return relations;
+		return relations.AsQueryable();
 	}
 
 	private static List<ApartmentRelation> GenerateData()

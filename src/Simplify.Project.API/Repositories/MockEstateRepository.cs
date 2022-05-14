@@ -18,9 +18,9 @@ public class MockEstateRepository : IEstateRepository
 	}
 	
 	/// <inheritdoc cref="IEstateRepository.GetEstates()"/>
-	public IEnumerable<Estate> GetEstates()
+	public IQueryable<Estate> GetEstates()
 	{
-		return _estates;
+		return _estates.AsQueryable();
 	}
 
 	/// <inheritdoc cref="IEstateRepository.GetEstate(Guid)"/>

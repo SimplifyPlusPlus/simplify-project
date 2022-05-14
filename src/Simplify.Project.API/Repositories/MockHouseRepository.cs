@@ -18,9 +18,9 @@ public class MockHouseRepository : IHouseRepository
 	}
 	
 	/// <inheritdoc cref="IHouseRepository.GetHouses()"/>
-	public IEnumerable<House> GetHouses()
+	public IQueryable<House> GetHouses()
 	{
-		return _houses;
+		return _houses.AsQueryable();
 	}
 
 	/// <inheritdoc cref="IHouseRepository.GetHouse(Guid)"/>

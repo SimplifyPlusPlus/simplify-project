@@ -14,7 +14,11 @@
 	<div class="focus-territory">
 		@if (_selectedNavItem == NavItem.Employees)
 		{
-			<Employees></Employees>
-		}
-	</div>
+            <Employees />
+        }
+        else if (_selectedNavItem == NavItem.Handbook)
+        {
+	        <Handbook />
+        }
+    </div>
 </div>

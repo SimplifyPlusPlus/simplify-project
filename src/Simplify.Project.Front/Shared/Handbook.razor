@@ -1,0 +1,55 @@
+@using Simplify.Project.Shared
+<style>
+	.handbook-header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	
+	.handbook-filters {
+		display: flex;
+		flex-direction: row;
+		margin-left: 2rem;
+	}
+	
+	.handbook-filters-item {
+		color: var(--accent);
+		border: 1px solid var(--accent);
+		padding: 2px 18px;
+        cursor: pointer;
+		text-decoration: none;
+	}
+	
+	.handbook-filters-item:first-child {
+		border-right: none;
+	}
+	
+	.handbook-filters-item:last-child {
+		border-left: none;
+	}
+	
+	.handbook-filters-item.selected {
+		background-color: var(--accent);
+		color: white;
+		text-decoration: none;
+	}
+</style>
+
+<div class="handbook-header">
+	<input type="text" class="employee-search-field" placeholder="Поиск по справочнику" @oninput="_onInputDebounced!">
+	<div class="handbook-filters">
+		<div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchTypes.Houses) ? "selected" : "")" 
+		     @onclick="() => FiltersItemOnClick(HandbookSearchTypes.Houses)">Дома</div>
+		<div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchTypes.Apartments) ? "selected" : "")" 
+		     @onclick="() => FiltersItemOnClick(HandbookSearchTypes.Apartments)">Квартиры</div>
+		<div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchTypes.Clients) ? "selected" : "")" 
+		     @onclick="() => FiltersItemOnClick(HandbookSearchTypes.Clients)">Клиенты</div>
+	</div>
+</div>
+
+@foreach (var item in SearchResults.OrderBy(dto => dto.Name))
+{
+    <div>
+        <p>@item.Name @GetComfortableTypeName(item.Type)</p>
+    </div>
+}

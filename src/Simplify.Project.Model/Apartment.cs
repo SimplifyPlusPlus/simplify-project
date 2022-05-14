@@ -6,7 +6,7 @@ namespace Simplify.Project.Model;
 /// <summary>
 /// Квартира
 /// </summary>
-public class Apartment : Entity, ISearchable
+public class Apartment : Entity
 {
 	/// <summary>
 	/// Номер
@@ -23,7 +23,4 @@ public class Apartment : Entity, ISearchable
 	/// Отношения
 	/// </summary>
 	public virtual ICollection<ApartmentRelation> ApartmentRelations { get; set; } = new List<ApartmentRelation>();
-
-	///<inheritdoc cref="ISearchable.Score(string)"/>
-	public double Score(string searchValue) => JaroWinklerDistance.Proximity($"{Entrance.House.Street} {Entrance.House.Number} {Entrance.House.Building} {Number}", searchValue);
 }
