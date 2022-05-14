@@ -2,12 +2,13 @@ using Mapster;
 using Simplify.Project.Model;
 using Simplify.Project.API.Contracts;
 using Simplify.Project.API.Contracts.Employee;
+using Simplify.Project.Shared;
 
 namespace Simplify.Project.API;
 
-internal class MapsterConfig
+internal static class MapsterConfig
 {
-	static public void Config()
+	public static void Config()
 	{
 		TypeAdapterConfig<Client, ClientBaseDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
@@ -96,20 +97,19 @@ internal class MapsterConfig
 			.Map(dest => dest.Apartment, src => src.Apartment)
 			.Map(dest => dest.RelationType, src => src.RelationType);
 
-
 		TypeAdapterConfig<House, SearchResultDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Name, src => $"{src.Street} {src.Number} {src.Building}".Trim())
-			.Map(dest => dest.Type, src => src.GetType().Name);
+			.Map(dest => dest.Type, src => HandbookSearchTypes.Houses);
 
 		TypeAdapterConfig<Client, SearchResultDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Name, src => $"{src.Lastname} {src.Firstname} {src.Patronymic}".Trim())
-			.Map(dest => dest.Type, src => src.GetType().Name);
+			.Map(dest => dest.Type, src => HandbookSearchTypes.Clients);
 
 		TypeAdapterConfig<Apartment, SearchResultDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number} {src.Entrance.House.Building}".Trim() + $"{src.Number}")
-			.Map(dest => dest.Type, src => src.GetType().Name);
+			.Map(dest => dest.Type, src => HandbookSearchTypes.Apartments);
 	}
 }
