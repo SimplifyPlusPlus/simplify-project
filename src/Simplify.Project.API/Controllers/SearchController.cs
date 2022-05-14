@@ -2,6 +2,7 @@ using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Simplify.Project.API.Contracts;
+using Simplify.Project.API.Contracts.Search;
 using Simplify.Project.API.Repositories;
 using Simplify.Project.Shared;
 
@@ -14,7 +15,7 @@ namespace Simplify.Project.API.Controllers;
 [Route("search")]
 public class SearchController : ControllerBase
 {
-	private const double MinimalSearchScore = 0.1;
+	private const double MinimalSearchScore = 0.6;
 	private readonly IClientRepository _clientRepository;
 	private readonly IApartmentRepository _apartmentRepository;
 	private readonly IHouseRepository _houseRepository;

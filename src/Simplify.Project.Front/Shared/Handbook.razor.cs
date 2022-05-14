@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Simplify.Project.API.Contracts;
+using Simplify.Project.API.Contracts.Search;
 using Simplify.Project.Front.Helpers;
 using Simplify.Project.Shared;
 

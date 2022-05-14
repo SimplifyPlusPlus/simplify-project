@@ -1,6 +1,6 @@
 using Simplify.Project.Shared;
 
-namespace Simplify.Project.API.Contracts;
+namespace Simplify.Project.API.Contracts.Search;
 
 /// <summary>
 /// Результат поиска

@@ -2,6 +2,7 @@ using Mapster;
 using Simplify.Project.Model;
 using Simplify.Project.API.Contracts;
 using Simplify.Project.API.Contracts.Employee;
+using Simplify.Project.API.Contracts.Search;
 using Simplify.Project.Shared;
 
 namespace Simplify.Project.API;
