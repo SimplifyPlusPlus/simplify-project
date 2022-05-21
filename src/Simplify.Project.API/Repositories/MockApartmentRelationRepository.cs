@@ -38,6 +38,12 @@ public class MockApartmentRelationRepository : IApartmentRelationRepository
 		return relations.AsQueryable();
 	}
 
+	public IQueryable<ApartmentRelation> GetClientApartmentsRelations(Guid id)
+	{
+		var relations = _apartmentRelations.Where(relation => relation.Client.Id == id);
+		return relations.AsQueryable();
+	}
+
 	private static List<ApartmentRelation> GenerateData()
 	{
 		return new List<ApartmentRelation>

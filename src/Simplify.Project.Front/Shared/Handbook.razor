@@ -1,5 +1,10 @@
 @using Simplify.Project.Shared
+
 <style>
+	.handbook {
+		padding: 1rem 2rem;
+	}
+
 	.handbook-header {
 		display: flex;
 		flex-direction: row;
@@ -35,21 +40,71 @@
 	}
 </style>
 
-<div class="handbook-header">
-	<input type="text" class="employee-search-field" placeholder="Поиск по справочнику" @oninput="_onInputDebounced!">
-	<div class="handbook-filters">
-		<div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchTypes.Houses) ? "selected" : "")" 
-		     @onclick="() => FiltersItemOnClick(HandbookSearchTypes.Houses)">Дома</div>
-		<div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchTypes.Apartments) ? "selected" : "")" 
-		     @onclick="() => FiltersItemOnClick(HandbookSearchTypes.Apartments)">Квартиры</div>
-		<div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchTypes.Clients) ? "selected" : "")" 
-		     @onclick="() => FiltersItemOnClick(HandbookSearchTypes.Clients)">Клиенты</div>
+<div class="handbook">
+	<div class="handbook-header">
+    	<input type="text" class="simplify-search-field" placeholder="Поиск по справочнику" @oninput="_onInputDebounced!">
+    	<div class="handbook-filters">
+    		<div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchTypes.Houses) ? "selected" : "")" 
+    		     @onclick="() => FiltersItemOnClick(HandbookSearchTypes.Houses)">Дома</div>
+    		<div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchTypes.Apartments) ? "selected" : "")" 
+    		     @onclick="() => FiltersItemOnClick(HandbookSearchTypes.Apartments)">Квартиры</div>
+    		<div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchTypes.Clients) ? "selected" : "")" 
+    		     @onclick="() => FiltersItemOnClick(HandbookSearchTypes.Clients)">Клиенты</div>
+    	</div>
+    </div>
+    
+	<div id="handbook-search-items">
+		@foreach (var item in SearchResults.OrderBy(dto => dto.Name))
+		{
+			<p id="@item.Id" class="simplify-list-item" @onclick="args => SelectHandbookItem(item)">
+				@item.Name @GetComfortableTypeName(item.Type)
+			</p>
+		}
 	</div>
 </div>
 
-@foreach (var item in SearchResults.OrderBy(dto => dto.Name))
-{
-    <div>
-        <p>@item.Name @GetComfortableTypeName(item.Type)</p>
-    </div>
-}
+<DetailsCard @ref="_clientDetailsCard">
+	<Body>
+		<div class="user-name">
+			<div class="user-name-item">
+				<label for="employeeLastname">Фамилия</label>
+				<input id="employeeLastname" type="text" class="simplify-search-field" @bind="@_clientEditDto.Lastname" />
+			</div>
+			<div class="user-name-item">
+				<label for="employeeFirstname">Имя</label>
+				<input id="employeeFirstname" type="text" class="simplify-search-field" @bind="@_clientEditDto.Firstname" />
+			</div>
+			<div class="user-name-item">
+				<label for="employeePatronymic">Отчество</label>
+				<input id="employeePatronymic" type="text" class="simplify-search-field" @bind="@_clientEditDto.Patronymic" />
+			</div>
+		</div>
+		<div class="simplify-card-body">
+			<div class="simplify-form-control">
+				<label>Номер телефона</label>
+				<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientEditDto.Phone">
+			</div>
+			<div class="simplify-form-control">
+				<label>E-mail</label>
+				<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientEditDto.Email">
+			</div>
+			<div class="simplify-form-control">
+				<label>Примечание</label>
+				<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientEditDto.Note">
+			</div>
+			<div class="simplify-form-control">
+				<label></label>
+				<a class="simplify-list-item" style="width: 100%;" @onclick="() => _clientEditDto.IsBlocked = !_clientEditDto.IsBlocked">
+					@(_clientEditDto.IsBlocked ? "Разблокировать" : "Заблокировать")
+				</a>
+			</div>
+		</div>
+		<div class="simplify-card-footer">
+			<div class="simplify-card-footer-item" style="justify-content: end;">
+				<button class="simplify-btn" style="width: 15%;" @onclick="async () => await ClientEditSaveOnClick()">
+					Сохранить
+				</button>
+			</div>
+		</div>
+	</Body>
+</DetailsCard>

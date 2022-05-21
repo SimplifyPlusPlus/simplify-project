@@ -30,6 +30,14 @@ public class MockClientRepository : IClientRepository
 		return client;
 	}
 
+	/// <inheritdoc cref="IClientRepository.UpdateClient(Guid, Client)"/>
+	public void UpdateClient(Guid id, Client updatedClient)
+	{
+		var client = _clients.Single(client => client.Id == id);
+		_clients.Remove(client);
+		_clients.Add(updatedClient);
+	}
+
 	private static List<Client> GenerateData()
 	{
 		return new List<Client>

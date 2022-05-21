@@ -2,53 +2,53 @@
 @using Simplify.Project.Shared
 
 <div class="employee-card">
-	<div class="employee-create-body">
-		<div class="employee-create-name">
-			<div class="employee-create-name-item">
+	<div class="simplify-card-wrapper">
+		<div class="user-name">
+			<div class="user-name-item">
 				<label for="employeeLastname">Фамилия</label>
-				<input id="employeeLastname" type="text" class="employee-search-field" @bind="@_employeeEditDto.Lastname" />
+				<input id="employeeLastname" type="text" class="simplify-search-field" @bind="@_employeeEditDto.Lastname" />
 			</div>
-			<div class="employee-create-name-item">
+			<div class="user-name-item">
 				<label for="employeeFirstname">Имя</label>
-				<input id="employeeFirstname" type="text" class="employee-search-field" @bind="@_employeeEditDto.Firstname" />
+				<input id="employeeFirstname" type="text" class="simplify-search-field" @bind="@_employeeEditDto.Firstname" />
 			</div>
-			<div class="employee-create-name-item">
+			<div class="user-name-item">
 				<label for="employeePatronymic">Отчество</label>
-				<input id="employeePatronymic" type="text" class="employee-search-field" @bind="@_employeeEditDto.Patronymic" />
+				<input id="employeePatronymic" type="text" class="simplify-search-field" @bind="@_employeeEditDto.Patronymic" />
 			</div>
 		</div>
     				
-		<div class="employee-create-other">
-			<div class="employee-create-other-item">
-				<div class="employee-create-personal-item">
-					<p class="employee-create-personal-item-title">Роль</p>
-					<select class="simplify-dropdown" @bind="@_employeeEditDto.Role">
-						@foreach (var item in RoleType.ToCollection())
-						{
-							<option value="@item">@item</option>
-						}
-					</select>
-				</div>
-				<div class="employee-create-personal-item" style="margin-top: 1rem;">
-					<p class="employee-create-personal-item-title">Имя пользователя</p>
-					<input type="text" class="employee-search-field" @bind="@_employeeEditDto.Login">
-				</div>
-				<div class="employee-create-personal-item" style="margin-top: 1rem;">
-					<p class="employee-create-personal-item-title">Пароль</p>
-					<input type="text" class="employee-search-field" @bind="@_employeeEditDto.Password">
-				</div>
-				<div class="employee-create-personal-item" style="margin-top: 1rem;">
-					<p class="employee-create-personal-item-title">Примечание</p>
-					<input type="text" class="employee-search-field" @bind="@_employeeEditDto.Note">
-				</div>
-				<div class="employee-create-personal-item" style="margin-top: 1rem;">
-					<p class="employee-create-personal-item-title"></p>
-					<a class="employee-list-item" style="width: 100%;" @onclick="() => _employeeEditDto.IsBlocked = !_employeeEditDto.IsBlocked">
-						@(_employeeEditDto.IsBlocked ? "Разблокировать" : "Заблокировать")
-					</a>
-				</div>
+		<div class="simplify-card-body">
+			<div class="simplify-form-control">
+				<label>Роль</label>
+				<select class="simplify-dropdown" @bind="@_employeeEditDto.Role">
+					@foreach (var item in RoleType.ToCollection())
+					{
+						<option value="@item">@item</option>
+					}
+				</select>
 			</div>
-			<div class="employee-create-other-item">
+			<div class="simplify-form-control">
+				<label>Имя пользователя</label>
+				<input type="text" class="simplify-search-field" @bind="@_employeeEditDto.Login">
+			</div>
+			<div class="simplify-form-control">
+				<label>Пароль</label>
+				<input type="text" class="simplify-search-field" @bind="@_employeeEditDto.Password">
+			</div>
+			<div class="simplify-form-control">
+				<label>Примечание</label>
+				<input type="text" class="simplify-search-field" @bind="@_employeeEditDto.Note">
+			</div>
+			<div class="simplify-form-control">
+				<label></label>
+				<a class="simplify-list-item" style="width: 100%;" @onclick="() => _employeeEditDto.IsBlocked = !_employeeEditDto.IsBlocked">
+					@(_employeeEditDto.IsBlocked ? "Разблокировать" : "Заблокировать")
+				</a>
+			</div>
+		</div>
+		<div class="simplify-card-footer">
+			<div class="simplify-card-footer-item" style="justify-content: end;">
 				<button class="simplify-btn" style="width: 30%;" @onclick="async () => await EmployeeEditOnClick()">
 					Сохранить
 				</button>

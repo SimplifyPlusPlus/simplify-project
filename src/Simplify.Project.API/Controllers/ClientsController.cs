@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Simplify.Project.API.Contracts;
 using Simplify.Project.API.Repositories;
-using Simplify.Project.Model;
 using Mapster;
+using Simplify.Project.API.Contracts.Client;
+using Simplify.Project.Model;
 
 namespace Simplify.Project.API.Controllers;
 
@@ -10,61 +10,86 @@ namespace Simplify.Project.API.Controllers;
 /// Контроллер для работы с клиентами
 /// </summary>
 [ApiController]
-[Route("clients")]
+[Route("api/client")]
 public class ClientsController : ControllerBase
 {
 	private readonly IClientRepository _clientRepository;
+	private readonly IApartmentRelationRepository _apartmentRelationRepository;
     
 	/// <summary>
 	/// Конструктор класса <see cref="ClientsController"/>
 	/// </summary>
 	/// <param name="repository">Репозиторий клиентов</param>
-	public ClientsController(IClientRepository repository)
+	/// <param name="apartmentRelationRepository">Репозиторий отношений клиент-квартира</param>
+	public ClientsController(IClientRepository repository, IApartmentRelationRepository apartmentRelationRepository)
 	{
 		_clientRepository = repository;
+		_apartmentRelationRepository = apartmentRelationRepository;
 	}
-    
-	/// <summary>
-	/// Получить всех клиентов системы
-	/// </summary>
-	/// <returns>Список клиентов</returns>
-	[HttpGet]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Client>))]
-	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-	public IActionResult GetClients()
-	{
-		// TODO: Client преобразовать в ClientDetailedDto
-		var clients = _clientRepository.GetClients();
-		return Ok(clients);
-	}
-    
+
 	/// <summary>
 	/// Получить клиента по идентификатору 
 	/// </summary>
 	/// <param name="id">Идентификатор</param>
-	/// <returns>Клиента</returns>
-	[HttpGet("{id:Guid}")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClientBaseDto))]
+	/// <returns>Детальная информация по клиенту</returns>
+	[HttpGet]
+	[Route("{id:Guid}/detailed")]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClientDetailedDto))]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-	public IActionResult GetClient(Guid id)
+	public IActionResult GetClientDetailed([FromRoute] Guid? id)
 	{
-		var client = _clientRepository.GetClient(id);
-		return client == null ? NotFound() : Ok(client.Adapt<ClientDetailedDto>());
+		if (id == null || id == Guid.Empty)
+			return BadRequest();
+
+		var client = _clientRepository.GetClient(id.Value);
+		return client == null ? NotFound(nameof(client)) : Ok(client.Adapt<ClientDetailedDto>());
 	}
-    
+	
 	/// <summary>
-	/// Получить базовую информацию по клиентам системы
+	/// Получить данные клиента для изменения
 	/// </summary>
-	/// <returns>Список клиентов</returns>
-	[HttpGet("/clients-base-information")]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ClientBaseDto>))]
+	/// <param name="id">Идентификатор</param>
+	/// <returns>Данные клиента</returns>
+	[HttpGet]
+	[Route("{id:Guid}/for-edit")]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClientEditDto))]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-	public IActionResult GetClientsBaseInformation()
+	public IActionResult GetClientForEdit([FromRoute] Guid? id)
 	{
-		var clients = _clientRepository
-			.GetClients()
-			.Adapt<ClientBaseDto[]>();
-		return Ok(clients);
+		if (id == null || id == Guid.Empty)
+			return BadRequest();
+		
+		var client = _clientRepository.GetClient(id.Value);
+		return client == null ? NotFound(nameof(client)) : Ok(client.Adapt<ClientEditDto>());
+	}
+
+	/// <summary>
+	/// Частичное изменение данных клиента
+	/// </summary>
+	/// <param name="id">Идентификатор</param>
+	/// <param name="clientEditDto">Измененные данные клиента</param>
+	[HttpPatch]
+	[Route("{id:Guid}/edit")]
+	[ProducesResponseType(StatusCodes.Status204NoContent)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+	public IActionResult GetClientEdit([FromRoute] Guid? id, [FromBody] ClientEditDto? clientEditDto)
+	{
+		if (id == null || id == Guid.Empty || clientEditDto == null)
+			return BadRequest();
+		
+		var oldClient = _clientRepository.GetClient(id.Value);
+		if (oldClient == null)
+			return NotFound(nameof(oldClient));
+
+		var client = clientEditDto.Adapt<Client>();
+		client.Created = oldClient.Created;
+		_clientRepository.UpdateClient(id.Value, client);
+		return NoContent();
 	}
 }

@@ -26,4 +26,11 @@ public interface IApartmentRelationRepository
 	/// <param name="id">Идентификатор квартиры</param>
 	/// <returns>Список отношений с квартирой</returns>
 	public IQueryable<ApartmentRelation> GetApartmentRelations(Guid id);
+	
+	/// <summary>
+	/// Получить все отношения с квартирами у клиента
+	/// </summary>
+	/// <param name="id">Идентификатор клиента</param>
+	/// <returns>Список отношений клиента</returns>
+	public IQueryable<ApartmentRelation> GetClientApartmentsRelations(Guid id);
 }

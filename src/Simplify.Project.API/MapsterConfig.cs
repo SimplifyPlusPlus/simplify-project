@@ -1,6 +1,7 @@
 using Mapster;
 using Simplify.Project.Model;
 using Simplify.Project.API.Contracts;
+using Simplify.Project.API.Contracts.Client;
 using Simplify.Project.API.Contracts.Employee;
 using Simplify.Project.API.Contracts.Search;
 using Simplify.Project.Shared;
@@ -18,6 +19,26 @@ internal static class MapsterConfig
 		TypeAdapterConfig<Client, ClientDetailedDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Name, src => $"{src.Lastname} {src.Firstname} {src.Patronymic}".Trim())
+			.Map(dest => dest.Email, src => src.Email)
+			.Map(dest => dest.Phone, src => src.Phone)
+			.Map(dest => dest.IsBlocked, src => src.IsBlocked)
+			.Map(dest => dest.Note, src => src.Note);
+		
+		TypeAdapterConfig<Client, ClientEditDto>.NewConfig()
+			.Map(dest => dest.Id, src => src.Id)
+			.Map(dest => dest.Lastname, src => src.Lastname)
+			.Map(dest => dest.Firstname, src => src.Firstname)
+			.Map(dest => dest.Patronymic, src => src.Patronymic)
+			.Map(dest => dest.Email, src => src.Email)
+			.Map(dest => dest.Phone, src => src.Phone)
+			.Map(dest => dest.IsBlocked, src => src.IsBlocked)
+			.Map(dest => dest.Note, src => src.Note);
+		
+		TypeAdapterConfig<ClientEditDto, Client>.NewConfig()
+			.Map(dest => dest.Id, src => src.Id)
+			.Map(dest => dest.Lastname, src => src.Lastname)
+			.Map(dest => dest.Firstname, src => src.Firstname)
+			.Map(dest => dest.Patronymic, src => src.Patronymic)
 			.Map(dest => dest.Email, src => src.Email)
 			.Map(dest => dest.Phone, src => src.Phone)
 			.Map(dest => dest.IsBlocked, src => src.IsBlocked)

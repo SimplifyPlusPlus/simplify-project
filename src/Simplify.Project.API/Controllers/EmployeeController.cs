@@ -78,7 +78,7 @@ public class EmployeeController : ControllerBase
 	}
 
 	/// <summary>
-	/// Получить данные пользователя для изменения
+	/// Получить данные сотрудника для изменения
 	/// </summary>
 	/// <param name="id">Идентификатор сотрудника</param>
 	/// <returns>Данные сотрудника</returns>

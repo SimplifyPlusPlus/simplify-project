@@ -5,7 +5,7 @@
 <CascadingValue TValue="Employees" Value="this">
 	<div class="main-frame">
 		<div class="left">
-			<input type="text" class="employee-search-field" placeholder="Имя сотрудника или роль..." 
+			<input type="text" class="simplify-search-field" placeholder="Имя сотрудника или роль..." 
 			       @oninput="args => { _filterPattern = args.Value?.ToString() ?? string.Empty; StateHasChanged(); }">
     
 			@foreach (var group in _employees.Where(EmployeeVerifyFilterPattern).GroupBy(employee => employee.Role))
@@ -14,7 +14,7 @@
 				<ul>
 					@foreach (var employee in group)
 					{
-						<li class="employee-list-item @(_selectedEmployeeId == employee.Id ? "selected" : "")" 
+						<li class="simplify-list-item @(_selectedEmployeeId == employee.Id ? "selected" : "")" 
 						    @onclick="() => SelectEmployee(employee.Id)">
 							@employee.Name
 						</li>
