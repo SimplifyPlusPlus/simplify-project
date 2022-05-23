@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Simplify.Project.API.Contracts.Apartment;
 
 namespace Simplify.Project.API.Contracts;
 

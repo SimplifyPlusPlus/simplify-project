@@ -1,6 +1,7 @@
 using Mapster;
 using Simplify.Project.Model;
 using Simplify.Project.API.Contracts;
+using Simplify.Project.API.Contracts.Apartment;
 using Simplify.Project.API.Contracts.Client;
 using Simplify.Project.API.Contracts.Employee;
 using Simplify.Project.API.Contracts.Search;
@@ -96,6 +97,16 @@ internal static class MapsterConfig
 			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Number, src => src.Number);
 
+		TypeAdapterConfig<Apartment, ApartmentEditDto>.NewConfig()
+			.Map(dest => dest.Id, src => src.Id)
+			.Map(dest => dest.Number, src => src.Number)
+			.Map(dest => dest.Name, src => $"Ахшарумова 15, кв. {src.Number}");
+			//.Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number} {src.Entrance.House.Building}".Trim() + $"{src.Number}");
+		
+		TypeAdapterConfig<ApartmentEditDto, Apartment>.NewConfig()
+			.Map(dest => dest.Id, src => src.Id)
+			.Map(dest => dest.Number, src => src.Number);
+		
 		TypeAdapterConfig<Entrance, EntranceBaseDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Number, src => src.Number)
@@ -118,11 +129,13 @@ internal static class MapsterConfig
 			.Map(dest => dest.Created, src => src.Created)
 			.Map(dest => dest.Apartment, src => src.Apartment)
 			.Map(dest => dest.RelationType, src => src.RelationType);
-
-		TypeAdapterConfig<House, SearchResultDto>.NewConfig()
+		
+		TypeAdapterConfig<ApartmentRelationDto, ApartmentRelation>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
-			.Map(dest => dest.Name, src => $"{src.Street} {src.Number} {src.Building}".Trim())
-			.Map(dest => dest.Type, src => HandbookSearchTypes.Houses);
+			.Map(dest => dest.Client, src => src.Client)
+			.Map(dest => dest.Created, src => src.Created)
+			.Map(dest => dest.Apartment, src => src.Apartment)
+			.Map(dest => dest.RelationType, src => src.RelationType);
 
 		TypeAdapterConfig<Client, SearchResultDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
@@ -131,7 +144,9 @@ internal static class MapsterConfig
 
 		TypeAdapterConfig<Apartment, SearchResultDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
-			.Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number} {src.Entrance.House.Building}".Trim() + $"{src.Number}")
+			// .Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number} {src.Entrance.House.Building}".Trim() + $"{src.Number}")
+			// TODO: Изменить, когда добавим ef
+			.Map(dest => dest.Name, src =>$"Ахшарумова 15, кв. {src.Number}")
 			.Map(dest => dest.Type, src => HandbookSearchTypes.Apartments);
 	}
 }

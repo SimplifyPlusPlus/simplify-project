@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using Simplify.Project.API.Contracts;
+using Simplify.Project.API.Contracts.Apartment;
 using Simplify.Project.API.Contracts.Client;
 using Simplify.Project.API.Contracts.Search;
 using Simplify.Project.Front.Helpers;
@@ -22,10 +23,10 @@ public partial class Handbook
 
 	protected override void OnInitialized()
 	{
-		_targetValue = $"{HandbookSearchTypes.Clients} {HandbookSearchTypes.Apartments} {HandbookSearchTypes.Houses}";
+		_targetValue = $"{HandbookSearchTypes.Clients} {HandbookSearchTypes.Apartments}";
 		_onInputDebounced = DebounceEvent<ChangeEventArgs>(e => _searchValue = e.Value?.ToString(), TimeSpan.FromMilliseconds(500));
 
-		_searchValue = "м";
+		_searchValue = "а";
 		GetSearchResults();
 
 		base.OnInitialized();
@@ -61,7 +62,6 @@ public partial class Handbook
 	{
 		return type switch
 		{
-			HandbookSearchTypes.Houses => "Дом",
 			HandbookSearchTypes.Apartments => "Квартира",
 			HandbookSearchTypes.Clients => "Клиент",
 			_ => throw new ArgumentOutOfRangeException(nameof(type), type, $"Неизвестный тип данных -> {type}")
@@ -86,9 +86,12 @@ public partial class Handbook
 	private Guid? _selectedClientId;
 	private ClientEditDto _clientEditDto = new();
 
+	private DetailsCard? _apartmentDetailsCard;
+	private Guid? _selectApartmentId;
+	private ApartmentEditDto _apartmentEditDto = new();
+
 	private async Task SelectHandbookItem(SearchResultDto searchResultDto)
 	{
-		Console.WriteLine($"Click {searchResultDto.Name}");
 		ArgumentNullException.ThrowIfNull(JsRuntime, nameof(JsRuntime));
 		var coords = await JsRuntime.InvokeAsync<Coordinates>("getElementCoordinatesById", searchResultDto.Id);
 
@@ -98,29 +101,17 @@ public partial class Handbook
 				_selectedClientId = searchResultDto.Id;
 				_clientEditDto = await GetClientEditFromServer();
 				_clientDetailsCard?.Open(coords.Y);
-				// if (_clientDetailsCard != null)
-				// {
-				// 	_clientDetailsCard.Open(coords.Y);
-				// 	_clientDetailsCard.OnClose = () =>
-				// 	{
-				// 		_selectedClientId = null;
-				// 		_clientEditDto = new ClientEditDto();
-				// 		StateHasChanged();
-				// 	};
-				// }
 				break;
 			case HandbookSearchTypes.Apartments:
+				_selectApartmentId = searchResultDto.Id;
+				_apartmentEditDto = await GetApartmentEditFromServer();
+				_apartmentDetailsCard?.Open(coords.Y);
 				break;
 			default:
 				throw new ArgumentOutOfRangeException(nameof(searchResultDto.Type));
 		}
 		
 		StateHasChanged();
-	}
-
-	private void Clear()
-	{
-		
 	}
 
 	private async Task ClientEditSaveOnClick()
@@ -137,18 +128,46 @@ public partial class Handbook
 		return await HttpClientHelper.GetJsonFromServer<ClientEditDto>(
 			HttpClient,
 			$"api/client/{_selectedClientId}/for-edit",
-			"Произошла ошибка при получении данных клиента для редактирования") ?? new ClientEditDto();
+			"Произошла ошибка при получении данных клиента для редактирования!") ?? new ClientEditDto();
 	}
 	
 	private async Task SendClientEditDataIntoServer(ClientEditDto clientEditDto)
 	{
-		ArgumentNullException.ThrowIfNull(_selectedClientId);
-		ArgumentNullException.ThrowIfNull(HttpClient);
+		ArgumentNullException.ThrowIfNull(_selectedClientId, nameof(_selectedClientId));
+		ArgumentNullException.ThrowIfNull(HttpClient, nameof(HttpClient));
 		await HttpClientHelper.PatchJsonToServer(
 			HttpClient,
 			$"api/client/{_selectedClientId}/edit",
 			clientEditDto,
 			$"Произошла ошибка при частичном изменении данных клиента!");
+	}
+	
+	private async Task ApartmentEditSaveOnClick()
+	{
+		await SendApartmenttEditDataIntoServer(_apartmentEditDto);
+		GetSearchResults();
+		StateHasChanged();
+	}
+	
+	private async Task<ApartmentEditDto> GetApartmentEditFromServer()
+	{
+		ArgumentNullException.ThrowIfNull(_selectApartmentId, nameof(_selectApartmentId));
+		ArgumentNullException.ThrowIfNull(HttpClient, nameof(HttpClient));
+		return await HttpClientHelper.GetJsonFromServer<ApartmentEditDto>(
+			HttpClient,
+			$"api/apartment/{_selectApartmentId}/for-edit",
+			"Произошла ошибка при получении данных квартиры для редактирования!") ?? new ApartmentEditDto();
+	}
+	
+	private async Task SendApartmenttEditDataIntoServer(ApartmentEditDto apartmentEditDto)
+	{
+		ArgumentNullException.ThrowIfNull(_selectApartmentId, nameof(_selectApartmentId));
+		ArgumentNullException.ThrowIfNull(HttpClient, nameof(HttpClient));
+		await HttpClientHelper.PatchJsonToServer(
+			HttpClient,
+			$"api/apartment/{_selectApartmentId}/edit",
+			apartmentEditDto,
+			$"Произошла ошибка при частичном изменении данных квартиры!");
 	}
 
 	#endregion
@@ -158,12 +177,5 @@ public partial class Handbook
 		public int X { get; set; }
 
 		public int Y { get; set; }
-	}
-
-	private class Dimension
-	{
-		public int Width { get; set; }
-
-		public int Height { get; set; }
 	}
 }

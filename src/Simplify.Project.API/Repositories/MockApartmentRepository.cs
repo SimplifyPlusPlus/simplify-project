@@ -30,6 +30,14 @@ public class MockApartmentRepository : IApartmentRepository
 		return apartment;
 	}
 
+	/// <inheritdoc cref="IApartmentRepository.UpdateApartment(Guid, Apartment)"/>
+	public void UpdateApartment(Guid id, Apartment updatedApartment)
+	{
+		var apartment = _apartments.Single(apartment => apartment.Id == id);
+		_apartments.Remove(apartment);
+		_apartments.Add(updatedApartment);
+	}
+
 	private static List<Apartment> GenerateData()
 	{
 		var apartments = new List<Apartment>();

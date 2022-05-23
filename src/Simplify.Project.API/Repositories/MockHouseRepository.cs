@@ -41,10 +41,10 @@ public class MockHouseRepository : IHouseRepository
 				Street = "Ахшарумова",
 				Entrances = new List<Entrance>
 				{
-					new Entrance {Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6") },
-					new Entrance {Id = Guid.Parse("00002f64-5717-4562-b3fc-2c963f66afa6") },
-					new Entrance {Id = Guid.Parse("00003f64-5717-4562-b3fc-2c963f66afa6") },
-					new Entrance {Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00002f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00003f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
 				},
 			},
 		};

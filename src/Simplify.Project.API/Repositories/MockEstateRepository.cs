@@ -40,7 +40,7 @@ public class MockEstateRepository : IEstateRepository
 				Name = "Центральный",
 				Houses = new List<House>
 				{
-					new House {Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6") },	
+					new() { Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6") },	
 				},
 			},
 		};

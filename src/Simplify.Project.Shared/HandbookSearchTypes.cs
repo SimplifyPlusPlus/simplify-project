@@ -14,9 +14,4 @@ public enum HandbookSearchTypes
 	/// Квартиры
 	/// </summary>
 	Apartments = 1,
-	
-	/// <summary>
-	/// Дома
-	/// </summary>
-	Houses = 2,
 }

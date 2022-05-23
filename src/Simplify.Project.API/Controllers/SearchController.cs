@@ -54,11 +54,9 @@ public class SearchController : ControllerBase
 
 		if (target?.Contains(HandbookSearchTypes.Apartments.ToString()) ?? false)
 			combinedRepositories = combinedRepositories.Concat(_apartmentRepository.GetApartments()
-				.Include(x => x.Entrance)
-				.ThenInclude(x => x.House).Adapt<SearchResultDto[]>());
-
-		if (target?.Contains(HandbookSearchTypes.Houses.ToString()) ?? false)
-			combinedRepositories = combinedRepositories.Concat(_houseRepository.GetHouses().Adapt<SearchResultDto[]>());
+				.Include(apartment => apartment.Entrance)
+				.ThenInclude(house => house.House)
+				.Adapt<SearchResultDto[]>());
 
 		var result = combinedRepositories
 			.OrderByDescending(searchItem => searchItem.Score(searchString))

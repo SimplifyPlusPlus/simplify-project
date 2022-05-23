@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Simplify.Project.API.Contracts.Client;
 
-namespace Simplify.Project.API.Contracts;
+namespace Simplify.Project.API.Contracts.Apartment;
 
 /// <summary>
 /// Объект передачи данных для отношения квартиры и пользователя

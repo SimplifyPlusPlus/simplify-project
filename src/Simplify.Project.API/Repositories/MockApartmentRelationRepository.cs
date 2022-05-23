@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Simplify.Project.Model;
 using Simplify.Project.Shared;
 
@@ -38,10 +39,23 @@ public class MockApartmentRelationRepository : IApartmentRelationRepository
 		return relations.AsQueryable();
 	}
 
+	/// <inheritdoc cref="IApartmentRelationRepository.GetClientApartmentsRelations(Guid)"/>
 	public IQueryable<ApartmentRelation> GetClientApartmentsRelations(Guid id)
 	{
 		var relations = _apartmentRelations.Where(relation => relation.Client.Id == id);
 		return relations.AsQueryable();
+	}
+
+	/// <inheritdoc cref="IApartmentRelationRepository.AddApartmentRelationsRange(IEnumerable{ApartmentRelation})"/>
+	public void AddApartmentRelationsRange(IEnumerable<ApartmentRelation> relations)
+	{
+		_apartmentRelations.AddRange(relations);
+	}
+
+	/// <inheritdoc cref="IApartmentRelationRepository.RemoveApartmentRelations(Guid)"/>
+	public void RemoveApartmentRelations(Guid id)
+	{
+		_apartmentRelations.RemoveAll(relation => relation.Apartment.Id == id);
 	}
 
 	private static List<ApartmentRelation> GenerateData()

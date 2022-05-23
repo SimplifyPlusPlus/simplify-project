@@ -44,7 +44,25 @@ public class MockClientRepository : IClientRepository
 		{
 			new()
 			{
-				Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6"), 
+				Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6"),
+				Lastname = "Селимов", 
+				Firstname = "Загидин", 
+				Patronymic = "Мурадович", 
+				Email = "", 
+				Phone = "",
+				ApartmentRelations = new List<ApartmentRelation>
+				{
+					new ApartmentRelation {Id = Guid.Parse("00007f64-5717-4562-b3fc-2c963f66afa6") },
+					new ApartmentRelation {Id = Guid.Parse("00008f64-5717-4562-b3fc-2c963f66afa6") },
+					new ApartmentRelation {Id = Guid.Parse("00009f64-5717-4562-b3fc-2c963f66afa6") },
+				},
+				Created = DateTime.Now, 
+				IsBlocked = false, 
+				Note = "Тех. Архитектор и Тимлид команды"
+			},
+			new()
+			{
+				Id = Guid.Parse("00002f64-5717-4562-b3fc-2c963f66afa6"), 
 				Lastname = "Маркелов", 
 				Firstname = "Павел", 
 				Patronymic = "Николаевич", 
@@ -62,7 +80,7 @@ public class MockClientRepository : IClientRepository
 			},
 			new()
 			{
-				Id = Guid.Parse("00002f64-5717-4562-b3fc-2c963f66afa6"),
+				Id = Guid.Parse("00003f64-5717-4562-b3fc-2c963f66afa6"),
 				Lastname = "Коколов", 
 				Firstname = "Андрей", 
 				Email = "", 
@@ -76,24 +94,6 @@ public class MockClientRepository : IClientRepository
 				Created = DateTime.Now, 
 				IsBlocked = false, 
 				Note = "Frontend и DB разработчик"
-			},
-			new()
-			{
-				Id = Guid.Parse("00003f64-5717-4562-b3fc-2c963f66afa6"),
-				Lastname = "Селимов", 
-				Firstname = "Загидин", 
-				Patronymic = "Мурадович", 
-				Email = "", 
-				Phone = "",
-				ApartmentRelations = new List<ApartmentRelation>
-				{
-					new ApartmentRelation {Id = Guid.Parse("00007f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00008f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00009f64-5717-4562-b3fc-2c963f66afa6") },
-				},
-				Created = DateTime.Now, 
-				IsBlocked = false, 
-				Note = "Тех. Архитектор и Тимлид команды"
 			},
 			new()
 			{
