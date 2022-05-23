@@ -1,6 +1,5 @@
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
-using Simplify.Project.API.Contracts;
 using Simplify.Project.API.Contracts.Apartment;
 using Simplify.Project.API.Repositories;
 using Simplify.Project.Model;

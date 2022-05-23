@@ -20,7 +20,7 @@ public class SearchResultDto
 	/// <summary>
 	/// Тип результата
 	/// </summary>
-	public HandbookSearchTypes Type { get; set; }
+	public HandbookSearchType Type { get; set; }
 
 	/// <summary>
 	/// Значение от 0 до 1, показывающее точность совпадения, 1 - полное, 0 - нет совпадения

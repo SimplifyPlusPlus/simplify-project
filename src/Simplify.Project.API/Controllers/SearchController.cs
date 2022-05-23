@@ -49,10 +49,10 @@ public class SearchController : ControllerBase
 	{
 		IEnumerable<SearchResultDto> combinedRepositories = new List<SearchResultDto>();
 		
-		if (target?.Contains(HandbookSearchTypes.Clients.ToString()) ?? false)
+		if (target?.Contains(HandbookSearchType.Clients.ToString()) ?? false)
 			combinedRepositories = combinedRepositories.Concat(_clientRepository.GetClients().Adapt<SearchResultDto[]>());
 
-		if (target?.Contains(HandbookSearchTypes.Apartments.ToString()) ?? false)
+		if (target?.Contains(HandbookSearchType.Apartments.ToString()) ?? false)
 			combinedRepositories = combinedRepositories.Concat(_apartmentRepository.GetApartments()
 				.Include(apartment => apartment.Entrance)
 				.ThenInclude(house => house.House)

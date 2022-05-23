@@ -3,7 +3,7 @@ namespace Simplify.Project.Shared;
 /// <summary>
 /// Типы словарей для поиска
 /// </summary>
-public enum HandbookSearchTypes
+public enum HandbookSearchType
 {
 	/// <summary>
 	/// Клиенты

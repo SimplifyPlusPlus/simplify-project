@@ -23,7 +23,7 @@ public partial class Handbook
 
 	protected override void OnInitialized()
 	{
-		_targetValue = $"{HandbookSearchTypes.Clients} {HandbookSearchTypes.Apartments}";
+		_targetValue = $"{HandbookSearchType.Clients} {HandbookSearchType.Apartments}";
 		_onInputDebounced = DebounceEvent<ChangeEventArgs>(e => _searchValue = e.Value?.ToString(), TimeSpan.FromMilliseconds(500));
 
 		_searchValue = "а";
@@ -44,12 +44,12 @@ public partial class Handbook
 		}, interval);
 	}
 
-	private bool FiltersItemIsSelected(HandbookSearchTypes type)
+	private bool FiltersItemIsSelected(HandbookSearchType type)
 	{
 		return _targetValue?.Contains(type.ToString()) ?? false;
 	}
 
-	private void FiltersItemOnClick(HandbookSearchTypes type)
+	private void FiltersItemOnClick(HandbookSearchType type)
 	{
 		_targetValue = _targetValue?.Contains(type.ToString()) ?? false
 			? _targetValue.Replace(type.ToString(), "").Trim()
@@ -58,12 +58,12 @@ public partial class Handbook
 		GetSearchResults();
 	}
 
-	private static string GetComfortableTypeName(HandbookSearchTypes type)
+	private static string GetComfortableTypeName(HandbookSearchType type)
 	{
 		return type switch
 		{
-			HandbookSearchTypes.Apartments => "Квартира",
-			HandbookSearchTypes.Clients => "Клиент",
+			HandbookSearchType.Apartments => "Квартира",
+			HandbookSearchType.Clients => "Клиент",
 			_ => throw new ArgumentOutOfRangeException(nameof(type), type, $"Неизвестный тип данных -> {type}")
 		};
 	}
@@ -97,12 +97,12 @@ public partial class Handbook
 
 		switch (searchResultDto.Type)
 		{
-			case HandbookSearchTypes.Clients:
+			case HandbookSearchType.Clients:
 				_selectedClientId = searchResultDto.Id;
 				_clientEditDto = await GetClientEditFromServer();
 				_clientDetailsCard?.Open(coords.Y);
 				break;
-			case HandbookSearchTypes.Apartments:
+			case HandbookSearchType.Apartments:
 				_selectApartmentId = searchResultDto.Id;
 				_apartmentEditDto = await GetApartmentEditFromServer();
 				_apartmentDetailsCard?.Open(coords.Y);

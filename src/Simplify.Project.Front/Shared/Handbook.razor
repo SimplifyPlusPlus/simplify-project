@@ -44,10 +44,10 @@
 	<div class="handbook-header">
     	<input type="text" class="simplify-search-field" placeholder="Поиск по справочнику" @oninput="_onInputDebounced!">
     	<div class="handbook-filters">
-	        <div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchTypes.Apartments) ? "selected" : "")" 
-    		     @onclick="() => FiltersItemOnClick(HandbookSearchTypes.Apartments)">Квартиры</div>
-    		<div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchTypes.Clients) ? "selected" : "")" 
-    		     @onclick="() => FiltersItemOnClick(HandbookSearchTypes.Clients)">Клиенты</div>
+	        <div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchType.Apartments) ? "selected" : "")" 
+    		     @onclick="() => FiltersItemOnClick(HandbookSearchType.Apartments)">Квартиры</div>
+    		<div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchType.Clients) ? "selected" : "")" 
+    		     @onclick="() => FiltersItemOnClick(HandbookSearchType.Clients)">Клиенты</div>
     	</div>
     </div>
     

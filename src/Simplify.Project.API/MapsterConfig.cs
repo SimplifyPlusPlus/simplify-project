@@ -140,13 +140,13 @@ internal static class MapsterConfig
 		TypeAdapterConfig<Client, SearchResultDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Name, src => $"{src.Lastname} {src.Firstname} {src.Patronymic}".Trim())
-			.Map(dest => dest.Type, src => HandbookSearchTypes.Clients);
+			.Map(dest => dest.Type, src => HandbookSearchType.Clients);
 
 		TypeAdapterConfig<Apartment, SearchResultDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
 			// .Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number} {src.Entrance.House.Building}".Trim() + $"{src.Number}")
 			// TODO: Изменить, когда добавим ef
 			.Map(dest => dest.Name, src =>$"Ахшарумова 15, кв. {src.Number}")
-			.Map(dest => dest.Type, src => HandbookSearchTypes.Apartments);
+			.Map(dest => dest.Type, src => HandbookSearchType.Apartments);
 	}
 }
