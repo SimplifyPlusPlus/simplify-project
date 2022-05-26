@@ -33,12 +33,13 @@ public class MockEntranceRepository : IEntranceRepository
 	private static List<Entrance> GenerateData()
 	{
 		var entrances = new List<Entrance>();
-		const string guidTemplate = "{0}f64-5717-4562-b3fc-2c963f66afa6";
+		const string apartmentGuidTemplate = "{0}f64-5716-4562-b3fc-2c963f66afa6";
+		const string entranceGuidTemplate = "{0}f64-5713-4562-b3fc-2c963f66afa6";
 
 		// Генерируем подъезд и добавляем в него квартиры
 		for (var i = 1; i <= 4; i++)
 		{
-			var id = string.Format(guidTemplate, $"0000{i}");
+			var id = string.Format(entranceGuidTemplate, $"0000{i}");
 			var item = new Entrance
 			{
 				Id = Guid.Parse(id),
@@ -51,9 +52,9 @@ public class MockEntranceRepository : IEntranceRepository
 			{
 				var apartmentId = j switch
 				{
-					>= 100 => string.Format(guidTemplate, $"00{j}"),
-					>= 10 => string.Format(guidTemplate, $"000{j}"),
-					_ => string.Format(guidTemplate, $"0000{j}")
+					>= 100 => string.Format(apartmentGuidTemplate, $"00{j}"),
+					>= 10 => string.Format(apartmentGuidTemplate, $"000{j}"),
+					_ => string.Format(apartmentGuidTemplate, $"0000{j}")
 				};
 
 				item.Apartments.Add(new Apartment { Id = Guid.Parse(apartmentId) });

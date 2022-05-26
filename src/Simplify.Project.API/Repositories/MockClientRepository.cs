@@ -31,11 +31,12 @@ public class MockClientRepository : IClientRepository
 	}
 
 	/// <inheritdoc cref="IClientRepository.UpdateClient(Guid, Client)"/>
-	public void UpdateClient(Guid id, Client updatedClient)
+	public Task UpdateClient(Guid id, Client updatedClient)
 	{
 		var client = _clients.Single(client => client.Id == id);
 		_clients.Remove(client);
 		_clients.Add(updatedClient);
+		return Task.CompletedTask;
 	}
 
 	private static List<Client> GenerateData()
@@ -44,7 +45,7 @@ public class MockClientRepository : IClientRepository
 		{
 			new()
 			{
-				Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6"),
+				Id = Guid.Parse("00001f64-5715-4562-b3fc-2c963f66afa6"),
 				Lastname = "Селимов", 
 				Firstname = "Загидин", 
 				Patronymic = "Мурадович", 
@@ -52,9 +53,9 @@ public class MockClientRepository : IClientRepository
 				Phone = "",
 				ApartmentRelations = new List<ApartmentRelation>
 				{
-					new ApartmentRelation {Id = Guid.Parse("00007f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00008f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00009f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00007f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00008f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00009f64-5717-4562-b3fc-2c963f66afa6") },
 				},
 				Created = DateTime.Now, 
 				IsBlocked = false, 
@@ -62,7 +63,7 @@ public class MockClientRepository : IClientRepository
 			},
 			new()
 			{
-				Id = Guid.Parse("00002f64-5717-4562-b3fc-2c963f66afa6"), 
+				Id = Guid.Parse("00002f64-5715-4562-b3fc-2c963f66afa6"), 
 				Lastname = "Маркелов", 
 				Firstname = "Павел", 
 				Patronymic = "Николаевич", 
@@ -70,9 +71,9 @@ public class MockClientRepository : IClientRepository
 				Phone = "",
 				ApartmentRelations = new List<ApartmentRelation>
 				{
-					new ApartmentRelation {Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00002f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00003f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00002f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00003f64-5717-4562-b3fc-2c963f66afa6") },
 				},
 				Created = DateTime.Now, 
 				IsBlocked = false, 
@@ -80,16 +81,16 @@ public class MockClientRepository : IClientRepository
 			},
 			new()
 			{
-				Id = Guid.Parse("00003f64-5717-4562-b3fc-2c963f66afa6"),
+				Id = Guid.Parse("00003f64-5715-4562-b3fc-2c963f66afa6"),
 				Lastname = "Коколов", 
 				Firstname = "Андрей", 
 				Email = "", 
 				Phone = "", 
 				ApartmentRelations = new List<ApartmentRelation>
 				{
-					new ApartmentRelation {Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00005f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00006f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00005f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00006f64-5717-4562-b3fc-2c963f66afa6") },
 				},
 				Created = DateTime.Now, 
 				IsBlocked = false, 
@@ -97,16 +98,16 @@ public class MockClientRepository : IClientRepository
 			},
 			new()
 			{
-				Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6"),
+				Id = Guid.Parse("00004f64-5715-4562-b3fc-2c963f66afa6"),
 				Lastname = "Ефимов", 
 				Firstname = "Алексей", 
 				Email = "", 
 				Phone = "",
 				ApartmentRelations = new List<ApartmentRelation>
 				{
-					new ApartmentRelation {Id = Guid.Parse("00010f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00011f64-5717-4562-b3fc-2c963f66afa6") },
-					new ApartmentRelation {Id = Guid.Parse("00012f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00010f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00011f64-5717-4562-b3fc-2c963f66afa6") },
+					new() { Id = Guid.Parse("00012f64-5717-4562-b3fc-2c963f66afa6") },
 				},
 				Created = DateTime.Now, 
 				IsBlocked = false, 

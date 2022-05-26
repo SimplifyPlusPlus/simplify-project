@@ -78,7 +78,7 @@ public class ClientsController : ControllerBase
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-	public IActionResult GetClientEdit([FromRoute] Guid? id, [FromBody] ClientEditDto? clientEditDto)
+	public async Task<IActionResult> GetClientEdit([FromRoute] Guid? id, [FromBody] ClientEditDto? clientEditDto)
 	{
 		if (id == null || id == Guid.Empty || clientEditDto == null)
 			return BadRequest();
@@ -89,7 +89,7 @@ public class ClientsController : ControllerBase
 
 		var client = clientEditDto.Adapt<Client>();
 		client.Created = oldClient.Created;
-		_clientRepository.UpdateClient(id.Value, client);
+		await _clientRepository.UpdateClient(id.Value, client);
 		return NoContent();
 	}
 }

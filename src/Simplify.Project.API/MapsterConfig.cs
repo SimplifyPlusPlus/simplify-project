@@ -100,13 +100,14 @@ internal static class MapsterConfig
 		TypeAdapterConfig<Apartment, ApartmentEditDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Number, src => src.Number)
-			.Map(dest => dest.Name, src => $"Ахшарумова 15, кв. {src.Number}");
-			//.Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number} {src.Entrance.House.Building}".Trim() + $"{src.Number}");
+			//.Map(dest => dest.Name, src => $"Ахшарумова 15, кв. {src.Number}");
+			.Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number} {src.Entrance.House.Building}".Trim() + $"{src.Number}")
+			.Map(dest => dest.ApartmentRelations, src => src.ApartmentRelations.Adapt<ApartmentRelationDto>());
 		
 		TypeAdapterConfig<ApartmentEditDto, Apartment>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Number, src => src.Number);
-		
+
 		TypeAdapterConfig<Entrance, EntranceBaseDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Number, src => src.Number)
@@ -144,9 +145,7 @@ internal static class MapsterConfig
 
 		TypeAdapterConfig<Apartment, SearchResultDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
-			// .Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number} {src.Entrance.House.Building}".Trim() + $"{src.Number}")
-			// TODO: Изменить, когда добавим ef
-			.Map(dest => dest.Name, src =>$"Ахшарумова 15, кв. {src.Number}")
+			.Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number} {src.Entrance.House.Building}".Trim() + $"{src.Number}")
 			.Map(dest => dest.Type, src => HandbookSearchType.Apartments);
 	}
 }

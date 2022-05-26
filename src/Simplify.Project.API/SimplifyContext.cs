@@ -1,6 +1,5 @@
 using Simplify.Project.Model;
 using Microsoft.EntityFrameworkCore;
-using Simplify.Project.Model.Utils;
 
 namespace Simplify.Project.API;
 	
@@ -45,6 +44,11 @@ public class SimplifyContext : DbContext
 	/// Коллекция домов
 	/// </summary>
 	public DbSet<House> Houses { get; set; } = null!;
+
+	/// <summary>
+	/// Коллекция событий
+	/// </summary>
+	public DbSet<Event> Events { get; set; } = null!;
 
 	#endregion
 

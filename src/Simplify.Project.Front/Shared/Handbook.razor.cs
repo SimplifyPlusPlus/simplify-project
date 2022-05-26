@@ -23,7 +23,7 @@ public partial class Handbook
 
 	protected override void OnInitialized()
 	{
-		_targetValue = $"{HandbookSearchType.Clients} {HandbookSearchType.Apartments}";
+		_targetValue = $"{HandbookSearchType.Clients}{HandbookSearchType.Apartments}";
 		_onInputDebounced = DebounceEvent<ChangeEventArgs>(e => _searchValue = e.Value?.ToString(), TimeSpan.FromMilliseconds(500));
 
 		_searchValue = "а";

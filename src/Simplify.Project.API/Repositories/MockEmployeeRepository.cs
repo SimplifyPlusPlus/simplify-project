@@ -32,17 +32,19 @@ public class MockEmployeeRepository : IEmployeeRepository
 	}
 
 	/// <inheritdoc cref="IEmployeeRepository.AddEmployee(Employee)"/>
-	public void AddEmployee(Employee employee)
+	public Task AddEmployee(Employee employee)
 	{
 		_employees.Add(employee);
+		return Task.CompletedTask;
 	}
 
 	/// <inheritdoc cref="IEmployeeRepository.UpdateEmployee(Guid, Employee)"/>
-	public void UpdateEmployee(Guid id, Employee updatedEmployee)
+	public Task UpdateEmployee(Guid id, Employee updatedEmployee)
 	{
 		var employee = _employees.Single(employee => employee.Id ==  id);
 		_employees.Remove(employee);
 		_employees.Add(updatedEmployee);
+		return Task.CompletedTask;
 	}
 
 	private static List<Employee> GenerateData()
@@ -51,7 +53,7 @@ public class MockEmployeeRepository : IEmployeeRepository
 		{
 			new()
 			{
-				Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6"), 
+				Id = Guid.Parse("00001f64-5714-4562-b3fc-2c963f66afa6"), 
 				Lastname = "Маркелов", 
 				Firstname = "Павел", 
 				Patronymic = "Николаевич",
@@ -64,7 +66,7 @@ public class MockEmployeeRepository : IEmployeeRepository
 			},
 			new()
 			{
-				Id = Guid.Parse("00002f64-5717-4562-b3fc-2c963f66afa6"),
+				Id = Guid.Parse("00002f64-5714-4562-b3fc-2c963f66afa6"),
 				Lastname = "Коколов", 
 				Firstname = "Андрей", 
 				Role = RoleType.Administrator,
@@ -76,7 +78,7 @@ public class MockEmployeeRepository : IEmployeeRepository
 			},
 			new()
 			{
-				Id = Guid.Parse("00003f64-5717-4562-b3fc-2c963f66afa6"),
+				Id = Guid.Parse("00003f64-5714-4562-b3fc-2c963f66afa6"),
 				Lastname = "Селимов", 
 				Firstname = "Загидин", 
 				Patronymic = "Мурадович", 
@@ -89,7 +91,7 @@ public class MockEmployeeRepository : IEmployeeRepository
 			},
 			new()
 			{
-				Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6"),
+				Id = Guid.Parse("00004f64-5714-4562-b3fc-2c963f66afa6"),
 				Lastname = "Ефимов", 
 				Firstname = "Алексей", 
 				Role = RoleType.Editor,

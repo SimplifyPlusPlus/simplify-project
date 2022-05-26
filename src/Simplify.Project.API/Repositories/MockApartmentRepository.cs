@@ -31,17 +31,18 @@ public class MockApartmentRepository : IApartmentRepository
 	}
 
 	/// <inheritdoc cref="IApartmentRepository.UpdateApartment(Guid, Apartment)"/>
-	public void UpdateApartment(Guid id, Apartment updatedApartment)
+	public Task UpdateApartment(Guid id, Apartment updatedApartment)
 	{
 		var apartment = _apartments.Single(apartment => apartment.Id == id);
 		_apartments.Remove(apartment);
 		_apartments.Add(updatedApartment);
+		return Task.CompletedTask;
 	}
 
 	private static List<Apartment> GenerateData()
 	{
 		var apartments = new List<Apartment>();
-		const string guidTemplate = "{0}f64-5717-4562-b3fc-2c963f66afa6";
+		const string guidTemplate = "{0}f64-5716-4562-b3fc-2c963f66afa6";
 
 		// Генерируем 400 квартир
 		for (var i = 1; i <= 400; i++)

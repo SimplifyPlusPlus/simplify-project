@@ -33,16 +33,16 @@ public interface IApartmentRelationRepository
 	/// <param name="id">Идентификатор клиента</param>
 	/// <returns>Список отношений клиента</returns>
 	public IQueryable<ApartmentRelation> GetClientApartmentsRelations(Guid id);
-	
+
 	/// <summary>
 	/// Добавить коллекцию отношений с квартирой
 	/// </summary>
 	/// <param name="relations">Коллекция отношений с квартирой</param>
-	public void AddApartmentRelationsRange(IEnumerable<ApartmentRelation> relations);
-	
+	public Task AddApartmentRelationsRange(IEnumerable<ApartmentRelation> relations);
+
 	/// <summary>
 	/// Удалить все отношения с квартирой
 	/// </summary>
 	/// <param name="id">Идентификатор квартиры</param>
-	public void RemoveApartmentRelations(Guid id);
+	public Task RemoveApartmentRelations(Guid id);
 }

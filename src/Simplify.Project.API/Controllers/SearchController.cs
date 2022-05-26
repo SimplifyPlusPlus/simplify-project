@@ -55,7 +55,7 @@ public class SearchController : ControllerBase
 		if (target?.Contains(HandbookSearchType.Apartments.ToString()) ?? false)
 			combinedRepositories = combinedRepositories.Concat(_apartmentRepository.GetApartments()
 				.Include(apartment => apartment.Entrance)
-				.ThenInclude(house => house.House)
+					.ThenInclude(house => house.House)
 				.Adapt<SearchResultDto[]>());
 
 		var result = combinedRepositories
