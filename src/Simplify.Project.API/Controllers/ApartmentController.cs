@@ -40,7 +40,7 @@ public class ApartmentController : ControllerBase
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-	public IActionResult ApartmentRelationCreate([FromBody] ApartmentRelationCreateDto? apartmentRelationCreateDto, 
+	public async Task<IActionResult> ApartmentRelationCreate([FromBody] ApartmentRelationCreateDto? apartmentRelationCreateDto, 
 		[FromServices] IClientRepository clientRepository)
 	{
 		if (apartmentRelationCreateDto == null 
@@ -64,8 +64,8 @@ public class ApartmentController : ControllerBase
 			Created = DateTime.Now,
 			RelationType = apartmentRelationCreateDto.RelationType,
 		};
-		_apartmentRelationRepository.AddApartmentRelation(relation);
-		return Ok();
+		await _apartmentRelationRepository.AddApartmentRelation(relation);
+		return NoContent();
 	}
 	
 	/// <summary>

@@ -24,22 +24,33 @@ public partial class Handbook
 	protected override async Task OnInitializedAsync()
 	{
 		_targetValue = $"{HandbookSearchType.Clients}{HandbookSearchType.Apartments}";
-		_onInputDebounced = DebounceEvent<ChangeEventArgs>(e => _searchValue = e.Value?.ToString(), TimeSpan.FromMilliseconds(500));
 
+		_onInputDebounced = DebounceEvent<ChangeEventArgs>(
+			action: (e => _searchValue = e.Value?.ToString()),
+			callback: (async () => await GetSearchResults()),
+			interval: TimeSpan.FromMilliseconds(500)
+		);
+		
+		_existClientOnInputDebounced = DebounceEvent<ChangeEventArgs>(
+			action: (e => _existClientSearchValue = e.Value?.ToString()),
+			callback: (async () => await GetExistClientSearchResults()),
+			interval: TimeSpan.FromMilliseconds(500)
+		);
+		
 		_searchValue = "а";
 		await GetSearchResults();
 
 		await base.OnInitializedAsync();
 	}
 
-	private Action<T> DebounceEvent<T>(Action<T> action, TimeSpan interval)
+	private Action<T> DebounceEvent<T>(Action<T> action, Action callback, TimeSpan interval)
 	{
 		return Debouncer.Debounce<T>(arg =>
 		{
 			InvokeAsync(async () =>
 			{
 				action(arg);
-				await GetSearchResults();
+				callback();
 			});
 		}, interval);
 	}
@@ -80,6 +91,55 @@ public partial class Handbook
 		StateHasChanged();
 	}
 
+	#region Add Exist Client to Apartment
+
+	private DetailsCard? _addExistClientCard;
+	private Guid _addExistClientButtonId = Guid.NewGuid();
+	private List<SearchResultDto> _existClientSearchResults { get; set; } = new();
+	private string? _existClientSearchValue = string.Empty;
+	private Action<ChangeEventArgs>? _existClientOnInputDebounced;
+
+	private async Task AddExistClientCardOpen()
+	{
+		ArgumentNullException.ThrowIfNull(JsRuntime, nameof(JsRuntime));
+		var coords = await JsRuntime.InvokeAsync<Coordinates>("getElementCoordinatesById", _addExistClientButtonId);
+		
+		_addExistClientCard?.Open(coords.Y, coords.X);
+	}
+	
+	private async Task SelectExistClient(SearchResultDto searchResultDto)
+	{
+		if (_selectApartmentId == null || _selectApartmentId == Guid.Empty)
+			return;
+		
+		var relationDto = new ApartmentRelationCreateDto
+		{
+			ApartmentId = _selectApartmentId.Value,
+			ClientId = searchResultDto.Id,
+			RelationType = ApartmentRelationType.Ownership,
+		};
+		
+		await SendApartmentRelationCreateIntoServer(relationDto);
+		
+		_addExistClientCard?.Close();
+		_apartmentEditDto = await GetApartmentEditFromServer();
+		StateHasChanged();
+	}
+	
+	private async Task GetExistClientSearchResults()
+	{
+		ArgumentNullException.ThrowIfNull(HttpClient);
+		_existClientSearchResults = _searchValue == string.Empty
+			? new List<SearchResultDto>()
+			: await HttpClientHelper.GetJsonFromServer<List<SearchResultDto>>(
+				HttpClient,
+				$"search?searchString={_searchValue}&target={HandbookSearchType.Clients}",
+				"Произошла ошибка при поиске клиентов") ?? new List<SearchResultDto>();
+		StateHasChanged();
+	}
+	
+	#endregion
+	
 	#region Register and Add Client to Apartment
 	
 	private DetailsCard? _registerAndAddClientCard;

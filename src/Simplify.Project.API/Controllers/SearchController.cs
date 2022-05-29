@@ -18,23 +18,16 @@ public class SearchController : ControllerBase
 	private const double MinimalSearchScore = 0.6;
 	private readonly IClientRepository _clientRepository;
 	private readonly IApartmentRepository _apartmentRepository;
-	private readonly IHouseRepository _houseRepository;
 
 	/// <summary>
 	/// Конструктор класса <see cref="SearchController"/>
 	/// </summary>
 	/// <param name="clientRepository">Репозиторий клиентов</param>
 	/// <param name="apartmentRepository">Репозиторий квартир</param>
-	/// <param name="houseRepository">Репозиторий домов</param>
-	public SearchController(
-		IClientRepository clientRepository, 
-		IApartmentRepository apartmentRepository, 
-		IHouseRepository houseRepository 
-	)
+	public SearchController(IClientRepository clientRepository, IApartmentRepository apartmentRepository)
 	{
 		_clientRepository = clientRepository;
 		_apartmentRepository = apartmentRepository;
-		_houseRepository = houseRepository;
 	}
 
 	/// <summary>

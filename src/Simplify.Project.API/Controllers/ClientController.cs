@@ -40,7 +40,7 @@ public class ClientController : ControllerBase
 
 		var client = clientCreateDto.Adapt<Client>();
 		await _clientRepository.AddClient(client);
-		return Ok();
+		return NoContent();
 	}
 	
 	/// <summary>

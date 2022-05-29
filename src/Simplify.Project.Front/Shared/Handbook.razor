@@ -121,14 +121,15 @@
 		@* ReSharper disable once SimplifyLinqExpressionUseAll *@
 		@if (!_apartmentEditDto.ApartmentRelations.Any(relation => relation.RelationType == ApartmentRelationType.Ownership))
 		{
-			<div style="display: flex; flex-direction: column; justify-content: space-between; height: 6rem;">
+			<div style="display: flex; flex-direction: column; justify-content: space-between; height: 6rem; color: white;">
 				<p>Нет владельца</p>
 				<div style="display: flex; flex-direction: row; align-items: center; justify-content: start;">
 					<p class="simplify-list-item" style="margin-right: 3rem; color: white;" 
 					   id="@_registerAndAddClientButtonId" @onclick="async () => await AddRegisterClientCardOpen()">
 						Зарегистрировать и добавить...
 					</p>
-					<p class="simplify-list-item" style="color: white;">
+					<p class="simplify-list-item" style="color: white;" 
+					   id="@_addExistClientButtonId" @onclick="async () => await AddExistClientCardOpen()">
 						Добавить из существующих...
 					</p>
 				</div>
@@ -215,7 +216,7 @@
 			<label>Примечание</label>
 			<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientEditDto.Note">
 		</div>
-	   </div>
+	</div>
 	<div class="simplify-card-footer">
 		<div class="simplify-card-footer-item" style="justify-content: end;">
 			<button class="simplify-btn" style="width: 15%;" @onclick="async () => await ApartmentRelationCreateSave()">
@@ -223,5 +224,23 @@
 			</button>
 		</div>
 	</div>
+	</Body>
+</DetailsCard>
+
+<DetailsCard @ref="_addExistClientCard">
+	<Body>
+		<div style="min-height: 64px; padding: 0.5rem 0.25rem;">
+			<div class="handbook-header">
+				<input type="text" class="simplify-search-field" placeholder="Фио пользователя..." @oninput="_existClientOnInputDebounced!">
+			</div>
+			<div id="clients-search-items">
+				@foreach (var item in _existClientSearchResults.OrderBy(dto => dto.Name))
+				{
+					<p id="@item.Id" class="simplify-list-item" @onclick="args => SelectExistClient(item)">
+						@item.Name
+					</p>
+				}
+			</div>
+		</div>
 	</Body>
 </DetailsCard>
