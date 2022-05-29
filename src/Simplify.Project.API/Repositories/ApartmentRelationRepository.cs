@@ -31,6 +31,7 @@ public class ApartmentRelationRepository : IApartmentRelationRepository
 		return _context.ApartmentRelations.Where(relation => relation.Client.Id == id).AsQueryable();
 	}
 
+	/// <inheritdoc cref="IApartmentRelationRepository.AddApartmentRelation(ApartmentRelation)"/>
 	public async Task AddApartmentRelation(ApartmentRelation relation)
 	{
 		_context.ApartmentRelations.Add(relation);
@@ -40,6 +41,13 @@ public class ApartmentRelationRepository : IApartmentRelationRepository
 	public async Task AddApartmentRelationsRange(IEnumerable<ApartmentRelation> relations)
 	{
 		_context.ApartmentRelations.AddRange(relations);
+		await _context.SaveChangesAsync();
+	}
+	
+	/// <inheritdoc cref="IApartmentRelationRepository.RemoveApartmentRelation(ApartmentRelation)"/>
+	public async Task RemoveApartmentRelation(ApartmentRelation relation)
+	{
+		_context.ApartmentRelations.Remove(relation);
 		await _context.SaveChangesAsync();
 	}
 

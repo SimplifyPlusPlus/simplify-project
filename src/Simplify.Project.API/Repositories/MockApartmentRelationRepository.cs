@@ -46,6 +46,7 @@ public class MockApartmentRelationRepository : IApartmentRelationRepository
 		return relations.AsQueryable();
 	}
 
+	/// <inheritdoc cref="IApartmentRelationRepository.AddApartmentRelation(ApartmentRelation)"/>
 	public Task AddApartmentRelation(ApartmentRelation relation)
 	{
 		_apartmentRelations.Add(relation);
@@ -56,6 +57,13 @@ public class MockApartmentRelationRepository : IApartmentRelationRepository
 	public Task AddApartmentRelationsRange(IEnumerable<ApartmentRelation> relations)
 	{
 		_apartmentRelations.AddRange(relations);
+		return Task.CompletedTask;
+	}
+
+	/// <inheritdoc cref="IApartmentRelationRepository.RemoveApartmentRelation(ApartmentRelation)"/>
+	public Task RemoveApartmentRelation(ApartmentRelation relation)
+	{
+		_apartmentRelations.Remove(relation);
 		return Task.CompletedTask;
 	}
 

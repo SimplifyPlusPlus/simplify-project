@@ -91,11 +91,29 @@ public partial class Handbook
 		StateHasChanged();
 	}
 
+	private async Task RemoveApartmentRelationWithClient(Guid relationId)
+	{
+		await RemoveApartmentRelationWithClientFromServer(relationId);
+		
+		_apartmentEditDto = await GetApartmentEditFromServer();
+		StateHasChanged();
+	}
+	
+	private async Task RemoveApartmentRelationWithClientFromServer(Guid relationId)
+	{
+		ArgumentNullException.ThrowIfNull(HttpClient, nameof(HttpClient));
+		await HttpClientHelper.PostJsonToServer(
+			HttpClient,
+			$"api/apartment/remove-relation",
+			relationId,
+			"Произошла ошибка при удалении отношения с квартирой!");
+	}
+
 	#region Add Exist Client to Apartment
 
 	private DetailsCard? _addExistClientCard;
 	private Guid _addExistClientButtonId = Guid.NewGuid();
-	private List<SearchResultDto> _existClientSearchResults { get; set; } = new();
+	private List<SearchResultDto> ExistClientSearchResults { get; set; } = new();
 	private string? _existClientSearchValue = string.Empty;
 	private Action<ChangeEventArgs>? _existClientOnInputDebounced;
 
@@ -129,7 +147,7 @@ public partial class Handbook
 	private async Task GetExistClientSearchResults()
 	{
 		ArgumentNullException.ThrowIfNull(HttpClient);
-		_existClientSearchResults = _searchValue == string.Empty
+		ExistClientSearchResults = _searchValue == string.Empty
 			? new List<SearchResultDto>()
 			: await HttpClientHelper.GetJsonFromServer<List<SearchResultDto>>(
 				HttpClient,

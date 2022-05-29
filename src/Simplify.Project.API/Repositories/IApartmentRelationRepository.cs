@@ -47,6 +47,12 @@ public interface IApartmentRelationRepository
 	public Task AddApartmentRelationsRange(IEnumerable<ApartmentRelation> relations);
 
 	/// <summary>
+	/// Удалить отношение с квартирой
+	/// </summary>
+	/// <param name="relation">Отношение с квартирой</param>
+	public Task RemoveApartmentRelation(ApartmentRelation relation);
+	
+	/// <summary>
 	/// Удалить все отношения с квартирой
 	/// </summary>
 	/// <param name="id">Идентификатор квартиры</param>

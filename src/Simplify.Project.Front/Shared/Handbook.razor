@@ -143,14 +143,16 @@
 				<p>
 					@foreach (var relation in ownerships)
 					{
-						<b>
+						<div style="display: flex; flex-direction: row; font-weight: 600;">
 							@relation.Client.Name
-							<i class="fa-solid fa-xmark"></i>
+							<div @onclick="async () => await RemoveApartmentRelationWithClient(relation.Id)" style="margin-left: 4px; cursor: pointer;">
+								<i class="fa-solid fa-xmark"></i>
+							</div>
 							@if (relation != ownerships.Last())
 							{
 								<span>, </span>
 							}
-						</b>
+						</div>
 					}
 				</p>
 			</div>
@@ -234,7 +236,7 @@
 				<input type="text" class="simplify-search-field" placeholder="Фио пользователя..." @oninput="_existClientOnInputDebounced!">
 			</div>
 			<div id="clients-search-items">
-				@foreach (var item in _existClientSearchResults.OrderBy(dto => dto.Name))
+				@foreach (var item in ExistClientSearchResults.OrderBy(dto => dto.Name))
 				{
 					<p id="@item.Id" class="simplify-list-item" @onclick="args => SelectExistClient(item)">
 						@item.Name

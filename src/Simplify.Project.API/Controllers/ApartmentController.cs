@@ -36,7 +36,7 @@ public class ApartmentController : ControllerBase
 	/// <returns>Данные квартиры</returns>
 	[HttpPost]
 	[Route("add-relation")]
-	[ProducesResponseType(StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status204NoContent)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -65,6 +65,29 @@ public class ApartmentController : ControllerBase
 			RelationType = apartmentRelationCreateDto.RelationType,
 		};
 		await _apartmentRelationRepository.AddApartmentRelation(relation);
+		return NoContent();
+	}
+
+	/// <summary>
+	/// Удалить отношение с квартирой
+	/// </summary>
+	/// <param name="relationId">Идентификатор отношения с квартирой</param>
+	[HttpPost]
+	[Route("remove-relation")]
+	[ProducesResponseType(StatusCodes.Status204NoContent)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+	public async Task<IActionResult> ApartmentRelationRemove([FromBody] Guid? relationId)
+	{
+		if (relationId == null || relationId == Guid.Empty)
+			return BadRequest();
+
+		var relation = _apartmentRelationRepository.GetRelation(relationId.Value);
+		if (relation == null)
+			return NotFound(nameof(relation));
+		
+		await _apartmentRelationRepository.RemoveApartmentRelation(relation);
 		return NoContent();
 	}
 	
