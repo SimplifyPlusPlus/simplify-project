@@ -21,6 +21,12 @@ public interface IClientRepository
 	public Client? GetClient(Guid id);
 
 	/// <summary>
+	/// Добавить клиента
+	/// </summary>
+	/// <param name="client">Новый клиент</param>
+	public Task AddClient(Client client);
+
+	/// <summary>
 	/// Обновить данные клиента по идентификатору
 	/// </summary>
 	/// <param name="id">Идентификатор клиента</param>

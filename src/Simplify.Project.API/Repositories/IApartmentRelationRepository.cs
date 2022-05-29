@@ -35,6 +35,12 @@ public interface IApartmentRelationRepository
 	public IQueryable<ApartmentRelation> GetClientApartmentsRelations(Guid id);
 
 	/// <summary>
+	/// Добавить отношение с квартирой
+	/// </summary>
+	/// <param name="relation">Отношение с квартирой</param>
+	public Task AddApartmentRelation(ApartmentRelation relation);
+	
+	/// <summary>
 	/// Добавить коллекцию отношений с квартирой
 	/// </summary>
 	/// <param name="relations">Коллекция отношений с квартирой</param>

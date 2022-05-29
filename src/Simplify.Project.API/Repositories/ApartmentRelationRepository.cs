@@ -31,6 +31,12 @@ public class ApartmentRelationRepository : IApartmentRelationRepository
 		return _context.ApartmentRelations.Where(relation => relation.Client.Id == id).AsQueryable();
 	}
 
+	public async Task AddApartmentRelation(ApartmentRelation relation)
+	{
+		_context.ApartmentRelations.Add(relation);
+		await _context.SaveChangesAsync();
+	}
+
 	public async Task AddApartmentRelationsRange(IEnumerable<ApartmentRelation> relations)
 	{
 		_context.ApartmentRelations.AddRange(relations);

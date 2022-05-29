@@ -21,25 +21,25 @@ public partial class Handbook
 
 	[Inject] private IJSRuntime? JsRuntime { get; set; }
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
 		_targetValue = $"{HandbookSearchType.Clients}{HandbookSearchType.Apartments}";
 		_onInputDebounced = DebounceEvent<ChangeEventArgs>(e => _searchValue = e.Value?.ToString(), TimeSpan.FromMilliseconds(500));
 
 		_searchValue = "а";
-		GetSearchResults();
+		await GetSearchResults();
 
-		base.OnInitialized();
+		await base.OnInitializedAsync();
 	}
 
 	private Action<T> DebounceEvent<T>(Action<T> action, TimeSpan interval)
 	{
 		return Debouncer.Debounce<T>(arg =>
 		{
-			InvokeAsync(() =>
+			InvokeAsync(async () =>
 			{
 				action(arg);
-				GetSearchResults();
+				await GetSearchResults();
 			});
 		}, interval);
 	}
@@ -49,13 +49,13 @@ public partial class Handbook
 		return _targetValue?.Contains(type.ToString()) ?? false;
 	}
 
-	private void FiltersItemOnClick(HandbookSearchType type)
+	private async Task FiltersItemOnClick(HandbookSearchType type)
 	{
 		_targetValue = _targetValue?.Contains(type.ToString()) ?? false
 			? _targetValue.Replace(type.ToString(), "").Trim()
 			: string.Concat(_targetValue, type.ToString());
 
-		GetSearchResults();
+		await GetSearchResults();
 	}
 
 	private static string GetComfortableTypeName(HandbookSearchType type)
@@ -68,7 +68,7 @@ public partial class Handbook
 		};
 	}
 
-	private async void GetSearchResults()
+	private async Task GetSearchResults()
 	{
 		ArgumentNullException.ThrowIfNull(HttpClient);
 		SearchResults = _searchValue == string.Empty || _targetValue == string.Empty
@@ -80,6 +80,61 @@ public partial class Handbook
 		StateHasChanged();
 	}
 
+	#region Register and Add Client to Apartment
+	
+	private DetailsCard? _registerAndAddClientCard;
+	private Guid _registerAndAddClientButtonId = Guid.NewGuid();
+	private ClientCreateDto _clientCreateDto = new() { Id = Guid.NewGuid() };
+
+	private async Task AddRegisterClientCardOpen()
+	{
+		ArgumentNullException.ThrowIfNull(JsRuntime, nameof(JsRuntime));
+		var coords = await JsRuntime.InvokeAsync<Coordinates>("getElementCoordinatesById", _registerAndAddClientButtonId);
+		
+		_registerAndAddClientCard?.Open(coords.Y, coords.X);
+	}
+	
+	private async Task ApartmentRelationCreateSave()
+	{
+		if (_selectApartmentId == null || _selectApartmentId == Guid.Empty)
+			return;
+		
+		await SendClientCreateIntoServer(_clientCreateDto);
+		var relationDto = new ApartmentRelationCreateDto
+		{
+			ApartmentId = _selectApartmentId.Value,
+			ClientId = _clientCreateDto.Id,
+			RelationType = ApartmentRelationType.Ownership,
+		};
+		await SendApartmentRelationCreateIntoServer(relationDto);
+		
+		_registerAndAddClientCard?.Close();
+		_apartmentEditDto = await GetApartmentEditFromServer();
+		StateHasChanged();
+	}
+	
+	private async Task SendClientCreateIntoServer(ClientCreateDto clientCreateDto)
+	{
+		ArgumentNullException.ThrowIfNull(HttpClient, nameof(HttpClient));
+		await HttpClientHelper.PostJsonToServer(
+			HttpClient,
+			$"api/client/add",
+			clientCreateDto,
+			"Произошла ошибка при добавлении клиента!");
+	}
+	
+	private async Task SendApartmentRelationCreateIntoServer(ApartmentRelationCreateDto relationCreateDto)
+	{
+		ArgumentNullException.ThrowIfNull(HttpClient, nameof(HttpClient));
+		await HttpClientHelper.PostJsonToServer(
+			HttpClient,
+			$"api/apartment/add-relation",
+			relationCreateDto,
+			"Произошла ошибка при добавлении отношения с квартирой!");
+	}
+
+	#endregion
+	
 	#region Work with Handbook item's
 
 	private DetailsCard? _clientDetailsCard;
@@ -144,7 +199,7 @@ public partial class Handbook
 	
 	private async Task ApartmentEditSaveOnClick()
 	{
-		await SendApartmenttEditDataIntoServer(_apartmentEditDto);
+		await SendApartmentEditDataIntoServer(_apartmentEditDto);
 		GetSearchResults();
 		StateHasChanged();
 	}
@@ -153,13 +208,14 @@ public partial class Handbook
 	{
 		ArgumentNullException.ThrowIfNull(_selectApartmentId, nameof(_selectApartmentId));
 		ArgumentNullException.ThrowIfNull(HttpClient, nameof(HttpClient));
-		return await HttpClientHelper.GetJsonFromServer<ApartmentEditDto>(
+		var k = await HttpClientHelper.GetJsonFromServer<ApartmentEditDto>(
 			HttpClient,
 			$"api/apartment/{_selectApartmentId}/for-edit",
 			"Произошла ошибка при получении данных квартиры для редактирования!") ?? new ApartmentEditDto();
+		return k;
 	}
 	
-	private async Task SendApartmenttEditDataIntoServer(ApartmentEditDto apartmentEditDto)
+	private async Task SendApartmentEditDataIntoServer(ApartmentEditDto apartmentEditDto)
 	{
 		ArgumentNullException.ThrowIfNull(_selectApartmentId, nameof(_selectApartmentId));
 		ArgumentNullException.ThrowIfNull(HttpClient, nameof(HttpClient));
@@ -174,8 +230,8 @@ public partial class Handbook
 
 	private class Coordinates
 	{
-		public int X { get; set; }
+		public double X { get; set; }
 
-		public int Y { get; set; }
+		public double Y { get; set; }
 	}
 }

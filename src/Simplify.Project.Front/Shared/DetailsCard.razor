@@ -5,40 +5,36 @@
 	  position: absolute;
       display: flex;
       flex-direction: column;
-    }
-    
-    .details-card-arrow-up {
-      width: 0; 
-      height: 0; 
-      margin-left: 32px;
-      border-left: 15px solid transparent;
-      border-right: 15px solid transparent;
-      border-bottom: 15px solid linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9), var(--brand));
+      box-shadow: 0px 3px 4px -2px black;
     }
     
     .details-card-body {
-      /*min-width: 400px;*/
-      /*width: 100%;*/
-      padding: 1rem 2rem !important;
-      background: linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), var(--brand);
+      padding: 1rem 3rem !important;
     }
 </style>
 
-<div id="@Id" class="details-card" style="width: inherit; display: @_display">
-	<div style="margin-left: 2rem; margin-top: 4px;">
+<div id="@Id" class="details-card" style="width: inherit; display: @_display; top: @(_positionY + 20)px;">
+	<div style="margin-left: 2rem;">
 		<Triangle Color="linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9), var(--brand))" />
 	</div>
-	<div class="details-card-body">
+	<div class="details-card-body" style="background: @(BackgroundColor ?? _backgroundColorDefault);">
 		@Body
 	</div>
 </div>
 
 @code {
 	private string _display = "none;";
+	private double _positionX = 0;
+	private double _positionY = 0;
 	
 	[Parameter, EditorRequired]
 	public RenderFragment? Body { get; set; }
 
+	[Parameter]
+	public string? BackgroundColor { get; set; }
+
+	private string _backgroundColorDefault = "linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), var(--brand)";
+	
 	private Guid Id { get; set; } = Guid.NewGuid();
 	
 	private Action? OnOpen { get; set; }
@@ -53,19 +49,21 @@
 		await base.OnAfterRenderAsync(firstRender);
 	}
 
-	public void Open(int offsetTop)
+	public void Open(double offsetTop, double offsetLeft = 0)
 	{
-		_display = $"flex; top: {offsetTop + 16}px;";
-		
+		_display = "flex";
+		_positionY = offsetTop;
+		_positionX = Convert.ToInt32(offsetLeft) / 2.0;
+
 		OnOpen?.Invoke();
 		StateHasChanged();
-		
-		Console.WriteLine("Card open");
 	}
 
 	public void Close()
 	{
 		_display = "none;";
+		_positionY = 0;
+		_positionX = 0;
 		
 		OnClose?.Invoke();
 		StateHasChanged();

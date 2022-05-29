@@ -29,6 +29,46 @@ public class ApartmentController : ControllerBase
 	}
 
 	/// <summary>
+	/// Добавить новое отношение с квартирой
+	/// </summary>
+	/// <param name="apartmentRelationCreateDto"></param>
+	/// <param name="clientRepository"></param>
+	/// <returns>Данные квартиры</returns>
+	[HttpPost]
+	[Route("add-relation")]
+	[ProducesResponseType(StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status404NotFound)]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+	public IActionResult ApartmentRelationCreate([FromBody] ApartmentRelationCreateDto? apartmentRelationCreateDto, 
+		[FromServices] IClientRepository clientRepository)
+	{
+		if (apartmentRelationCreateDto == null 
+		    || apartmentRelationCreateDto.ApartmentId == Guid.Empty 
+		    || apartmentRelationCreateDto.ClientId == Guid.Empty)
+			return BadRequest();
+
+		var apartment = _apartmentRepository.GetApartment(apartmentRelationCreateDto.ApartmentId);
+		if (apartment == null)
+			return NotFound(nameof(apartment));
+
+		var client = clientRepository.GetClient(apartmentRelationCreateDto.ClientId);
+		if (client == null)
+			return NotFound(nameof(client));
+
+		var relation = new ApartmentRelation
+		{
+			Id = Guid.NewGuid(),
+			Apartment = apartment,
+			Client = client,
+			Created = DateTime.Now,
+			RelationType = apartmentRelationCreateDto.RelationType,
+		};
+		_apartmentRelationRepository.AddApartmentRelation(relation);
+		return Ok();
+	}
+	
+	/// <summary>
 	/// Получить данные квартиры для изменения
 	/// </summary>
 	/// <param name="id">Идентификатор</param>

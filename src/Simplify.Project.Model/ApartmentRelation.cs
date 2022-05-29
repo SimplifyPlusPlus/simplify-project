@@ -20,7 +20,7 @@ public class ApartmentRelation : Entity
 	/// Тип связи
 	/// </summary>
 	[Required] 
-	public string RelationType { get; set; } = ApartmentRelationType.Empty;
+	public ApartmentRelationType RelationType { get; set; }
 	
 	/// <summary>
 	/// Дата добавления связи

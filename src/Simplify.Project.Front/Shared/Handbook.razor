@@ -107,7 +107,7 @@
 	</Body>
 </DetailsCard>
 
-<DetailsCard @ref="_apartmentDetailsCard">
+<DetailsCard @ref="_apartmentDetailsCard" BackgroundColor="var(--brand)">
 	<Body>
 	<div class="apartment-details-header">
 		<p class="apartment-details-number">
@@ -118,9 +118,109 @@
 		</p>
 	</div>
 	<div class="simplify-card-body">
+		@* ReSharper disable once SimplifyLinqExpressionUseAll *@
+		@if (!_apartmentEditDto.ApartmentRelations.Any(relation => relation.RelationType == ApartmentRelationType.Ownership))
+		{
+			<div style="display: flex; flex-direction: column; justify-content: space-between; height: 6rem;">
+				<p>Нет владельца</p>
+				<div style="display: flex; flex-direction: row; align-items: center; justify-content: start;">
+					<p class="simplify-list-item" style="margin-right: 3rem; color: white;" 
+					   id="@_registerAndAddClientButtonId" @onclick="async () => await AddRegisterClientCardOpen()">
+						Зарегистрировать и добавить...
+					</p>
+					<p class="simplify-list-item" style="color: white;">
+						Добавить из существующих...
+					</p>
+				</div>
+			</div>
+		}
+		else
+		{
+			var ownerships = _apartmentEditDto.ApartmentRelations.Where(relation => relation.RelationType == ApartmentRelationType.Ownership).ToList();
+			<div class="simplify-form-control apartment-relations">
+				<p>Владельцы</p>
+				<p>
+					@foreach (var relation in ownerships)
+					{
+						<b>
+							@relation.Client.Name
+							<i class="fa-solid fa-xmark"></i>
+							@if (relation != ownerships.Last())
+							{
+								<span>, </span>
+							}
+						</b>
+					}
+				</p>
+			</div>
+			<div class="simplify-form-control apartment-relations">
+				@if (_apartmentEditDto.ApartmentRelations.Any(relation => relation.RelationType == ApartmentRelationType.OwnershipFamily))
+				{
+					<p>Доверенные</p>
+					<p>@((MarkupString) string.Join(", ", _apartmentEditDto.ApartmentRelations.Where(relation => relation.RelationType == ApartmentRelationType.OwnershipFamily).Select(relation => $"<b>{relation.Client.Name}</b>")))</p>
+				}
+				else
+				{
+					<p>Нет доверенных</p>
+					<p>
+						<i class="fa-solid fa-plus"></i>
+					</p>
+				}
+			</div>
+			<div class="simplify-form-control apartment-relations">
+				@if (_apartmentEditDto.ApartmentRelations.Any(relation => relation.RelationType == ApartmentRelationType.Renter))
+				{
+					<p>Квартиранты</p>
+					<p>@((MarkupString) string.Join(", ", _apartmentEditDto.ApartmentRelations.Where(relation => relation.RelationType == ApartmentRelationType.Renter).Select(relation => $"<b>{relation.Client.Name}</b>")))</p>
+				}
+				else
+				{
+					<p>Нет квартирантов</p>
+					<p>
+						<i class="fa-solid fa-plus"></i>
+					</p>
+				}
+			</div>
+		}
+	</div>
+	</Body>
+</DetailsCard>
+
+<DetailsCard @ref="@_registerAndAddClientCard">
+	<Body>
+	<div class="user-name">
+		<div class="user-name-item">
+			<label for="newClientLastname">Фамилия</label>
+			<input id="newClientLastname" type="text" class="simplify-search-field" @bind="@_clientCreateDto.Lastname" />
+		</div>
+		<div class="user-name-item">
+			<label for="newClientFirstname">Имя</label>
+			<input id="newClientFirstname" type="text" class="simplify-search-field" @bind="@_clientCreateDto.Firstname" />
+		</div>
+		<div class="user-name-item">
+			<label for="newClientPatronymic">Отчество</label>
+			<input id="newClientPatronymic" type="text" class="simplify-search-field" @bind="@_clientCreateDto.Patronymic" />
+		</div>
+	</div>
+	<div class="simplify-card-body">
 		<div class="simplify-form-control">
-			<p>Владельцы</p>
-			<p>@string.Join(", ", _apartmentEditDto.ApartmentRelations.Where(relation => relation.RelationType == ApartmentRelationType.Ownership).Select(relation => $"<b>{relation.Client.Name}</b>"))</p>
+			<label>Номер телефона</label>
+			<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientCreateDto.Phone">
+		</div>
+		<div class="simplify-form-control">
+			<label>E-mail</label>
+			<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientCreateDto.Email">
+		</div>
+		<div class="simplify-form-control">
+			<label>Примечание</label>
+			<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientEditDto.Note">
+		</div>
+	   </div>
+	<div class="simplify-card-footer">
+		<div class="simplify-card-footer-item" style="justify-content: end;">
+			<button class="simplify-btn" style="width: 15%;" @onclick="async () => await ApartmentRelationCreateSave()">
+				Добавить
+			</button>
 		</div>
 	</div>
 	</Body>

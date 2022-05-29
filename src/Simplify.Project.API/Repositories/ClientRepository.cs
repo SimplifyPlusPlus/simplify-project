@@ -21,6 +21,12 @@ public class ClientRepository : IClientRepository
 		return _context.Clients.SingleOrDefault(client => client.Id == id);
 	}
 
+	public async Task AddClient(Client client)
+	{
+		_context.Clients.Add(client);
+		await _context.SaveChangesAsync();
+	}
+
 	public async Task UpdateClient(Guid id, Client updatedClient)
 	{
 		_context.Clients.Update(updatedClient);

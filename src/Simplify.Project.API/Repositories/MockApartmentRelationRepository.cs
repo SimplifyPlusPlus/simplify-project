@@ -46,6 +46,12 @@ public class MockApartmentRelationRepository : IApartmentRelationRepository
 		return relations.AsQueryable();
 	}
 
+	public Task AddApartmentRelation(ApartmentRelation relation)
+	{
+		_apartmentRelations.Add(relation);
+		return Task.CompletedTask;
+	}
+
 	/// <inheritdoc cref="IApartmentRelationRepository.AddApartmentRelationsRange(IEnumerable{ApartmentRelation})"/>
 	public Task AddApartmentRelationsRange(IEnumerable<ApartmentRelation> relations)
 	{

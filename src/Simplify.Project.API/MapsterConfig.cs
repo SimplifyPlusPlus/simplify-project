@@ -26,7 +26,6 @@ internal static class MapsterConfig
 			.Map(dest => dest.Note, src => src.Note);
 		
 		TypeAdapterConfig<Client, ClientEditDto>.NewConfig()
-			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Lastname, src => src.Lastname)
 			.Map(dest => dest.Firstname, src => src.Firstname)
 			.Map(dest => dest.Patronymic, src => src.Patronymic)
@@ -36,7 +35,6 @@ internal static class MapsterConfig
 			.Map(dest => dest.Note, src => src.Note);
 		
 		TypeAdapterConfig<ClientEditDto, Client>.NewConfig()
-			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Lastname, src => src.Lastname)
 			.Map(dest => dest.Firstname, src => src.Firstname)
 			.Map(dest => dest.Patronymic, src => src.Patronymic)
@@ -100,9 +98,8 @@ internal static class MapsterConfig
 		TypeAdapterConfig<Apartment, ApartmentEditDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Number, src => src.Number)
-			//.Map(dest => dest.Name, src => $"Ахшарумова 15, кв. {src.Number}");
-			.Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number} {src.Entrance.House.Building}".Trim() + $"{src.Number}")
-			.Map(dest => dest.ApartmentRelations, src => src.ApartmentRelations.Adapt<ApartmentRelationDto>());
+			.Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number}, {src.Entrance.House.Building}".Trim() + $" кв. {src.Number}")
+			.Map(dest => dest.ApartmentRelations, src => src.ApartmentRelations.Select(relation => relation.Adapt<ApartmentRelationDto>()));
 		
 		TypeAdapterConfig<ApartmentEditDto, Apartment>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
@@ -145,7 +142,7 @@ internal static class MapsterConfig
 
 		TypeAdapterConfig<Apartment, SearchResultDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
-			.Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number} {src.Entrance.House.Building}".Trim() + $"{src.Number}")
+			.Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number}, {src.Entrance.House.Building}".Trim() + $" кв. {src.Number}")
 			.Map(dest => dest.Type, src => HandbookSearchType.Apartments);
 	}
 }

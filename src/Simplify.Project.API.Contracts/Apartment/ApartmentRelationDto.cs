@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Simplify.Project.API.Contracts.Client;
+using Simplify.Project.Shared;
 
 namespace Simplify.Project.API.Contracts.Apartment;
 
@@ -24,7 +25,7 @@ public class ApartmentRelationDto
 	/// Тип связи
 	/// </summary>
 	[Required] 
-	public string RelationType { get; set; } = string.Empty;
+	public ApartmentRelationType RelationType { get; set; }
 	
 	/// <summary>
 	/// Дата добавления связи

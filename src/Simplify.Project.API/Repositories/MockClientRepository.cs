@@ -30,6 +30,13 @@ public class MockClientRepository : IClientRepository
 		return client;
 	}
 
+	/// <inheritdoc cref="IClientRepository.AddClient(Client)"/>
+	public Task AddClient(Client client)
+	{
+		_clients.Add(client);
+		return Task.CompletedTask;
+	}
+
 	/// <inheritdoc cref="IClientRepository.UpdateClient(Guid, Client)"/>
 	public Task UpdateClient(Guid id, Client updatedClient)
 	{

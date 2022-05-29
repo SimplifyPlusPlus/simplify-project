@@ -56,12 +56,11 @@ namespace Simplify.Project.API.Migrations
 
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasDefaultValueSql("now()");
 
-                    b.Property<string>("RelationType")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("RelationType")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -80,7 +79,7 @@ namespace Simplify.Project.API.Migrations
 
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasDefaultValueSql("now()");
 
                     b.Property<string>("Email")
@@ -123,7 +122,7 @@ namespace Simplify.Project.API.Migrations
 
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasDefaultValueSql("now()");
 
                     b.Property<string>("Firstname")
@@ -207,7 +206,7 @@ namespace Simplify.Project.API.Migrations
 
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasDefaultValueSql("now()");
 
                     b.Property<IReadOnlyDictionary<string, object>>("Data")

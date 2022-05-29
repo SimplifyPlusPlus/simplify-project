@@ -12,7 +12,7 @@ public class ClientCreateDto
 	/// </summary>
 	[Required]
 	public Guid Id { get; set; }
-
+	
 	/// <summary>
 	/// Фамилия
 	/// </summary>
@@ -33,11 +33,13 @@ public class ClientCreateDto
 	/// <summary>
 	/// Электронная почта
 	/// </summary>
+	[Required(ErrorMessage = "Необходимо указать адрес электронной почты")]
 	public string Email { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Номер телефона
 	/// </summary>
+	[Required(ErrorMessage = "Необходимо указать номер телефона")]
 	public string Phone { get; set; } = string.Empty;
 
 	/// <summary>
