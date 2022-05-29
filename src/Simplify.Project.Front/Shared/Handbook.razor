@@ -129,7 +129,7 @@
 						Зарегистрировать и добавить...
 					</p>
 					<p class="simplify-list-item" style="color: white;" 
-					   id="@_addExistClientButtonId" @onclick="async () => await AddExistClientCardOpen()">
+					   id="@_addOwnershipButtonId" @onclick="async () => await AddExistClientCardOpen(_addOwnershipButtonId, ApartmentRelationType.Ownership)">
 						Добавить из существующих...
 					</p>
 				</div>
@@ -159,28 +159,66 @@
 			<div class="simplify-form-control apartment-relations">
 				@if (_apartmentEditDto.ApartmentRelations.Any(relation => relation.RelationType == ApartmentRelationType.OwnershipFamily))
 				{
+					var ownershipFamily = _apartmentEditDto.ApartmentRelations.Where(relation => relation.RelationType == ApartmentRelationType.OwnershipFamily).ToList();
 					<p>Доверенные</p>
-					<p>@((MarkupString) string.Join(", ", _apartmentEditDto.ApartmentRelations.Where(relation => relation.RelationType == ApartmentRelationType.OwnershipFamily).Select(relation => $"<b>{relation.Client.Name}</b>")))</p>
+					<p>
+						@foreach (var relation in ownershipFamily)
+						{
+							<div style="display: flex; flex-direction: row; font-weight: 600;">
+								@relation.Client.Name
+								<div @onclick="async () => await RemoveApartmentRelationWithClient(relation.Id)" style="margin-left: 4px; cursor: pointer;">
+									<i class="fa-solid fa-xmark"></i>
+								</div>
+								<span>, </span>
+								<div style="margin-left: 4px; cursor: pointer;"
+								     id="@_addOwnershipFamilyButtonId" @onclick="async () => await AddExistClientCardOpen(_addOwnershipFamilyButtonId, ApartmentRelationType.OwnershipFamily)">
+									<i class="fa-solid fa-plus"></i>
+								</div>
+							</div>
+						}
+					</p>
 				}
 				else
 				{
 					<p>Нет доверенных</p>
 					<p>
-						<i class="fa-solid fa-plus"></i>
+						<div style="margin-left: 4px; cursor: pointer;"
+						     id="@_addOwnershipFamilyButtonId" @onclick="async () => await AddExistClientCardOpen(_addOwnershipFamilyButtonId, ApartmentRelationType.OwnershipFamily)">
+							<i class="fa-solid fa-plus"></i>
+						</div>
 					</p>
 				}
 			</div>
 			<div class="simplify-form-control apartment-relations">
 				@if (_apartmentEditDto.ApartmentRelations.Any(relation => relation.RelationType == ApartmentRelationType.Renter))
 				{
+					var renters = _apartmentEditDto.ApartmentRelations.Where(relation => relation.RelationType == ApartmentRelationType.Renter).ToList();
 					<p>Квартиранты</p>
-					<p>@((MarkupString) string.Join(", ", _apartmentEditDto.ApartmentRelations.Where(relation => relation.RelationType == ApartmentRelationType.Renter).Select(relation => $"<b>{relation.Client.Name}</b>")))</p>
+					<p>
+						@foreach (var relation in renters)
+						{
+							<div style="display: flex; flex-direction: row; font-weight: 600;">
+								@relation.Client.Name
+								<div @onclick="async () => await RemoveApartmentRelationWithClient(relation.Id)" style="margin-left: 4px; cursor: pointer;">
+									<i class="fa-solid fa-xmark"></i>
+								</div>
+								<span>, </span>
+								<div style="margin-left: 4px; cursor: pointer;"
+								     id="@_addRenterButtonId" @onclick="async () => await AddExistClientCardOpen(_addRenterButtonId, ApartmentRelationType.Renter)">
+									<i class="fa-solid fa-plus"></i>
+								</div>
+							</div>
+						}
+					</p>
 				}
 				else
 				{
 					<p>Нет квартирантов</p>
 					<p>
-						<i class="fa-solid fa-plus"></i>
+						<div style="margin-left: 4px; cursor: pointer;"
+						     id="@_addRenterButtonId" @onclick="async () => await AddExistClientCardOpen(_addRenterButtonId, ApartmentRelationType.Renter)">
+							<i class="fa-solid fa-plus"></i>
+						</div>
 					</p>
 				}
 			</div>
@@ -236,12 +274,14 @@
 				<input type="text" class="simplify-search-field" placeholder="Фио пользователя..." @oninput="_existClientOnInputDebounced!">
 			</div>
 			<div id="clients-search-items">
-				@foreach (var item in ExistClientSearchResults.OrderBy(dto => dto.Name))
-				{
-					<p id="@item.Id" class="simplify-list-item" @onclick="args => SelectExistClient(item)">
-						@item.Name
-					</p>
-				}
+				<div style="margin-top: 1rem;">
+					@foreach (var item in ExistClientSearchResults.OrderBy(dto => dto.Name))
+					{
+						<p id="@item.Id" class="simplify-list-item" @onclick="args => SelectExistClient(item)">
+							@item.Name
+						</p>
+					}
+				</div>
 			</div>
 		</div>
 	</Body>

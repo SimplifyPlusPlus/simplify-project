@@ -112,15 +112,19 @@ public partial class Handbook
 	#region Add Exist Client to Apartment
 
 	private DetailsCard? _addExistClientCard;
-	private Guid _addExistClientButtonId = Guid.NewGuid();
+	private Guid _addOwnershipButtonId = Guid.NewGuid();
+	private Guid _addOwnershipFamilyButtonId = Guid.NewGuid();
+	private Guid _addRenterButtonId = Guid.NewGuid();
+	private ApartmentRelationType _existClientRelationType;
 	private List<SearchResultDto> ExistClientSearchResults { get; set; } = new();
 	private string? _existClientSearchValue = string.Empty;
 	private Action<ChangeEventArgs>? _existClientOnInputDebounced;
 
-	private async Task AddExistClientCardOpen()
+	private async Task AddExistClientCardOpen(Guid clickedButtonId, ApartmentRelationType relationType)
 	{
 		ArgumentNullException.ThrowIfNull(JsRuntime, nameof(JsRuntime));
-		var coords = await JsRuntime.InvokeAsync<Coordinates>("getElementCoordinatesById", _addExistClientButtonId);
+		var coords = await JsRuntime.InvokeAsync<Coordinates>("getElementCoordinatesById", clickedButtonId);
+		_existClientRelationType = relationType;
 		
 		_addExistClientCard?.Open(coords.Y, coords.X);
 	}
@@ -134,13 +138,14 @@ public partial class Handbook
 		{
 			ApartmentId = _selectApartmentId.Value,
 			ClientId = searchResultDto.Id,
-			RelationType = ApartmentRelationType.Ownership,
+			RelationType = _existClientRelationType,
 		};
 		
 		await SendApartmentRelationCreateIntoServer(relationDto);
 		
 		_addExistClientCard?.Close();
 		_apartmentEditDto = await GetApartmentEditFromServer();
+		ExistClientSearchResults.Clear();
 		StateHasChanged();
 	}
 	
@@ -153,6 +158,10 @@ public partial class Handbook
 				HttpClient,
 				$"search?searchString={_searchValue}&target={HandbookSearchType.Clients}",
 				"Произошла ошибка при поиске клиентов") ?? new List<SearchResultDto>();
+		if (_apartmentEditDto.ApartmentRelations.Any())
+		{
+			ExistClientSearchResults.RemoveAll(item => _apartmentEditDto.ApartmentRelations.Any(relation => relation.Client.Id == item.Id));
+		}
 		StateHasChanged();
 	}
 	
