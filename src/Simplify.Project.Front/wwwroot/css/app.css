@@ -144,6 +144,7 @@ a, .btn-link {
   width: max-content;
   color: var(--accent);
   font-weight: 500;
+  font-size: 1.15rem;
   margin-bottom: 0.5rem;
   cursor: pointer;
   text-decoration: underline var(--accent) dashed;
@@ -207,7 +208,7 @@ a, .btn-link {
   column-gap: 2rem;
   z-index: 1;
   height: 100%;
-  padding: 1rem 2rem;
+  padding: 2rem 5rem;
 }
 
 .main-frame ul {

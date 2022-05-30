@@ -2,13 +2,14 @@
 
 <style>
 	.handbook {
-		padding: 1rem 2rem;
+		padding: 2rem 5rem;
 	}
 
 	.handbook-header {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
+		margin-bottom: 1.5rem;
 	}
 	
 	.handbook-filters {
@@ -146,7 +147,7 @@
 						<div style="display: flex; flex-direction: row; font-weight: 600;">
 							@relation.Client.Name
 							<div @onclick="async () => await RemoveApartmentRelationWithClient(relation.Id)" style="margin-left: 4px; cursor: pointer;">
-								<i class="fa-solid fa-xmark"></i>
+								<CloseIcon />
 							</div>
 							@if (relation != ownerships.Last())
 							{
@@ -167,12 +168,12 @@
 							<div style="display: flex; flex-direction: row; font-weight: 600;">
 								@relation.Client.Name
 								<div @onclick="async () => await RemoveApartmentRelationWithClient(relation.Id)" style="margin-left: 4px; cursor: pointer;">
-									<i class="fa-solid fa-xmark"></i>
+									<CloseIcon />
 								</div>
 								<span>, </span>
 								<div style="margin-left: 4px; cursor: pointer;"
 								     id="@_addOwnershipFamilyButtonId" @onclick="async () => await AddExistClientCardOpen(_addOwnershipFamilyButtonId, ApartmentRelationType.OwnershipFamily)">
-									<i class="fa-solid fa-plus"></i>
+									<PlusIcon />
 								</div>
 							</div>
 						}
@@ -184,7 +185,7 @@
 					<p>
 						<div style="margin-left: 4px; cursor: pointer;"
 						     id="@_addOwnershipFamilyButtonId" @onclick="async () => await AddExistClientCardOpen(_addOwnershipFamilyButtonId, ApartmentRelationType.OwnershipFamily)">
-							<i class="fa-solid fa-plus"></i>
+							<PlusIcon />
 						</div>
 					</p>
 				}
@@ -200,12 +201,12 @@
 							<div style="display: flex; flex-direction: row; font-weight: 600;">
 								@relation.Client.Name
 								<div @onclick="async () => await RemoveApartmentRelationWithClient(relation.Id)" style="margin-left: 4px; cursor: pointer;">
-									<i class="fa-solid fa-xmark"></i>
+									<CloseIcon />
 								</div>
 								<span>, </span>
 								<div style="margin-left: 4px; cursor: pointer;"
 								     id="@_addRenterButtonId" @onclick="async () => await AddExistClientCardOpen(_addRenterButtonId, ApartmentRelationType.Renter)">
-									<i class="fa-solid fa-plus"></i>
+									<PlusIcon />
 								</div>
 							</div>
 						}
@@ -217,7 +218,7 @@
 					<p>
 						<div style="margin-left: 4px; cursor: pointer;"
 						     id="@_addRenterButtonId" @onclick="async () => await AddExistClientCardOpen(_addRenterButtonId, ApartmentRelationType.Renter)">
-							<i class="fa-solid fa-plus"></i>
+							<PlusIcon />
 						</div>
 					</p>
 				}
