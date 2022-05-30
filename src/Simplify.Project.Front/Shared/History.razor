@@ -1,0 +1,70 @@
+@using Simplify.Project.Front.Helpers
+<style>
+	.history {
+		padding: 2rem 5rem;
+	}
+	
+	.history-search {
+		margin-bottom: 4rem;
+	}
+
+	.events-group {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 5rem;
+	}
+	
+	.events-group-header {
+		color: black;
+		font-size: 1.5rem;
+        font-weight: 500;
+        text-align: center;
+        margin-bottom: 1rem;
+	}
+	
+	.events-group-body {}
+
+	.events-entity {
+		display: flex; 
+		flex-direction: row;
+		font-size: 1.25rem;
+		font-weight: 500;
+		margin-bottom: 1rem;
+	}
+
+	.events-entity-time {
+		color: rgba(0, 0, 0, 0.35);
+		margin-right: 2rem;
+	}
+
+	.events-entity-title {
+		color: var(--accent);
+		cursor: pointer;
+		text-decoration: underline;
+	}
+</style>
+
+<div class="history">
+	<div class="history-search">
+		<input type="text" class="simplify-search-field" placeholder="Введите любой текст, имя или действие" @oninput="args => HistorySearchOnInput(args.Value?.ToString())">
+	</div>
+	@foreach (var eventsGroup in _eventInfoForDisplay.GroupBy(ev => DateOnly.FromDateTime(ev.Created)))
+	{
+		<div class="events-group">
+			<p class="events-group-header">
+				@eventsGroup.Key.ToString(_eventDatePattern)
+			</p>
+			<div class="events-group-body">
+				@foreach (var ev in eventsGroup.OrderByDescending(ev => ev.Created))
+				{
+					<div class="events-entity">
+						<span class="events-entity-time">
+							@ev.Created.ToLocalTime().ToString("HH:mm")
+						</span>
+						@ev.Info
+					</div>
+				}
+			</div>
+		</div>
+	}
+</div>

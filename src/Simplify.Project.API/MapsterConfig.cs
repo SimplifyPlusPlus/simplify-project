@@ -4,6 +4,7 @@ using Simplify.Project.API.Contracts;
 using Simplify.Project.API.Contracts.Apartment;
 using Simplify.Project.API.Contracts.Client;
 using Simplify.Project.API.Contracts.Employee;
+using Simplify.Project.API.Contracts.Events;
 using Simplify.Project.API.Contracts.Search;
 using Simplify.Project.Shared;
 
@@ -153,5 +154,17 @@ internal static class MapsterConfig
 			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number}, {src.Entrance.House.Building}".Trim() + $" кв. {src.Number}")
 			.Map(dest => dest.Type, src => HandbookSearchType.Apartments);
+		
+		TypeAdapterConfig<Employee, EventDataItem>.NewConfig()
+			.Map(dest => dest.Id, src => src.Id)
+			.Map(dest => dest.Name, src => $"{src.Lastname} {src.Firstname} {src.Patronymic}".Trim());
+		
+		TypeAdapterConfig<Client, EventDataItem>.NewConfig()
+			.Map(dest => dest.Id, src => src.Id)
+			.Map(dest => dest.Name, src => $"{src.Lastname} {src.Firstname} {src.Patronymic}".Trim());
+
+		TypeAdapterConfig<Apartment, EventDataItem>.NewConfig()
+			.Map(dest => dest.Id, src => src.Id)
+			.Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number}, {src.Entrance.House.Building}".Trim() + $" кв. {src.Number}");
 	}
 }

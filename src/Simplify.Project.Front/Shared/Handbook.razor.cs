@@ -197,6 +197,7 @@ public partial class Handbook
 		
 		_registerAndAddClientCard?.Close();
 		_apartmentEditDto = await GetApartmentEditFromServer();
+		_clientCreateDto = new ClientCreateDto { Id = Guid.NewGuid() };
 		StateHasChanged();
 	}
 	

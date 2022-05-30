@@ -29,6 +29,7 @@ public static class Program
 		builder.Services.AddScoped<IEntranceRepository, EntranceRepository>();
 		builder.Services.AddScoped<IApartmentRepository, ApartmentRepository>();
 		builder.Services.AddScoped<IApartmentRelationRepository, ApartmentRelationRepository>();
+		builder.Services.AddScoped<IEventRepository, EventRepository>();
 
 		var app = builder.Build();
 
