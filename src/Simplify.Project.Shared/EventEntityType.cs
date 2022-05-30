@@ -14,4 +14,14 @@ public enum EventEntityType
 	/// Житель
 	/// </summary>
 	Client = 2,
+	
+	/// <summary>
+	/// Квартира
+	/// </summary>
+	Apartment = 3,
+	
+	/// <summary>
+	/// Отношение к квартире
+	/// </summary>
+	ApartmentRelation = 4,
 }

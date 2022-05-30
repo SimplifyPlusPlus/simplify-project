@@ -25,6 +25,15 @@ internal static class MapsterConfig
 			.Map(dest => dest.IsBlocked, src => src.IsBlocked)
 			.Map(dest => dest.Note, src => src.Note);
 		
+		TypeAdapterConfig<ClientCreateDto, Client>.NewConfig()
+			.Map(dest => dest.Lastname, src => src.Lastname)
+			.Map(dest => dest.Firstname, src => src.Firstname)
+			.Map(dest => dest.Patronymic, src => src.Patronymic)
+			.Map(dest => dest.Email, src => src.Email)
+			.Map(dest => dest.Phone, src => src.Phone)
+			.Map(dest => dest.Created, src => DateTime.Now)
+			.Map(dest => dest.Note, src => src.Note);
+		
 		TypeAdapterConfig<Client, ClientEditDto>.NewConfig()
 			.Map(dest => dest.Lastname, src => src.Lastname)
 			.Map(dest => dest.Firstname, src => src.Firstname)
