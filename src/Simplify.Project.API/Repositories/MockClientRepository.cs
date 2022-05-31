@@ -37,6 +37,11 @@ public class MockClientRepository : IClientRepository
 		return Task.CompletedTask;
 	}
 
+	public Task UpdateClient(Client updatedClient)
+	{
+		throw new NotImplementedException();
+	}
+
 	/// <inheritdoc cref="IClientRepository.UpdateClient(Guid, Client)"/>
 	public Task UpdateClient(Guid id, Client updatedClient)
 	{

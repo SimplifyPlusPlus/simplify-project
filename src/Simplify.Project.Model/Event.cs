@@ -13,13 +13,13 @@ public class Event : Entity
 	/// Тип сущности, с которым произошло событие
 	/// </summary>
 	[Required]
-	public EventEntityType EventEntityType { get; set; }
+	public virtual EventEntityType EventEntityType { get; set; }
 	
 	/// <summary>
 	/// Тип события
 	/// </summary>
 	[Required]
-	public EventType EventType { get; set; }
+	public virtual EventType EventType { get; set; }
 	
 	/// <summary>
 	/// Дата добавления события

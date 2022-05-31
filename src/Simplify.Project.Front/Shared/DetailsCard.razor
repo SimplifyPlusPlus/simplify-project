@@ -14,7 +14,6 @@
 </style>
 
 <div id="@Id" class="details-card" style="width: inherit; display: @_display; top: @(_positionY + 20)px;">
-	@* <div style="margin-left: 2rem; margin-bottom: -6px;"> *@
 	<div style="position: relative; left: @(_positionX)px; margin-bottom: -6px;">
 		<TriangleIcon UseGradientColor="@(BackgroundColor != "var(--brand)")" />
 	</div>
@@ -33,22 +32,15 @@
 
 	[Parameter]
 	public string? BackgroundColor { get; set; }
-
-	[Parameter]
-	public bool IsSubCard { get; set; } = false;
-
+	
 	private string _backgroundColorDefault = "linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), var(--brand)";
 	
 	private Guid Id { get; set; } = Guid.NewGuid();
-	
-	private Action? OnOpen { get; set; }
-	
-	public Action? OnClose { get; set; }
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
 		if (firstRender)
-			await _jsRuntime.InvokeVoidAsync("registerDetailsCardEvents", Id, IsSubCard);
+			await _jsRuntime.InvokeVoidAsync("registerDetailsCardEvents", Id);
 	
 		await base.OnAfterRenderAsync(firstRender);
 	}
@@ -58,8 +50,7 @@
 		_display = "flex";
 		_positionY = Convert.ToInt32(offsetTop);
 		_positionX = Convert.ToInt32(offsetLeft);
-
-		OnOpen?.Invoke();
+		
 		StateHasChanged();
 	}
 
@@ -69,7 +60,6 @@
 		_positionY = 0;
 		_positionX = 0;
 		
-		OnClose?.Invoke();
 		StateHasChanged();
 	}
 }

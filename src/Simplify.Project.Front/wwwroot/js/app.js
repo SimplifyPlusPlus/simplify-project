@@ -14,7 +14,7 @@ window.getElementCoordinatesById = (id) => {
 	return coords; 
 }
 
-window.registerDetailsCardEvents = (card_id, is_sub_card) => {
+window.registerDetailsCardEvents = (card_id) => {
 	let card = document.getElementById(card_id);
 	let otherCards = document.querySelectorAll('.details-card');
 	window.addEventListener('click', function (event) {
@@ -24,8 +24,5 @@ window.registerDetailsCardEvents = (card_id, is_sub_card) => {
 				card.style.display = 'none';
 			}
 		}
-		event.preventDefault();
-		event.stopPropagation();
 	});
-	console.log('card with id ', card_id, ' is registered!');
 }
