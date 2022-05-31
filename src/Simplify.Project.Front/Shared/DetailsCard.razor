@@ -14,8 +14,8 @@
 </style>
 
 <div id="@Id" class="details-card" style="width: inherit; display: @_display; top: @(_positionY + 20)px;">
-	<div style="margin-left: 2rem;">
-		<Triangle Color="linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9), var(--brand))" />
+	<div style="position: relative; left: @(_positionX)px; margin-bottom: -6px;">
+		<CardTriangleIcon UseGradientColor="@(BackgroundColor != "var(--brand)")" />
 	</div>
 	<div class="details-card-body" style="background: @(BackgroundColor ?? _backgroundColorDefault);">
 		@Body
@@ -37,10 +37,6 @@
 	
 	private Guid Id { get; set; } = Guid.NewGuid();
 	
-	private Action? OnOpen { get; set; }
-	
-	public Action? OnClose { get; set; }
-
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
 		if (firstRender)
@@ -49,13 +45,12 @@
 		await base.OnAfterRenderAsync(firstRender);
 	}
 
-	public void Open(double offsetTop, double offsetLeft = 0)
+	public void Open(double offsetTop, double offsetLeft)
 	{
 		_display = "flex";
 		_positionY = offsetTop;
-		_positionX = Convert.ToInt32(offsetLeft) / 2.0;
-
-		OnOpen?.Invoke();
+		_positionX = Convert.ToInt32(offsetLeft);
+		
 		StateHasChanged();
 	}
 
@@ -65,7 +60,6 @@
 		_positionY = 0;
 		_positionX = 0;
 		
-		OnClose?.Invoke();
 		StateHasChanged();
 	}
 }

@@ -243,12 +243,12 @@ public partial class Handbook
 			case HandbookSearchType.Clients:
 				_selectedClientId = searchResultDto.Id;
 				_clientEditDto = await GetClientEditFromServer();
-				_clientDetailsCard?.Open(coords.Y);
+				_clientDetailsCard?.Open(coords.Y, coords.X);
 				break;
 			case HandbookSearchType.Apartments:
 				_selectApartmentId = searchResultDto.Id;
 				_apartmentEditDto = await GetApartmentEditFromServer();
-				_apartmentDetailsCard?.Open(coords.Y);
+				_apartmentDetailsCard?.Open(coords.Y, coords.X);
 				break;
 			default:
 				throw new ArgumentOutOfRangeException(nameof(searchResultDto.Type));
