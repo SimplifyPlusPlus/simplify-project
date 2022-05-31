@@ -105,7 +105,7 @@ public class ClientController : ControllerBase
 
 		var client = clientEditDto.Adapt<Client>();
 		client.Created = oldClient.Created;
-		await _clientRepository.UpdateClient(id.Value, client);
+		await _clientRepository.UpdateClient(client);
 		return NoContent();
 	}
 }

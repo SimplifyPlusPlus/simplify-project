@@ -5,7 +5,7 @@
 	  position: absolute;
       display: flex;
       flex-direction: column;
-      box-shadow: 0px 3px 4px -2px black;
+      box-shadow: 0 3px 4px -2px black;
     }
     
     .details-card-body {
@@ -14,8 +14,9 @@
 </style>
 
 <div id="@Id" class="details-card" style="width: inherit; display: @_display; top: @(_positionY + 20)px;">
-	<div style="margin-left: 2rem;">
-		<Triangle Color="linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9), var(--brand))" />
+	@* <div style="margin-left: 2rem; margin-bottom: -6px;"> *@
+	<div style="position: relative; left: @(_positionX)px; margin-bottom: -6px;">
+		<TriangleIcon UseGradientColor="@(BackgroundColor != "var(--brand)")" />
 	</div>
 	<div class="details-card-body" style="background: @(BackgroundColor ?? _backgroundColorDefault);">
 		@Body
@@ -33,6 +34,9 @@
 	[Parameter]
 	public string? BackgroundColor { get; set; }
 
+	[Parameter]
+	public bool IsSubCard { get; set; } = false;
+
 	private string _backgroundColorDefault = "linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), var(--brand)";
 	
 	private Guid Id { get; set; } = Guid.NewGuid();
@@ -44,16 +48,16 @@
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
 		if (firstRender)
-			await _jsRuntime.InvokeVoidAsync("registerDetailsCardEvents", Id);
-
+			await _jsRuntime.InvokeVoidAsync("registerDetailsCardEvents", Id, IsSubCard);
+	
 		await base.OnAfterRenderAsync(firstRender);
 	}
 
-	public void Open(double offsetTop, double offsetLeft = 0)
+	public void Open(double offsetTop, double offsetLeft)
 	{
 		_display = "flex";
-		_positionY = offsetTop;
-		_positionX = Convert.ToInt32(offsetLeft) / 2.0;
+		_positionY = Convert.ToInt32(offsetTop);
+		_positionX = Convert.ToInt32(offsetLeft);
 
 		OnOpen?.Invoke();
 		StateHasChanged();

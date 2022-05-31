@@ -3,6 +3,9 @@ using Simplify.Project.Shared;
 
 namespace Simplify.Project.API.Contracts.Events;
 
+/// <summary>
+/// Модель события
+/// </summary>
 public class EventDto
 {
 	/// <summary>

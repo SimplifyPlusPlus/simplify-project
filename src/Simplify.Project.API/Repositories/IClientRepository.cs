@@ -31,5 +31,5 @@ public interface IClientRepository
 	/// </summary>
 	/// <param name="id">Идентификатор клиента</param>
 	/// <param name="updatedClient">Измененные данные клиента</param>
-	public Task UpdateClient(Guid id, Client updatedClient);
+	public Task UpdateClient(Client updatedClient);
 }

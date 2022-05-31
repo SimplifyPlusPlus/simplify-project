@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Simplify.Project.Model;
 
 namespace Simplify.Project.API.Repositories;
@@ -18,7 +19,7 @@ public class ClientRepository : IClientRepository
 
 	public Client? GetClient(Guid id)
 	{
-		return _context.Clients.SingleOrDefault(client => client.Id == id);
+		return _context.Clients.AsNoTracking().SingleOrDefault(client => client.Id == id);
 	}
 
 	public async Task AddClient(Client client)
@@ -27,7 +28,7 @@ public class ClientRepository : IClientRepository
 		await _context.SaveChangesAsync();
 	}
 
-	public async Task UpdateClient(Guid id, Client updatedClient)
+	public async Task UpdateClient(Client updatedClient)
 	{
 		_context.Clients.Update(updatedClient);
 		await _context.SaveChangesAsync();
