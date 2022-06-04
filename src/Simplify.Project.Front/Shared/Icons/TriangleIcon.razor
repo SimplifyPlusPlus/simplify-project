@@ -1,10 +1,8 @@
 <svg width="28" height="14" viewBox="0 0 28 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-	<path d="M14 0L0 14H28L14 0Z" fill="@(UseGradientColor ? "#ECFAEF" : Color)"/>
+	<path d="M14 0L0 14H28L14 0Z" fill="@(UseGradientColor ? "var(--brand-gradient)" : "var(--brand)")"/>
 </svg>
 
 @code {
-	private string Color { get; set; } = "var(--brand)";
-
 	[Parameter]
 	public bool UseGradientColor { get; set; }
 }

@@ -147,7 +147,7 @@ a, .btn-link {
   font-size: 1.15rem;
   margin-bottom: 0.5rem;
   cursor: pointer;
-  text-decoration: underline var(--accent) dashed;
+  text-decoration: underline;
 }
 
 .simplify-list-item.selected {
