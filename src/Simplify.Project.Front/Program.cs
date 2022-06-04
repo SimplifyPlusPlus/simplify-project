@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Simplify.Project.Front;
 
-public static class Program
+public class Program
 {
 	public static async Task Main(string[] args)
 	{

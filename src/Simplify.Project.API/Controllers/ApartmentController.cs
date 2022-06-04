@@ -8,28 +8,29 @@ using Simplify.Project.Model;
 namespace Simplify.Project.API.Controllers;
 
 /// <summary>
-/// Контроллер для работы с квартирами
+///     Контроллер для работы с квартирами
 /// </summary>
 [ApiController]
 [Route("api/apartment")]
 public class ApartmentController : ControllerBase
 {
-	private readonly IApartmentRepository _apartmentRepository;
 	private readonly IApartmentRelationRepository _apartmentRelationRepository;
+	private readonly IApartmentRepository _apartmentRepository;
 
 	/// <summary>
-	/// Конструктор класса <see cref="ApartmentController"/>
+	///     Конструктор класса <see cref="ApartmentController" />
 	/// </summary>
 	/// <param name="apartmentRepository">Репозиторий квартир</param>
 	/// <param name="apartmentRelationRepository">Репозиторий отношений клиент-квартира</param>
-	public ApartmentController(IApartmentRepository apartmentRepository, IApartmentRelationRepository apartmentRelationRepository)
+	public ApartmentController(IApartmentRepository apartmentRepository,
+		IApartmentRelationRepository apartmentRelationRepository)
 	{
 		_apartmentRepository = apartmentRepository;
 		_apartmentRelationRepository = apartmentRelationRepository;
 	}
 
 	/// <summary>
-	/// Добавить новое отношение с квартирой
+	///     Добавить новое отношение с квартирой
 	/// </summary>
 	/// <param name="apartmentRelationCreateDto"></param>
 	/// <param name="clientRepository"></param>
@@ -40,11 +41,12 @@ public class ApartmentController : ControllerBase
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-	public async Task<IActionResult> ApartmentRelationCreate([FromBody] ApartmentRelationCreateDto? apartmentRelationCreateDto, 
+	public async Task<IActionResult> ApartmentRelationCreate(
+		[FromBody] ApartmentRelationCreateDto? apartmentRelationCreateDto,
 		[FromServices] IClientRepository clientRepository)
 	{
-		if (apartmentRelationCreateDto == null 
-		    || apartmentRelationCreateDto.ApartmentId == Guid.Empty 
+		if (apartmentRelationCreateDto == null
+		    || apartmentRelationCreateDto.ApartmentId == Guid.Empty
 		    || apartmentRelationCreateDto.ClientId == Guid.Empty)
 			return BadRequest();
 
@@ -62,14 +64,14 @@ public class ApartmentController : ControllerBase
 			Apartment = apartment,
 			Client = client,
 			Created = DateTime.Now,
-			RelationType = apartmentRelationCreateDto.RelationType,
+			RelationType = apartmentRelationCreateDto.RelationType
 		};
 		await _apartmentRelationRepository.AddApartmentRelation(relation);
 		return NoContent();
 	}
 
 	/// <summary>
-	/// Удалить отношение с квартирой
+	///     Удалить отношение с квартирой
 	/// </summary>
 	/// <param name="relationId">Идентификатор отношения с квартирой</param>
 	[HttpPost]
@@ -86,13 +88,13 @@ public class ApartmentController : ControllerBase
 		var relation = _apartmentRelationRepository.GetRelation(relationId.Value);
 		if (relation == null)
 			return NotFound(nameof(relation));
-		
+
 		await _apartmentRelationRepository.RemoveApartmentRelation(relation);
 		return NoContent();
 	}
-	
+
 	/// <summary>
-	/// Получить данные квартиры для изменения
+	///     Получить данные квартиры для изменения
 	/// </summary>
 	/// <param name="id">Идентификатор</param>
 	/// <returns>Данные квартиры</returns>
@@ -109,15 +111,15 @@ public class ApartmentController : ControllerBase
 
 		var apartment = _apartmentRepository.GetApartments()
 			.Include(apartment => apartment.Entrance)
-				.ThenInclude(entrance => entrance.House)
+			.ThenInclude(entrance => entrance.House)
 			.Include(apartment => apartment.ApartmentRelations)
-				.ThenInclude(relation => relation.Client)
+			.ThenInclude(relation => relation.Client)
 			.SingleOrDefault(apartment => apartment.Id == id.Value);
 		return apartment == null ? NotFound(nameof(apartment)) : Ok(apartment.Adapt<ApartmentEditDto>());
 	}
 
 	/// <summary>
-	/// Частичное изменение данных квартиры
+	///     Частичное изменение данных квартиры
 	/// </summary>
 	/// <param name="id">Идентификатор</param>
 	/// <param name="apartmentEditDto">Измененные данные квартиры</param>

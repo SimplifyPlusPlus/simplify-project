@@ -1,0 +1,61 @@
+version: '3.4'
+
+networks:
+  simplify-net:
+    external: true
+
+services:
+  simplify-front:
+    image: ${DOCKER_REGISTRY-}simplify-front
+    build:
+      context: .
+      dockerfile: src/Simplify.Project.Front/Dockerfile
+    container_name: simplify-front
+    networks:
+      - simplify-net
+    ports:
+      - '6061:6061'
+    depends_on:
+      - simplify-api
+    restart: always
+  
+  simplify-api:
+    image: ${DOCKER_REGISTRY-}simplify-api
+    build:
+      context: .
+      dockerfile: src/Simplify.Project.API/Dockerfile
+    container_name: simplify-api
+    networks:
+      - simplify-net
+    ports:
+      - '6060:6060'
+    depends_on:
+      - simplify-postgres
+    restart: always
+  
+  simplify-postgres:
+    image: postgres:14
+    container_name: simplify-postgres
+    networks:
+      - simplify-net
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=Simplify.DB
+    ports:
+      - '6059:6059'
+    restart: always
+  
+  simplify-pgadmin:
+    image: dpage/pgadmin4
+    container_name: simplify-pgadmin
+    networks:
+      - simplify-net
+    ports:
+      - '6058:6058'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'simplify@simplify.com'
+      PGADMIN_DEFAULT_PASSWORD: '123'
+    depends_on:
+      - simplify-postgres
+    restart: always

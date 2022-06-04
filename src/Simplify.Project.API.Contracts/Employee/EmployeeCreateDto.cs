@@ -3,53 +3,53 @@ using System.ComponentModel.DataAnnotations;
 namespace Simplify.Project.API.Contracts.Employee;
 
 /// <summary>
-/// Модель данных для создания сотрудника
+///     Модель данных для создания сотрудника
 /// </summary>
 public class EmployeeCreateDto
 {
 	/// <summary>
-	/// Идентификатор
+	///     Идентификатор
 	/// </summary>
 	[Required]
 	public Guid Id { get; set; }
 
 	/// <summary>
-	/// Фамилия
+	///     Фамилия
 	/// </summary>
 	[Required]
 	public string Lastname { get; set; } = string.Empty;
-    
+
 	/// <summary>
-	/// Имя
+	///     Имя
 	/// </summary>
 	[Required]
 	public string Firstname { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Отчество
+	///     Отчество
 	/// </summary>
 	public string? Patronymic { get; set; }
 
 	/// <summary>
-	/// Роль в системе
+	///     Роль в системе
 	/// </summary>
 	[Required]
 	public string Role { get; set; } = string.Empty;
-	
+
 	/// <summary>
-	/// Логин
+	///     Логин
 	/// </summary>
 	[Required]
 	public string Login { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Пароль 
+	///     Пароль
 	/// </summary>
 	[Required]
 	public string Password { get; set; } = string.Empty;
-	
+
 	/// <summary>
-	/// Примечание
+	///     Примечание
 	/// </summary>
 	public string? Note { get; set; }
 }

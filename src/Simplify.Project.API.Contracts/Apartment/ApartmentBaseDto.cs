@@ -3,18 +3,18 @@ using System.ComponentModel.DataAnnotations;
 namespace Simplify.Project.API.Contracts.Apartment;
 
 /// <summary>
-/// Базовая информация по квартире
+///     Базовая информация по квартире
 /// </summary>
-public class  ApartmentBaseDto
+public class ApartmentBaseDto
 {
 	/// <summary>
-	/// Идентификатор
+	///     Идентификатор
 	/// </summary>
 	[Required]
 	public Guid Id { get; set; }
-	
+
 	/// <summary>
-	/// Номер
+	///     Номер
 	/// </summary>
 	[Required]
 	public int Number { get; set; }

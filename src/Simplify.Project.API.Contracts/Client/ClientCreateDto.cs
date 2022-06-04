@@ -3,47 +3,47 @@ using System.ComponentModel.DataAnnotations;
 namespace Simplify.Project.API.Contracts.Client;
 
 /// <summary>
-/// Модель данных для создания клиента
+///     Модель данных для создания клиента
 /// </summary>
 public class ClientCreateDto
 {
 	/// <summary>
-	/// Идентификатор
+	///     Идентификатор
 	/// </summary>
 	[Required]
 	public Guid Id { get; set; }
-	
+
 	/// <summary>
-	/// Фамилия
+	///     Фамилия
 	/// </summary>
 	[Required(ErrorMessage = "Необходимо указать фамилию клиента")]
 	public string Lastname { get; set; } = string.Empty;
-    
+
 	/// <summary>
-	/// Имя
+	///     Имя
 	/// </summary>
 	[Required(ErrorMessage = "Необходимо указать имя клиента")]
 	public string Firstname { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Отчество
+	///     Отчество
 	/// </summary>
 	public string? Patronymic { get; set; }
-	
+
 	/// <summary>
-	/// Электронная почта
+	///     Электронная почта
 	/// </summary>
 	[Required(ErrorMessage = "Необходимо указать адрес электронной почты")]
 	public string Email { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Номер телефона
+	///     Номер телефона
 	/// </summary>
 	[Required(ErrorMessage = "Необходимо указать номер телефона")]
 	public string Phone { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Заметка
+	///     Заметка
 	/// </summary>
 	public string? Note { get; set; }
 }

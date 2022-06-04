@@ -1,13 +1,13 @@
-using Microsoft.AspNetCore.Mvc;
-using Simplify.Project.API.Repositories;
 using Mapster;
+using Microsoft.AspNetCore.Mvc;
 using Simplify.Project.API.Contracts.Client;
+using Simplify.Project.API.Repositories;
 using Simplify.Project.Model;
 
 namespace Simplify.Project.API.Controllers;
 
 /// <summary>
-/// Контроллер для работы с клиентами
+///     Контроллер для работы с клиентами
 /// </summary>
 [ApiController]
 [Route("api/client")]
@@ -16,7 +16,7 @@ public class ClientController : ControllerBase
 	private readonly IClientRepository _clientRepository;
 
 	/// <summary>
-	/// Конструктор класса <see cref="ClientController"/>
+	///     Конструктор класса <see cref="ClientController" />
 	/// </summary>
 	/// <param name="repository">Репозиторий клиентов</param>
 	public ClientController(IClientRepository repository)
@@ -25,7 +25,7 @@ public class ClientController : ControllerBase
 	}
 
 	/// <summary>
-	/// Добавить нового клиента
+	///     Добавить нового клиента
 	/// </summary>
 	/// <param name="clientCreateDto">Данные нового клиента</param>
 	[HttpPost]
@@ -42,9 +42,9 @@ public class ClientController : ControllerBase
 		await _clientRepository.AddClient(client);
 		return NoContent();
 	}
-	
+
 	/// <summary>
-	/// Получить клиента по идентификатору 
+	///     Получить клиента по идентификатору
 	/// </summary>
 	/// <param name="id">Идентификатор</param>
 	/// <returns>Детальная информация по клиенту</returns>
@@ -62,9 +62,9 @@ public class ClientController : ControllerBase
 		var client = _clientRepository.GetClient(id.Value);
 		return client == null ? NotFound(nameof(client)) : Ok(client.Adapt<ClientDetailedDto>());
 	}
-	
+
 	/// <summary>
-	/// Получить данные клиента для изменения
+	///     Получить данные клиента для изменения
 	/// </summary>
 	/// <param name="id">Идентификатор</param>
 	/// <returns>Данные клиента</returns>
@@ -78,13 +78,13 @@ public class ClientController : ControllerBase
 	{
 		if (id == null || id == Guid.Empty)
 			return BadRequest();
-		
+
 		var client = _clientRepository.GetClient(id.Value);
 		return client == null ? NotFound(nameof(client)) : Ok(client.Adapt<ClientEditDto>());
 	}
 
 	/// <summary>
-	/// Частичное изменение данных клиента
+	///     Частичное изменение данных клиента
 	/// </summary>
 	/// <param name="id">Идентификатор</param>
 	/// <param name="clientEditDto">Измененные данные клиента</param>
@@ -98,7 +98,7 @@ public class ClientController : ControllerBase
 	{
 		if (id == null || id == Guid.Empty || clientEditDto == null)
 			return BadRequest();
-		
+
 		var oldClient = _clientRepository.GetClient(id.Value);
 		if (oldClient == null)
 			return NotFound(nameof(oldClient));

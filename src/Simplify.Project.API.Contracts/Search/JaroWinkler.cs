@@ -1,26 +1,26 @@
 namespace Simplify.Project.API.Contracts.Search;
 
 /// <summary>
-/// Инструментарий для алгоритма Джаро-Винклера
+///     Инструментарий для алгоритма Джаро-Винклера
 /// </summary>
 public static class JaroWinklerDistance
 {
 	/// <summary>
-	/// Лимит веса для алгоритма, значение из оригинального paper
+	///     Лимит веса для алгоритма, значение из оригинального paper
 	/// </summary>
 	private static readonly double WeightThreshold = 0.7;
 
 	/// <summary>
-	/// Длина префикса
+	///     Длина префикса
 	/// </summary>
 	private static readonly int PrefixLength = 4;
 
 	/// <summary>
-	/// Возвращает сходство Джаро-Винклера для двух строк, в промежутке от 0 до 1 <br />
-	/// Поиск симметричен <br />
-	/// 0 - нет совпадения <br />
-	/// 1 - есть совпадения <br />
-	/// https://stackoverflow.com/a/19165108/16029300
+	///     Возвращает сходство Джаро-Винклера для двух строк, в промежутке от 0 до 1 <br />
+	///     Поиск симметричен <br />
+	///     0 - нет совпадения <br />
+	///     1 - есть совпадения <br />
+	///     https://stackoverflow.com/a/19165108/16029300
 	/// </summary>
 	/// <param name="origin">Первая строка</param>
 	/// <param name="searchValue">Вторая строка</param>
@@ -67,10 +67,10 @@ public static class JaroWinklerDistance
 
 		for (var i = 0; i < lLen1; ++i)
 		{
-			if (!lMatched1[i]) 
+			if (!lMatched1[i])
 				continue;
 
-			while (!lMatched2[k]) 
+			while (!lMatched2[k])
 				++k;
 
 			if (!comparer.Equals(origin[i], searchValue[k]))
@@ -84,10 +84,10 @@ public static class JaroWinklerDistance
 		double lNumCommonD = lNumCommon;
 
 		var lWeight = (lNumCommonD / lLen1
-						  + lNumCommonD / lLen2
-						  + (lNumCommon - lNumTransposed) / lNumCommonD) / 3.0;
+		               + lNumCommonD / lLen2
+		               + (lNumCommon - lNumTransposed) / lNumCommonD) / 3.0;
 
-		if (lWeight <= WeightThreshold) 
+		if (lWeight <= WeightThreshold)
 			return lWeight;
 
 		var lMax = Math.Min(PrefixLength, Math.Min(origin.Length, searchValue.Length));
@@ -96,7 +96,7 @@ public static class JaroWinklerDistance
 		while (lPos < lMax && comparer.Equals(origin[lPos], searchValue[lPos]))
 			++lPos;
 
-		if (lPos == 0) 
+		if (lPos == 0)
 			return lWeight;
 
 		return lWeight + 0.1 * lPos * (1.0 - lWeight);

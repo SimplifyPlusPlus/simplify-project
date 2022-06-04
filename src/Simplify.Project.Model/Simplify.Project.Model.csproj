@@ -7,6 +7,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Simplify.Project.Shared\Simplify.Project.Shared.csproj" />
+		<ProjectReference Include="..\Simplify.Project.Shared\Simplify.Project.Shared.csproj"/>
 	</ItemGroup>
 </Project>
