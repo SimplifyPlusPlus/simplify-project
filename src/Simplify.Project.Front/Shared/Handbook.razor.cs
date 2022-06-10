@@ -23,18 +23,18 @@ public partial class Handbook
 
 	protected override async Task OnInitializedAsync()
 	{
-		_targetValue = $"{HandbookSearchType.Clients}{HandbookSearchType.Apartments}";
+		_targetValue = $"{HandbookSearchType.Clients}";
 
 		_onInputDebounced = DebounceEvent<ChangeEventArgs>(
 			action: (e => _searchValue = e.Value?.ToString()),
 			callback: (async () => await GetSearchResults()),
-			interval: TimeSpan.FromMilliseconds(500)
+			interval: TimeSpan.FromMilliseconds(250)
 		);
 		
 		_existClientOnInputDebounced = DebounceEvent<ChangeEventArgs>(
 			action: (e => _existClientSearchValue = e.Value?.ToString()),
 			callback: (async () => await GetExistClientSearchResults()),
-			interval: TimeSpan.FromMilliseconds(500)
+			interval: TimeSpan.FromMilliseconds(250)
 		);
 		
 		await base.OnInitializedAsync();
@@ -54,26 +54,15 @@ public partial class Handbook
 
 	private bool FiltersItemIsSelected(HandbookSearchType type)
 	{
-		return _targetValue?.Contains(type.ToString()) ?? false;
+		return _targetValue == type.ToString();
 	}
 
 	private async Task FiltersItemOnClick(HandbookSearchType type)
 	{
-		_targetValue = _targetValue?.Contains(type.ToString()) ?? false
-			? _targetValue.Replace(type.ToString(), "").Trim()
-			: string.Concat(_targetValue, type.ToString());
+		if (FiltersItemIsSelected(type)) return;
 
+		_targetValue = type.ToString();
 		await GetSearchResults();
-	}
-
-	private static string GetComfortableTypeName(HandbookSearchType type)
-	{
-		return type switch
-		{
-			HandbookSearchType.Apartments => "Квартира",
-			HandbookSearchType.Clients => "Клиент",
-			_ => throw new ArgumentOutOfRangeException(nameof(type), type, $"Неизвестный тип данных -> {type}")
-		};
 	}
 
 	private async Task GetSearchResults()

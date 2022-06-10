@@ -55,8 +55,8 @@
 	<div id="handbook-search-items">
 		@foreach (var item in SearchResults.OrderBy(dto => dto.Name))
 		{
-			<p id="@item.Id" class="simplify-list-item" @onclick="args => SelectHandbookItem(item)">
-				@item.Name @GetComfortableTypeName(item.Type)
+			<p id="@item.Id" class="simplify-list-item" @onclick="_ => SelectHandbookItem(item)">
+				@item.Name
 			</p>
 		}
 	</div>
@@ -90,12 +90,6 @@
 		<div class="simplify-form-control">
 			<label>Примечание</label>
 			<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientEditDto.Note">
-		</div>
-		<div class="simplify-form-control">
-			<label></label>
-			<a class="simplify-list-item" style="width: 100%;" @onclick="() => _clientEditDto.IsBlocked = !_clientEditDto.IsBlocked">
-				@(_clientEditDto.IsBlocked ? "Разблокировать" : "Заблокировать")
-			</a>
 		</div>
 	</div>
 	<div class="simplify-card-footer">
