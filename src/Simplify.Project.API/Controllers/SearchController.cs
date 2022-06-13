@@ -12,7 +12,7 @@ namespace Simplify.Project.API.Controllers;
 /// Контроллер поиска
 /// </summary>
 [ApiController]
-[Route("search")]
+[Route("api/search")]
 public class SearchController : ControllerBase
 {
 	private const double MinimalSearchScore = 0.6;
@@ -55,5 +55,28 @@ public class SearchController : ControllerBase
 			.OrderByDescending(searchItem => searchItem.Score(searchString))
 			.Where(searchItem => searchItem.Score(searchString) > MinimalSearchScore);
 		return Ok(result);
-	}	
+	}
+	
+	/// <summary>
+	/// Поиск клиентов
+	/// </summary>
+	/// <param name="searchString">Строка, по которой происходит поиск</param>
+	/// <returns></returns>
+	[HttpGet]
+	[Route("client")]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SearchResultDto>))]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+	public IActionResult GetClientResults([FromQuery] string? searchString)
+	{
+		if (string.IsNullOrEmpty(searchString))
+			return BadRequest();
+
+		var client = _clientRepository.GetClients().Adapt<SearchClientResultDto[]>();
+		
+		var result = client
+			.OrderByDescending(searchItem => searchItem.Score(searchString))
+			.Where(searchItem => searchItem.Score(searchString) > MinimalSearchScore);
+		return Ok(result);
+	}
 }

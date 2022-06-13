@@ -19,7 +19,7 @@ public class ClientRepository : IClientRepository
 
 	public Client? GetClient(Guid id)
 	{
-		return _context.Clients.AsNoTracking().SingleOrDefault(client => client.Id == id);
+		return _context.Clients.SingleOrDefault(client => client.Id == id);
 	}
 
 	public async Task AddClient(Client client)

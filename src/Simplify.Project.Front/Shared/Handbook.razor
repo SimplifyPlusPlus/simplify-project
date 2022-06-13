@@ -62,165 +62,9 @@
 	</div>
 </div>
 
-<DetailsCard @ref="_clientDetailsCard">
-	<Body>
-	<div class="user-name">
-		<div class="user-name-item">
-			<label for="employeeLastname">Фамилия</label>
-			<input id="employeeLastname" type="text" class="simplify-search-field" @bind="@_clientEditDto.Lastname" />
-		</div>
-		<div class="user-name-item">
-			<label for="employeeFirstname">Имя</label>
-			<input id="employeeFirstname" type="text" class="simplify-search-field" @bind="@_clientEditDto.Firstname" />
-		</div>
-		<div class="user-name-item">
-			<label for="employeePatronymic">Отчество</label>
-			<input id="employeePatronymic" type="text" class="simplify-search-field" @bind="@_clientEditDto.Patronymic" />
-		</div>
-	</div>
-	<div class="simplify-card-body">
-		<div class="simplify-form-control">
-			<label>Номер телефона</label>
-			<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientEditDto.Phone">
-		</div>
-		<div class="simplify-form-control">
-			<label>E-mail</label>
-			<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientEditDto.Email">
-		</div>
-		<div class="simplify-form-control">
-			<label>Примечание</label>
-			<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientEditDto.Note">
-		</div>
-	</div>
-	<div class="simplify-card-footer">
-		<div class="simplify-card-footer-item" style="justify-content: end;">
-			<button class="simplify-btn" style="width: 15%;" @onclick="async () => await ClientEditSaveOnClick()">
-				Сохранить
-			</button>
-		</div>
-	</div>
-	</Body>
-</DetailsCard>
+<ClientEditCard @ref="@_clientEditCard" OnClose="() => InvokeAsync(Refresh)" />
 
-<DetailsCard @ref="_apartmentDetailsCard" BackgroundColor="var(--brand)">
-	<Body>
-	<div class="apartment-details-header">
-		<p class="apartment-details-number">
-			@_apartmentEditDto.Number
-		</p>
-		<p class="apartment-details-name">
-			@_apartmentEditDto.Name
-		</p>
-	</div>
-	<div class="simplify-card-body">
-		@* ReSharper disable once SimplifyLinqExpressionUseAll *@
-		@if (!_apartmentEditDto.ApartmentRelations.Any(relation => relation.RelationType == ApartmentRelationType.Ownership))
-		{
-			<div style="display: flex; flex-direction: column; justify-content: space-between; height: 6rem; color: white;">
-				<p>Нет владельца</p>
-				<div style="display: flex; flex-direction: row; align-items: center; justify-content: start;">
-					<p class="simplify-list-item" style="margin-right: 3rem; color: white;" 
-					   id="@_registerAndAddClientButtonId" @onclick="async () => await AddRegisterClientCardOpen()">
-						Зарегистрировать и добавить...
-					</p>
-					<p class="simplify-list-item" style="color: white;" 
-					   id="@_addOwnershipButtonId" @onclick="async () => await AddExistClientCardOpen(_addOwnershipButtonId, ApartmentRelationType.Ownership)">
-						Добавить из существующих...
-					</p>
-				</div>
-			</div>
-		}
-		else
-		{
-			var ownerships = _apartmentEditDto.ApartmentRelations.Where(relation => relation.RelationType == ApartmentRelationType.Ownership).ToList();
-			<div class="simplify-form-control apartment-relations">
-				<p>Владельцы</p>
-				<p>
-					@foreach (var relation in ownerships)
-					{
-						<div style="display: flex; flex-direction: row; font-weight: 600;">
-							@relation.Client.Name
-							<div @onclick="async () => await RemoveApartmentRelationWithClient(relation.Id)" style="margin-left: 4px; cursor: pointer;">
-								<CloseIcon />
-							</div>
-							@if (relation != ownerships.Last())
-							{
-								<span>, </span>
-							}
-						</div>
-					}
-				</p>
-			</div>
-			<div class="simplify-form-control apartment-relations">
-				@if (_apartmentEditDto.ApartmentRelations.Any(relation => relation.RelationType == ApartmentRelationType.OwnershipFamily))
-				{
-					var ownershipFamily = _apartmentEditDto.ApartmentRelations.Where(relation => relation.RelationType == ApartmentRelationType.OwnershipFamily).ToList();
-					<p>Доверенные</p>
-					<p>
-						@foreach (var relation in ownershipFamily)
-						{
-							<div style="display: flex; flex-direction: row; font-weight: 600;">
-								@relation.Client.Name
-								<div @onclick="async () => await RemoveApartmentRelationWithClient(relation.Id)" style="margin-left: 4px; cursor: pointer;">
-									<CloseIcon />
-								</div>
-								<span>, </span>
-								<div style="margin-left: 4px; cursor: pointer;"
-								     id="@_addOwnershipFamilyButtonId" @onclick="async () => await AddExistClientCardOpen(_addOwnershipFamilyButtonId, ApartmentRelationType.OwnershipFamily)">
-									<PlusIcon />
-								</div>
-							</div>
-						}
-					</p>
-				}
-				else
-				{
-					<p>Нет доверенных</p>
-					<p>
-						<div style="margin-left: 4px; cursor: pointer;"
-						     id="@_addOwnershipFamilyButtonId" @onclick="async () => await AddExistClientCardOpen(_addOwnershipFamilyButtonId, ApartmentRelationType.OwnershipFamily)">
-							<PlusIcon />
-						</div>
-					</p>
-				}
-			</div>
-			<div class="simplify-form-control apartment-relations">
-				@if (_apartmentEditDto.ApartmentRelations.Any(relation => relation.RelationType == ApartmentRelationType.Renter))
-				{
-					var renters = _apartmentEditDto.ApartmentRelations.Where(relation => relation.RelationType == ApartmentRelationType.Renter).ToList();
-					<p>Квартиранты</p>
-					<p>
-						@foreach (var relation in renters)
-						{
-							<div style="display: flex; flex-direction: row; font-weight: 600;">
-								@relation.Client.Name
-								<div @onclick="async () => await RemoveApartmentRelationWithClient(relation.Id)" style="margin-left: 4px; cursor: pointer;">
-									<CloseIcon />
-								</div>
-								<span>, </span>
-								<div style="margin-left: 4px; cursor: pointer;"
-								     id="@_addRenterButtonId" @onclick="async () => await AddExistClientCardOpen(_addRenterButtonId, ApartmentRelationType.Renter)">
-									<PlusIcon />
-								</div>
-							</div>
-						}
-					</p>
-				}
-				else
-				{
-					<p>Нет квартирантов</p>
-					<p>
-						<div style="margin-left: 4px; cursor: pointer;"
-						     id="@_addRenterButtonId" @onclick="async () => await AddExistClientCardOpen(_addRenterButtonId, ApartmentRelationType.Renter)">
-							<PlusIcon />
-						</div>
-					</p>
-				}
-			</div>
-		}
-	</div>
-	</Body>
-</DetailsCard>
+<ApartmentEditCard @ref="_apartmentEditCard" />
 
 <DetailsCard @ref="@_registerAndAddClientCard">
 	<Body>
@@ -249,7 +93,7 @@
 		</div>
 		<div class="simplify-form-control">
 			<label>Примечание</label>
-			<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientEditDto.Note">
+			<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientCreateDto.Note">
 		</div>
 	</div>
 	<div class="simplify-card-footer">
@@ -259,25 +103,5 @@
 			</button>
 		</div>
 	</div>
-	</Body>
-</DetailsCard>
-
-<DetailsCard @ref="_addExistClientCard">
-	<Body>
-		<div style="min-height: 64px; padding: 0.5rem 0.25rem;">
-			<div class="handbook-header">
-				<input type="text" class="simplify-search-field" placeholder="Фио пользователя..." @oninput="_existClientOnInputDebounced!">
-			</div>
-			<div id="clients-search-items">
-				<div style="margin-top: 1rem;">
-					@foreach (var item in ExistClientSearchResults.OrderBy(dto => dto.Name))
-					{
-						<p id="@item.Id" class="simplify-list-item" @onclick="args => SelectExistClient(item)">
-							@item.Name
-						</p>
-					}
-				</div>
-			</div>
-		</div>
 	</Body>
 </DetailsCard>

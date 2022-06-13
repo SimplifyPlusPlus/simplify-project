@@ -1,0 +1,132 @@
+@using Simplify.Project.Shared
+
+<DetailsCard @ref="_detailsCard" BackgroundColor="var(--brand)">
+	<Body>
+	<div class="apartment-details-header">
+		<p class="apartment-details-number">
+			@_apartmentEditDto.Number
+		</p>
+		<p class="apartment-details-name">
+			@_apartmentEditDto.Name
+		</p>
+	</div>
+	<div class="simplify-card-body">
+		@* ReSharper disable once SimplifyLinqExpressionUseAll *@
+		@if (!_apartmentEditDto.ApartmentRelations.Any())
+		{
+			<div style="display: flex; flex-direction: column; justify-content: space-between; height: 6rem; color: white;">
+				<p>Нет владельца</p>
+				<div style="display: flex; flex-direction: row; align-items: center; justify-content: start;">
+					<p class="simplify-list-item" style="margin-right: 3rem; color: white;">
+						Зарегистрировать и добавить...
+					</p>
+					<p class="simplify-list-item" style="color: white;" 
+					   id="@_addOwnershipButtonId" @onclick="async () => await AddExistClientCardOpen(_addOwnershipButtonId, ApartmentRelationType.Ownership)">
+						Добавить из существующих...
+					</p>
+				</div>
+			</div>
+		}
+		else
+		{
+			var ownerships = _apartmentEditDto.ApartmentRelations.Where(relation => relation.RelationType == ApartmentRelationType.Ownership).ToList();
+			<div class="simplify-form-control apartment-relations">
+				<p>Владельцы</p>
+				<p>
+					@foreach (var relation in ownerships)
+					{
+						<div style="display: flex; flex-direction: row; font-weight: 600;">
+							@relation.Client.Name
+							<div @onclick="() => RemoveApartmentRelationWithClient(relation)" style="margin-left: 4px; cursor: pointer;">
+								<CloseIcon />
+							</div>
+							@if (relation != ownerships.Last())
+							{
+								<span>, </span>
+							}
+						</div>
+					}
+				</p>
+			</div>
+			<div class="simplify-form-control apartment-relations">
+				@if (_apartmentEditDto.ApartmentRelations.Any(relation => relation.RelationType == ApartmentRelationType.OwnershipFamily))
+				{
+					var ownershipFamily = _apartmentEditDto.ApartmentRelations.Where(relation => relation.RelationType == ApartmentRelationType.OwnershipFamily).ToList();
+					<p>Доверенные</p>
+					<p>
+						@foreach (var relation in ownershipFamily)
+						{
+							<div style="display: flex; flex-direction: row; font-weight: 600;">
+								@relation.Client.Name
+								<div @onclick="() => RemoveApartmentRelationWithClient(relation)" style="margin-left: 4px; cursor: pointer;">
+									<CloseIcon />
+								</div>
+								<span>, </span>
+								<div style="margin-left: 4px; cursor: pointer;"
+								     id="@_addOwnershipFamilyButtonId" @onclick="async () => await AddExistClientCardOpen(_addOwnershipFamilyButtonId, ApartmentRelationType.OwnershipFamily)">
+									<PlusIcon />
+								</div>
+							</div>
+						}
+					</p>
+				}
+				else
+				{
+					<p>Нет доверенных</p>
+					<p>
+						<div style="margin-left: 4px; cursor: pointer;"
+						     id="@_addOwnershipFamilyButtonId" @onclick="async () => await AddExistClientCardOpen(_addOwnershipFamilyButtonId, ApartmentRelationType.OwnershipFamily)">
+							<PlusIcon />
+						</div>
+					</p>
+				}
+			</div>
+			<div class="simplify-form-control apartment-relations">
+				@if (_apartmentEditDto.ApartmentRelations.Any(relation => relation.RelationType == ApartmentRelationType.Renter))
+				{
+					var renters = _apartmentEditDto.ApartmentRelations.Where(relation => relation.RelationType == ApartmentRelationType.Renter).ToList();
+					<p>Квартиранты</p>
+					<p>
+						@foreach (var relation in renters)
+						{
+							<div style="display: flex; flex-direction: row; font-weight: 600;">
+								@relation.Client.Name
+								<div @onclick="() => RemoveApartmentRelationWithClient(relation)" style="margin-left: 4px; cursor: pointer;">
+									<CloseIcon />
+								</div>
+								<span>, </span>
+								<div style="margin-left: 4px; cursor: pointer;"
+								     id="@_addRenterButtonId" @onclick="async () => await AddExistClientCardOpen(_addRenterButtonId, ApartmentRelationType.Renter)">
+									<PlusIcon />
+								</div>
+							</div>
+						}
+					</p>
+				}
+				else
+				{
+					<p>Нет квартирантов</p>
+					<p>
+						<div style="margin-left: 4px; cursor: pointer;"
+						     id="@_addRenterButtonId" @onclick="async () => await AddExistClientCardOpen(_addRenterButtonId, ApartmentRelationType.Renter)">
+							<PlusIcon />
+						</div>
+					</p>
+				}
+			</div>
+		}
+	</div>
+	@if (_apartmentEditDto.ApartmentRelations.Any())
+	{
+		<div class="simplify-card-footer">
+			<div class="simplify-card-footer-item" style="justify-content: end;">
+				<button class="simplify-btn-light" style="width: 15%;" @onclick="async () => await ApartmentEditSaveOnClick()">
+					Сохранить
+				</button>
+			</div>
+		</div>
+	}
+	</Body>
+</DetailsCard>
+
+<ApartmentAddExistClientCard @ref="@_addExistClientCard" OnClose="dto => { _apartmentEditDto = dto; StateHasChanged(); }" />

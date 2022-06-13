@@ -26,6 +26,9 @@ internal static class MapsterConfig
 			.Map(dest => dest.IsBlocked, src => src.IsBlocked)
 			.Map(dest => dest.Note, src => src.Note);
 		
+		TypeAdapterConfig<ClientBaseDto, Client>.NewConfig()
+			.Map(dest => dest.Id, src => src.Id);
+		
 		TypeAdapterConfig<ClientCreateDto, Client>.NewConfig()
 			.Map(dest => dest.Lastname, src => src.Lastname)
 			.Map(dest => dest.Firstname, src => src.Firstname)
@@ -43,7 +46,7 @@ internal static class MapsterConfig
 			.Map(dest => dest.Phone, src => src.Phone)
 			.Map(dest => dest.IsBlocked, src => src.IsBlocked)
 			.Map(dest => dest.Note, src => src.Note);
-		
+
 		TypeAdapterConfig<ClientEditDto, Client>.NewConfig()
 			.Map(dest => dest.Lastname, src => src.Lastname)
 			.Map(dest => dest.Firstname, src => src.Firstname)
@@ -51,7 +54,8 @@ internal static class MapsterConfig
 			.Map(dest => dest.Email, src => src.Email)
 			.Map(dest => dest.Phone, src => src.Phone)
 			.Map(dest => dest.IsBlocked, src => src.IsBlocked)
-			.Map(dest => dest.Note, src => src.Note);
+			.Map(dest => dest.Note, src => src.Note)
+			.IgnoreNonMapped(true);
 
 		TypeAdapterConfig<Employee, EmployeeBaseDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
@@ -110,7 +114,10 @@ internal static class MapsterConfig
 			.Map(dest => dest.Number, src => src.Number)
 			.Map(dest => dest.Name, src => $"{src.Entrance.House.Street} {src.Entrance.House.Number}, {src.Entrance.House.Building}".Trim() + $" кв. {src.Number}")
 			.Map(dest => dest.ApartmentRelations, src => src.ApartmentRelations.Select(relation => relation.Adapt<ApartmentRelationDto>()));
-		
+
+		TypeAdapterConfig<ApartmentBaseDto, Apartment>.NewConfig()
+			.Map(dest => dest.Id, src => src.Id);
+
 		TypeAdapterConfig<ApartmentEditDto, Apartment>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Number, src => src.Number);
@@ -133,18 +140,23 @@ internal static class MapsterConfig
 
 		TypeAdapterConfig<ApartmentRelation, ApartmentRelationDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
-			.Map(dest => dest.Client, src => src.Client)
+			.Map(dest => dest.Client, src => src.Client.Adapt<ClientBaseDto>())
 			.Map(dest => dest.Created, src => src.Created)
-			.Map(dest => dest.Apartment, src => src.Apartment)
+			.Map(dest => dest.Apartment, src => src.Apartment.Adapt<ApartmentBaseDto>())
 			.Map(dest => dest.RelationType, src => src.RelationType);
 		
 		TypeAdapterConfig<ApartmentRelationDto, ApartmentRelation>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
-			.Map(dest => dest.Client, src => src.Client)
+			.Map(dest => dest.Client, src => src.Client.Adapt<Client>())
 			.Map(dest => dest.Created, src => src.Created)
-			.Map(dest => dest.Apartment, src => src.Apartment)
+			.Map(dest => dest.Apartment, src => src.Apartment.Adapt<Apartment>())
 			.Map(dest => dest.RelationType, src => src.RelationType);
 
+		TypeAdapterConfig<Client, SearchClientResultDto>.NewConfig()
+			.Map(dest => dest.Id, src => src.Id)
+			.Map(dest => dest.Name, src => $"{src.Lastname} {src.Firstname} {src.Patronymic}".Trim())
+			.Map(dest => dest.IsBlocked, src => src.IsBlocked);
+		
 		TypeAdapterConfig<Client, SearchResultDto>.NewConfig()
 			.Map(dest => dest.Id, src => src.Id)
 			.Map(dest => dest.Name, src => $"{src.Lastname} {src.Firstname} {src.Patronymic}".Trim())

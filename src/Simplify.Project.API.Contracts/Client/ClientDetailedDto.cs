@@ -6,8 +6,26 @@ namespace Simplify.Project.API.Contracts.Client;
 /// <summary>
 /// Детальная информация по клиенту
 /// </summary>
-public class ClientDetailedDto : ClientBaseDto
+public class ClientDetailedDto
 {
+	/// <summary>
+	/// Идентификатор
+	/// </summary>
+	[Required]
+	public Guid Id { get; set; }
+    
+	/// <summary>
+	/// Имя
+	/// </summary>
+	[Required]
+	public string Name { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Флаг блокировки
+	/// </summary>
+	[Required]
+	public bool IsBlocked { get; set; }
+	
 	/// <summary>
 	/// Электронная почта
 	/// </summary>

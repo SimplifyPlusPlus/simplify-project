@@ -27,7 +27,7 @@
 	private double _positionX = 0;
 	private double _positionY = 0;
 	
-	[Parameter, EditorRequired]
+	[Parameter]
 	public RenderFragment? Body { get; set; }
 
 	[Parameter]
@@ -40,7 +40,7 @@
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
 		if (firstRender)
-			await _jsRuntime.InvokeVoidAsync("registerDetailsCardEvents", Id);
+			//await _jsRuntime.InvokeVoidAsync("registerDetailsCardEvents", Id);
 	
 		await base.OnAfterRenderAsync(firstRender);
 	}
@@ -50,8 +50,6 @@
 		_display = "flex";
 		_positionY = Convert.ToInt32(offsetTop);
 		_positionX = Convert.ToInt32(offsetLeft);
-		
-		StateHasChanged();
 	}
 
 	public void Close()
@@ -59,7 +57,5 @@
 		_display = "none;";
 		_positionY = 0;
 		_positionX = 0;
-		
-		StateHasChanged();
 	}
 }

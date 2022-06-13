@@ -121,13 +121,15 @@ public class ApartmentController : ControllerBase
 	/// </summary>
 	/// <param name="id">Идентификатор</param>
 	/// <param name="apartmentEditDto">Измененные данные квартиры</param>
+	/// <param name="clientRepository"></param>
 	[HttpPatch]
 	[Route("{id:Guid}/edit")]
 	[ProducesResponseType(StatusCodes.Status204NoContent)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-	public async Task<IActionResult> GetClientEdit([FromRoute] Guid? id, [FromBody] ApartmentEditDto? apartmentEditDto)
+	public async Task<IActionResult> GetClientEdit([FromRoute] Guid? id, [FromBody] ApartmentEditDto? apartmentEditDto, 
+		[FromServices] IClientRepository clientRepository)
 	{
 		if (id == null || id == Guid.Empty || apartmentEditDto == null)
 			return BadRequest();
@@ -135,9 +137,18 @@ public class ApartmentController : ControllerBase
 		var apartment = _apartmentRepository.GetApartment(id.Value);
 		if (apartment == null)
 			return NotFound(nameof(apartment));
-
+		
 		// Саму квартиру можно не изменять, ибо с веб-интерфейса можно изменить только связи с квартирой
-		var relations = apartmentEditDto.ApartmentRelations.Select(relation => relation.Adapt<ApartmentRelation>());
+		var relations = apartmentEditDto.ApartmentRelations.Select(relation => relation.Adapt<ApartmentRelation>()).ToList();
+		foreach (var relation in relations)
+		{
+			var client = clientRepository.GetClient(relation.Client.Id);
+			if (client == null)
+				return NotFound(nameof(client));
+			relation.Client = client;
+			relation.Apartment = apartment;
+		}
+
 		await _apartmentRelationRepository.RemoveApartmentRelations(id.Value);
 		await _apartmentRelationRepository.AddApartmentRelationsRange(relations);
 

@@ -99,12 +99,11 @@ public class ClientController : ControllerBase
 		if (id == null || id == Guid.Empty || clientEditDto == null)
 			return BadRequest();
 		
-		var oldClient = _clientRepository.GetClient(id.Value);
-		if (oldClient == null)
-			return NotFound(nameof(oldClient));
+		var client = _clientRepository.GetClient(id.Value);
+		if (client == null)
+			return NotFound(nameof(client));
 
-		var client = clientEditDto.Adapt<Client>();
-		client.Created = oldClient.Created;
+		clientEditDto.Adapt(client);
 		await _clientRepository.UpdateClient(client);
 		return NoContent();
 	}
