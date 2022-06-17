@@ -87,11 +87,17 @@ public partial class Handbook
 		{
 			case HandbookSearchType.Clients:
 				_clientEditCard?.Init(searchResultDto.Id);
-				_clientEditCard?.Open( coords.Y, coords.X);
+				if (_clientEditCard?.IsOpen == true)
+					_clientEditCard?.Close();
+				else
+					_clientEditCard?.Open(coords.Y, coords.X);
 				break;
 			case HandbookSearchType.Apartments:
 				_apartmentEditCard?.Init(searchResultDto.Id);
-				_apartmentEditCard?.Open( coords.Y, coords.X);
+				if (_apartmentEditCard?.IsOpen == true)
+					_apartmentEditCard.Close();
+				else
+					_apartmentEditCard?.Open(coords.Y, coords.X);
 				break;
 			default:
 				throw new ArgumentOutOfRangeException(nameof(searchResultDto.Type));

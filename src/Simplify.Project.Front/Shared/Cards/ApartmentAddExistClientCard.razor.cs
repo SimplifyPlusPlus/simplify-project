@@ -33,7 +33,7 @@ public partial class ApartmentAddExistClientCard
 
 		await base.OnInitializedAsync();
 	}
-	
+
 	private Action<T> DebounceEvent<T>(Action<T> action, Action callback, TimeSpan interval)
 	{
 		return Debouncer.Debounce<T>(arg =>
@@ -60,7 +60,7 @@ public partial class ApartmentAddExistClientCard
 		_detailsCard?.Open(offsetTop, offsetLeft);
 	}
 
-	private void Close()
+	public void Close()
 	{
 		_detailsCard?.Close();
 	}

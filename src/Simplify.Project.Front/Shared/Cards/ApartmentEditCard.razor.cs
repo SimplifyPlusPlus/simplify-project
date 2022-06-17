@@ -17,6 +17,8 @@ public partial class ApartmentEditCard
 	private DetailsCard? _detailsCard;
 	private ApartmentEditDto _apartmentEditDto = new();
 
+	public bool IsOpen { get; set; } = false;
+
 	[Inject] private HttpClient? HttpClient { get; set; }
 	
 	[Inject] private IJSRuntime? JsRuntime { get; set; }
@@ -33,10 +35,15 @@ public partial class ApartmentEditCard
 	public void Open(double offsetTop, double offsetLeft)
 	{
 		_detailsCard?.Open(offsetTop, offsetLeft);
+		IsOpen = true;
 	}
 
-	private void Close()
+	public void Close()
 	{
+		IsOpen = false;
+		_addNewClientCard?.Close();
+		_addExistClientCard?.Close();
+		OnClose?.Invoke();
 		_detailsCard?.Close();
 	}
 

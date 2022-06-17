@@ -9,6 +9,7 @@ public partial class ClientEditCard
 	private DetailsCard? _detailsCard;
 	private Guid? _selectedClientId;
 	private ClientEditDto _clientEditDto = new();
+	public bool IsOpen { get; set; } = false;
 
 	[Inject] private HttpClient? HttpClient { get; set; }
 	
@@ -22,9 +23,17 @@ public partial class ClientEditCard
 		_clientEditDto = await GetClientEditFromServer();
 		StateHasChanged();
 	}
+
+	public void Close()
+	{
+		IsOpen = false;
+		_detailsCard?.Close();
+		OnClose?.Invoke();
+	}
 	
 	public void Open(double offsetTop, double offsetLeft)
 	{
+		IsOpen = true;
 		_detailsCard?.Open(offsetTop, offsetLeft);
 	}
 	
