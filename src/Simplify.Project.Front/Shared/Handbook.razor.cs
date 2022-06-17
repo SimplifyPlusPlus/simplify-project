@@ -73,62 +73,6 @@ public partial class Handbook
 		StateHasChanged();
 	}
 
-	#region Register and Add Client to Apartment
-	
-	private DetailsCard? _registerAndAddClientCard;
-	private Guid _registerAndAddClientButtonId = Guid.NewGuid();
-	private ClientCreateDto _clientCreateDto = new() { Id = Guid.NewGuid() };
-
-	private async Task AddRegisterClientCardOpen()
-	{
-		ArgumentNullException.ThrowIfNull(JsRuntime, nameof(JsRuntime));
-		var coords = await JsRuntime.InvokeAsync<Coordinates>("getElementCoordinatesById", _registerAndAddClientButtonId);
-		
-		_registerAndAddClientCard?.Open(coords.Y, coords.X);
-	}
-	
-	private async Task ApartmentRelationCreateSave()
-	{
-		// if (_selectApartmentId == null || _selectApartmentId == Guid.Empty)
-		// 	return;
-		//
-		// await SendClientCreateIntoServer(_clientCreateDto);
-		// var relationDto = new ApartmentRelationCreateDto
-		// {
-		// 	ApartmentId = _selectApartmentId.Value,
-		// 	ClientId = _clientCreateDto.Id,
-		// 	RelationType = ApartmentRelationType.Ownership,
-		// };
-		// await SendApartmentRelationCreateIntoServer(relationDto);
-		//
-		// _registerAndAddClientCard?.Close();
-		// _apartmentEditDto = await GetApartmentEditFromServer();
-		// _clientCreateDto = new ClientCreateDto { Id = Guid.NewGuid() };
-		// StateHasChanged();
-	}
-	
-	private async Task SendClientCreateIntoServer(ClientCreateDto clientCreateDto)
-	{
-		ArgumentNullException.ThrowIfNull(HttpClient, nameof(HttpClient));
-		await HttpClientHelper.PostJsonToServer(
-			HttpClient,
-			$"api/client/add",
-			clientCreateDto,
-			"Произошла ошибка при добавлении клиента!");
-	}
-	
-	private async Task SendApartmentRelationCreateIntoServer(ApartmentRelationCreateDto relationCreateDto)
-	{
-		ArgumentNullException.ThrowIfNull(HttpClient, nameof(HttpClient));
-		await HttpClientHelper.PostJsonToServer(
-			HttpClient,
-			$"api/apartment/add-relation",
-			relationCreateDto,
-			"Произошла ошибка при добавлении отношения с квартирой!");
-	}
-
-	#endregion
-	
 	#region Work with Handbook item's
 
 	private ClientEditCard? _clientEditCard;

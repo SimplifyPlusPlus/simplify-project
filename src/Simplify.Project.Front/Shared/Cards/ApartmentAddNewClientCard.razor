@@ -1,0 +1,39 @@
+<DetailsCard @ref="@_detailsCard">
+	<Body>
+	<div class="user-name">
+		<div class="user-name-item">
+			<label for="newClientLastname">Фамилия</label>
+			<input id="newClientLastname" type="text" class="simplify-search-field" @bind="@_clientCreateDto.Lastname" />
+		</div>
+		<div class="user-name-item">
+			<label for="newClientFirstname">Имя</label>
+			<input id="newClientFirstname" type="text" class="simplify-search-field" @bind="@_clientCreateDto.Firstname" />
+		</div>
+		<div class="user-name-item">
+			<label for="newClientPatronymic">Отчество</label>
+			<input id="newClientPatronymic" type="text" class="simplify-search-field" @bind="@_clientCreateDto.Patronymic" />
+		</div>
+	</div>
+	<div class="simplify-card-body">
+		<div class="simplify-form-control">
+			<label>Номер телефона</label>
+			<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientCreateDto.Phone">
+		</div>
+		<div class="simplify-form-control">
+			<label>E-mail</label>
+			<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientCreateDto.Email">
+		</div>
+		<div class="simplify-form-control">
+			<label>Примечание</label>
+			<input type="text" class="simplify-search-field" style="width: 38.5rem;" @bind="@_clientCreateDto.Note">
+		</div>
+	</div>
+	<div class="simplify-card-footer">
+		<div class="simplify-card-footer-item" style="justify-content: end;">
+			<button class="simplify-btn" style="width: 15%;" @onclick="async () => await CreateClient()">
+				Добавить
+			</button>
+		</div>
+	</div>
+	</Body>
+</DetailsCard>

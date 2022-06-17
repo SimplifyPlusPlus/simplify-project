@@ -17,7 +17,8 @@
 			<div style="display: flex; flex-direction: column; justify-content: space-between; height: 6rem; color: white;">
 				<p>Нет владельца</p>
 				<div style="display: flex; flex-direction: row; align-items: center; justify-content: start;">
-					<p class="simplify-list-item" style="margin-right: 3rem; color: white;">
+					<p class="simplify-list-item" style="margin-right: 3rem; color: white;"
+					   id="@_registerAndAddOwnershipButtonId" @onclick="async () => await AddNewClientCardOpen(_registerAndAddOwnershipButtonId)">
 						Зарегистрировать и добавить...
 					</p>
 					<p class="simplify-list-item" style="color: white;" 
@@ -129,4 +130,5 @@
 	</Body>
 </DetailsCard>
 
-<ApartmentAddExistClientCard @ref="@_addExistClientCard" OnClose="dto => { _apartmentEditDto = dto; StateHasChanged(); }" />
+<ApartmentAddExistClientCard @ref="@_addExistClientCard" OnCreateCallback="CreateRelationByClient" />
+<ApartmentAddNewClientCard @ref="@_addNewClientCard" OnCreateCallback="CreateRelationByClient" />

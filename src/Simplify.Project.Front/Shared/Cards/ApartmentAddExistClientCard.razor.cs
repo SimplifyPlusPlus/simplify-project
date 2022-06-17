@@ -14,14 +14,14 @@ public partial class ApartmentAddExistClientCard
 
 	private List<SearchClientResultDto> _searchResults = new();
 	private string? _searchValue = string.Empty;
-	
+
 	private ApartmentEditDto _apartmentEditDto = new();
 	private ApartmentRelationType _relationType;
-	
+
 	[Inject] private HttpClient? HttpClient { get; set; }
-	
-	[Parameter]
-	public Action<ApartmentEditDto>? OnClose { get; set; }
+
+	[Parameter, EditorRequired]
+	public Action<ClientBaseDto, ApartmentRelationType> OnCreateCallback { get; set; } = null!;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -63,33 +63,21 @@ public partial class ApartmentAddExistClientCard
 	private void Close()
 	{
 		_detailsCard?.Close();
-		OnClose?.Invoke(_apartmentEditDto);
 	}
 
 	private void SelectExistClient(SearchClientResultDto resultDto)
 	{
 		if (_apartmentEditDto.Id == Guid.Empty)
 			return;
-		
-		var relationDto = new ApartmentRelationDto
+
+		var clientBaseDto = new ClientBaseDto
 		{
-			Id = Guid.NewGuid(),
-			Apartment = new ApartmentBaseDto
-			{
-				Id = _apartmentEditDto.Id,
-				Number = _apartmentEditDto.Number,
-			},
-			Client = new ClientBaseDto
-			{
-				Id = resultDto.Id,
-				Name = resultDto.Name,
-				IsBlocked = resultDto.IsBlocked,
-			},
-			Created = DateTime.Now,
-			RelationType = _relationType,
+			Id = resultDto.Id,
+			Name = resultDto.Name,
+			IsBlocked = resultDto.IsBlocked,
 		};
 		
-		_apartmentEditDto.ApartmentRelations.Add(relationDto);
+		OnCreateCallback.Invoke(clientBaseDto, _relationType);
 		Close();
 	}
 	

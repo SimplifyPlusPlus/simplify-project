@@ -33,7 +33,6 @@ public class ApartmentController : ControllerBase
 	/// </summary>
 	/// <param name="apartmentRelationCreateDto"></param>
 	/// <param name="clientRepository"></param>
-	/// <returns>Данные квартиры</returns>
 	[HttpPost]
 	[Route("add-relation")]
 	[ProducesResponseType(StatusCodes.Status204NoContent)]
