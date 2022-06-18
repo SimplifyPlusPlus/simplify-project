@@ -1,10 +1,24 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Simplify.Project.API.Contracts.Apartment;
 
 /// <summary>
 /// Модель данных для редактирования квартиры
 /// </summary>
-public class ApartmentEditDto : ApartmentBaseDto
+public class ApartmentEditDto
 {
+	/// <summary>
+	/// Идентификатор
+	/// </summary>
+	[Required]
+	public Guid Id { get; set; }
+
+	/// <summary>
+	/// Номер
+	/// </summary>
+	[Required]
+	public int Number { get; set; }
+
 	/// <summary>
 	/// Полное наименование
 	/// </summary>
