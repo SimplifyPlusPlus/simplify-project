@@ -3,20 +3,24 @@
 <style>
 	:root {
       --brand: #@BrandColor;
+      --brand-gradient: #@BrandGradientColor;
     }
 </style>
 
 <div class="page">
-  <BorderColumn></BorderColumn>
-  
-  <main>
-    @Body
-  </main>
+	<BorderColumn></BorderColumn>
 
-  <BorderColumn></BorderColumn>
+	<main>
+		@Body
+	</main>
+
+	<BorderColumn></BorderColumn>
 </div>
 
 @code {
-  [Parameter]
-  public string BrandColor { get; set; } = "27D056";
+	[Parameter]
+	public string BrandColor { get; set; } = "8BAFF4";
+
+	[Parameter]
+	public string BrandGradientColor { get; set; } = "F4F7FD";
 }

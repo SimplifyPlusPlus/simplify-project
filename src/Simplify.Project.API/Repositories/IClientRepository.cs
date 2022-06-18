@@ -19,4 +19,16 @@ public interface IClientRepository
 	/// <param name="id">Идентификатор</param>
 	/// <returns>Клиент</returns>
 	public Client? GetClient(Guid id);
+
+	/// <summary>
+	/// Добавить клиента
+	/// </summary>
+	/// <param name="client">Новый клиент</param>
+	public Task AddClient(Client client);
+
+	/// <summary>
+	/// Обновить данные клиента по идентификатору
+	/// </summary>
+	/// <param name="updatedClient">Измененные данные клиента</param>
+	public Task UpdateClient(Client updatedClient);
 }

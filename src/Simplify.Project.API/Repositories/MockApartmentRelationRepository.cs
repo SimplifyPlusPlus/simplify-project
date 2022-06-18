@@ -38,6 +38,41 @@ public class MockApartmentRelationRepository : IApartmentRelationRepository
 		return relations.AsQueryable();
 	}
 
+	/// <inheritdoc cref="IApartmentRelationRepository.GetClientApartmentsRelations(Guid)"/>
+	public IQueryable<ApartmentRelation> GetClientApartmentsRelations(Guid id)
+	{
+		var relations = _apartmentRelations.Where(relation => relation.Client.Id == id);
+		return relations.AsQueryable();
+	}
+
+	/// <inheritdoc cref="IApartmentRelationRepository.AddApartmentRelation(ApartmentRelation)"/>
+	public Task AddApartmentRelation(ApartmentRelation relation)
+	{
+		_apartmentRelations.Add(relation);
+		return Task.CompletedTask;
+	}
+
+	/// <inheritdoc cref="IApartmentRelationRepository.AddApartmentRelationsRange(IEnumerable{ApartmentRelation})"/>
+	public Task AddApartmentRelationsRange(IEnumerable<ApartmentRelation> relations)
+	{
+		_apartmentRelations.AddRange(relations);
+		return Task.CompletedTask;
+	}
+
+	/// <inheritdoc cref="IApartmentRelationRepository.RemoveApartmentRelation(ApartmentRelation)"/>
+	public Task RemoveApartmentRelation(ApartmentRelation relation)
+	{
+		_apartmentRelations.Remove(relation);
+		return Task.CompletedTask;
+	}
+
+	/// <inheritdoc cref="IApartmentRelationRepository.RemoveApartmentRelations(Guid)"/>
+	public Task RemoveApartmentRelations(Guid id)
+	{
+		_apartmentRelations.RemoveAll(relation => relation.Apartment.Id == id);
+		return Task.CompletedTask;
+	}
+
 	private static List<ApartmentRelation> GenerateData()
 	{
 		return new List<ApartmentRelation>
@@ -45,84 +80,84 @@ public class MockApartmentRelationRepository : IApartmentRelationRepository
 			new()
 			{
 				Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6"),
-				Apartment = new Apartment {Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6") },
+				Apartment = new Apartment {Id = Guid.Parse("00001f64-5716-4562-b3fc-2c963f66afa6") },
 				RelationType = ApartmentRelationType.Ownership,
 				Created = DateTime.Now,
 			},
 			new()
 			{
 				Id = Guid.Parse("00002f64-5717-4562-b3fc-2c963f66afa6"),
-				Apartment = new Apartment {Id = Guid.Parse("00100f64-5717-4562-b3fc-2c963f66afa6")},
+				Apartment = new Apartment {Id = Guid.Parse("00100f64-5716-4562-b3fc-2c963f66afa6")},
 				RelationType = ApartmentRelationType.OwnershipFamily,
 				Created = DateTime.Now,
 			},
 			new()
 			{
 				Id = Guid.Parse("00003f64-5717-4562-b3fc-2c963f66afa6"),
-				Apartment = new Apartment {Id = Guid.Parse("00205f64-5717-4562-b3fc-2c963f66afa6")},
+				Apartment = new Apartment {Id = Guid.Parse("00205f64-5716-4562-b3fc-2c963f66afa6")},
 				RelationType = ApartmentRelationType.Renter,
 				Created = DateTime.Now,
 			},
 			new()
 			{
 				Id = Guid.Parse("00004f64-5717-4562-b3fc-2c963f66afa6"),
-				Apartment = new Apartment {Id = Guid.Parse("00205f64-5717-4562-b3fc-2c963f66afa6")},
+				Apartment = new Apartment {Id = Guid.Parse("00205f64-5716-4562-b3fc-2c963f66afa6")},
 				RelationType = ApartmentRelationType.Ownership,
 				Created = DateTime.Now,
 			},
 			new()
 			{
 				Id = Guid.Parse("00005f64-5717-4562-b3fc-2c963f66afa6"),
-				Apartment = new Apartment {Id = Guid.Parse("00102f64-5717-4562-b3fc-2c963f66afa6")},
+				Apartment = new Apartment {Id = Guid.Parse("00102f64-5716-4562-b3fc-2c963f66afa6")},
 				RelationType = ApartmentRelationType.OwnershipFamily,
 				Created = DateTime.Now,
 			},
 			new()
 			{
 				Id = Guid.Parse("00006f64-5717-4562-b3fc-2c963f66afa6"),
-				Apartment = new Apartment {Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6")},
+				Apartment = new Apartment {Id = Guid.Parse("00001f64-5716-4562-b3fc-2c963f66afa6")},
 				RelationType = ApartmentRelationType.Renter,
 				Created = DateTime.Now,
 			},
 			new()
 			{
 				Id = Guid.Parse("00007f64-5717-4562-b3fc-2c963f66afa6"),
-				Apartment = new Apartment {Id = Guid.Parse("00294f64-5717-4562-b3fc-2c963f66afa6")},
+				Apartment = new Apartment {Id = Guid.Parse("00294f64-5716-4562-b3fc-2c963f66afa6")},
 				RelationType = ApartmentRelationType.Ownership,
 				Created = DateTime.Now,
 			},
 			new()
 			{
 				Id = Guid.Parse("00008f64-5717-4562-b3fc-2c963f66afa6"),
-				Apartment = new Apartment {Id = Guid.Parse("00055f64-5717-4562-b3fc-2c963f66afa6")},
+				Apartment = new Apartment {Id = Guid.Parse("00055f64-5716-4562-b3fc-2c963f66afa6")},
 				RelationType = ApartmentRelationType.OwnershipFamily,
 				Created = DateTime.Now,
 			},
 			new()
 			{
 				Id = Guid.Parse("00009f64-5717-4562-b3fc-2c963f66afa6"),
-				Apartment = new Apartment {Id = Guid.Parse("00001f64-5717-4562-b3fc-2c963f66afa6")},
+				Apartment = new Apartment {Id = Guid.Parse("00001f64-5716-4562-b3fc-2c963f66afa6")},
 				RelationType = ApartmentRelationType.Renter,
 				Created = DateTime.Now,
 			},
 			new()
 			{
 				Id = Guid.Parse("00010f64-5717-4562-b3fc-2c963f66afa6"),
-				Apartment = new Apartment {Id = Guid.Parse("00055f64-5717-4562-b3fc-2c963f66afa6")},
+				Apartment = new Apartment {Id = Guid.Parse("00055f64-5716-4562-b3fc-2c963f66afa6")},
 				RelationType = ApartmentRelationType.Ownership,
 				Created = DateTime.Now,
 			},
 			new()
 			{
 				Id = Guid.Parse("00011f64-5717-4562-b3fc-2c963f66afa6"),
-				Apartment = new Apartment {Id = Guid.Parse("00100f64-5717-4562-b3fc-2c963f66afa6")},
+				Apartment = new Apartment {Id = Guid.Parse("00100f64-5716-4562-b3fc-2c963f66afa6")},
 				RelationType = ApartmentRelationType.OwnershipFamily,
 				Created = DateTime.Now,
 			},
 			new()
 			{
 				Id = Guid.Parse("00012f64-5717-4562-b3fc-2c963f66afa6"),
-				Apartment = new Apartment {Id = Guid.Parse("00294f64-5717-4562-b3fc-2c963f66afa6")},
+				Apartment = new Apartment {Id = Guid.Parse("00294f64-5716-4562-b3fc-2c963f66afa6")},
 				RelationType = ApartmentRelationType.Renter,
 				Created = DateTime.Now,
 			},

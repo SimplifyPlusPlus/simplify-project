@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Simplify.Project.API.Contracts.Employee;
 using Simplify.Project.Front.Helpers;
 
-namespace Simplify.Project.Front.Shared;
+namespace Simplify.Project.Front.Shared.Cards;
 
 public partial class EmployeeEditCard
 {

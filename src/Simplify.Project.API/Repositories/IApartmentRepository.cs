@@ -19,4 +19,11 @@ public interface IApartmentRepository
 	/// <param name="id">Идентификатор</param>
 	/// <returns>Квартира</returns>
 	public Apartment? GetApartment(Guid id);
+
+	/// <summary>
+	/// Обновить данные квартиры по идентификатору
+	/// </summary>
+	/// <param name="id">Идентификатор квартиры</param>
+	/// <param name="updatedApartment">Измененные данные квартиры</param>
+	public Task UpdateApartment(Guid id, Apartment updatedApartment);
 }

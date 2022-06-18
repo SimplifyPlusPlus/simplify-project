@@ -8,6 +8,8 @@ namespace Simplify.Project.API;
 /// </summary>
 public class SimplifyContext : DbContext
 {
+	#region Tables
+
 	/// <summary>
 	/// Коллекция квартир
 	/// </summary>
@@ -43,6 +45,12 @@ public class SimplifyContext : DbContext
 	/// </summary>
 	public DbSet<House> Houses { get; set; } = null!;
 
+	/// <summary>
+	/// Коллекция событий
+	/// </summary>
+	public DbSet<Event> Events { get; set; } = null!;
+
+	#endregion
 
 	public SimplifyContext() { }
 	public SimplifyContext(DbContextOptions<SimplifyContext> options) : base(options) { }
@@ -125,6 +133,15 @@ public class SimplifyContext : DbContext
 			entity.Property(x => x.Building).IsRequired(false);
 
 			entity.HasMany(x => x.Entrances).WithOne(x => x.House);
+		});
+
+		modelBuilder.Entity<Event>(entity =>
+		{
+			entity.HasKey(x => x.Id);
+			entity.Property(x => x.EventEntityType).IsRequired();
+			entity.Property(x => x.EventType).IsRequired();
+			entity.Property(x => x.Created).IsRequired().HasDefaultValueSql("now()");
+			entity.Property(x => x.Data).IsRequired().HasColumnType("jsonb");
 		});
 	}
 }

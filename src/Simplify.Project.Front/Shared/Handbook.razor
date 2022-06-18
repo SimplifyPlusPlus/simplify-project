@@ -1,9 +1,15 @@
 @using Simplify.Project.Shared
+
 <style>
+	.handbook {
+		padding: 2rem 5rem;
+	}
+
 	.handbook-header {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
+		margin-bottom: 1.5rem;
 	}
 	
 	.handbook-filters {
@@ -35,21 +41,26 @@
 	}
 </style>
 
-<div class="handbook-header">
-	<input type="text" class="employee-search-field" placeholder="Поиск по справочнику" @oninput="_onInputDebounced!">
-	<div class="handbook-filters">
-		<div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchTypes.Houses) ? "selected" : "")" 
-		     @onclick="() => FiltersItemOnClick(HandbookSearchTypes.Houses)">Дома</div>
-		<div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchTypes.Apartments) ? "selected" : "")" 
-		     @onclick="() => FiltersItemOnClick(HandbookSearchTypes.Apartments)">Квартиры</div>
-		<div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchTypes.Clients) ? "selected" : "")" 
-		     @onclick="() => FiltersItemOnClick(HandbookSearchTypes.Clients)">Клиенты</div>
+<div class="handbook">
+	<div class="handbook-header">
+    	<input type="text" class="simplify-search-field" placeholder="Поиск по справочнику" @oninput="_onInputDebounced!">
+    	<div class="handbook-filters">
+	        <div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchType.Apartments) ? "selected" : "")" 
+    		     @onclick="() => FiltersItemOnClick(HandbookSearchType.Apartments)">Квартиры</div>
+    		<div class="handbook-filters-item @(FiltersItemIsSelected(HandbookSearchType.Clients) ? "selected" : "")" 
+    		     @onclick="() => FiltersItemOnClick(HandbookSearchType.Clients)">Клиенты</div>
+    	</div>
+    </div>
+    
+	<div id="handbook-search-items">
+		@foreach (var item in SearchResults.OrderBy(dto => dto.Name))
+		{
+			<p id="@item.Id" class="simplify-list-item" @onclick="_ => SelectHandbookItem(item)">
+				@item.Name
+			</p>
+		}
 	</div>
 </div>
 
-@foreach (var item in SearchResults.OrderBy(dto => dto.Name))
-{
-    <div>
-        <p>@item.Name @GetComfortableTypeName(item.Type)</p>
-    </div>
-}
+<ClientEditCard @ref="@_clientEditCard" OnClose="() => InvokeAsync(Refresh)" />
+<ApartmentEditCard @ref="_apartmentEditCard" />

@@ -25,12 +25,12 @@ public interface IEmployeeRepository
 	/// Добавить сотрудника
 	/// </summary>
 	/// <param name="employee">Данные сотрудника</param>
-	public void AddEmployee(Employee employee);
+	public Task AddEmployee(Employee employee);
 
 	/// <summary>
 	/// Обновить данные сотрудника по идентификатору
 	/// </summary>
 	/// <param name="id">Идентификатор сотрудника</param>
 	/// <param name="updatedEmployee">Измененные данные сотрудника</param>
-	public void UpdateEmployee(Guid id, Employee updatedEmployee);
+	public Task UpdateEmployee(Guid id, Employee updatedEmployee);
 }

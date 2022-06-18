@@ -1,0 +1,73 @@
+@using Simplify.Project.Shared
+
+@if (!_showCreateForm)
+{
+	<div class="employee-card">
+		<div class="employee-roles-body">
+			<p class="employee-roles-title">Новый сотрудник</p>
+			<div class="employee-roles-grid">
+				@foreach (var role in RoleType.ToCollection())
+				{
+					<button class="simplify-btn" style="margin-bottom: 1rem;" @onmouseover="() => _roleMouseUp = role" @onmouseout="() => _roleMouseUp = string.Empty"
+					        @onclick="() => NewEmployeeRolePicked(role)">
+						@role
+					</button>
+				}
+			</div>
+        
+			<p class="employee-role-description">@GetRoleDescription(_roleMouseUp)</p>
+		</div>
+	</div>
+}
+else
+{
+	<div class="employee-card">
+		<div class="simplify-card-wrapper">
+			<div class="user-name">
+				<div class="user-name-item">
+					<label for="employeeLastname">Фамилия</label>
+					<input id="employeeLastname" type="text" class="simplify-search-field" @bind="@_employeeCreateDto.Lastname" />
+				</div>
+				<div class="user-name-item">
+					<label for="employeeFirstname">Имя</label>
+					<input id="employeeFirstname" type="text" class="simplify-search-field" @bind="@_employeeCreateDto.Firstname" />
+				</div>
+				<div class="user-name-item">
+					<label for="employeePatronymic">Отчество</label>
+					<input id="employeePatronymic" type="text" class="simplify-search-field" @bind="@_employeeCreateDto.Patronymic" />
+				</div>
+			</div>
+    				
+			<div class="simplify-card-body">
+				<div class="simplify-form-control">
+					<label>Роль</label>
+					<select class="simplify-dropdown" @bind="@_employeeCreateDto.Role">
+						@foreach (var item in RoleType.ToCollection())
+						{
+							<option value="@item">@item</option>
+						}
+					</select>
+				</div>
+				<div class="simplify-form-control">
+					<label>Имя пользователя</label>
+					<input type="text" class="simplify-search-field" @bind="@_employeeCreateDto.Login">
+				</div>
+				<div class="simplify-form-control">
+					<label>Пароль</label>
+					<input type="text" class="simplify-search-field" @bind="@_employeeCreateDto.Password">
+				</div>
+				<div class="simplify-form-control">
+					<label>Примечание</label>
+					<input type="text" class="simplify-search-field" @bind="@_employeeCreateDto.Note">
+				</div>
+			</div>
+			<div class="simplify-card-footer">
+				<div class="simplify-card-footer-item" style="justify-content: end;">
+					<button class="simplify-btn" style="width: 30%;" @onclick="async () => await EmployeeAddOnClick()">
+						Сохранить
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+}

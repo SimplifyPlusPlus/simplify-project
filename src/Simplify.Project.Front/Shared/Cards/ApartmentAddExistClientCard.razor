@@ -1,0 +1,19 @@
+<DetailsCard @ref="_detailsCard">
+	<Body>
+	<div style="min-height: 64px; padding: 0.5rem 0.25rem;">
+		<div class="handbook-header">
+			<input type="text" class="simplify-search-field" placeholder="Фио пользователя..." @oninput="_onInputDebounced!">
+		</div>
+		<div id="clients-search-items">
+			<div style="margin-top: 1rem;">
+				@foreach (var item in _searchResults.OrderBy(dto => dto.Name))
+				{
+					<p id="@item.Id" class="simplify-list-item" @onclick="_ => SelectExistClient(item)">
+						@item.Name
+					</p>
+				}
+			</div>
+		</div>
+	</div>
+	</Body>
+</DetailsCard>

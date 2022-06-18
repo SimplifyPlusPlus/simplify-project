@@ -12,8 +12,9 @@
   box-sizing: border-box;
 }
 
-body {
+* {
   margin: 0;
+  padding: 0;
 }
 
 h1:focus {
@@ -24,9 +25,9 @@ a, .btn-link {
   color: #0071c1;
 }
 
-main {
-  padding: 1rem 3rem;
-}
+/*main {*/
+/*  padding: 1rem 3rem;*/
+/*}*/
 
 .btn-primary {
   color: #fff;
@@ -83,7 +84,7 @@ main {
   display: flex;
   flex-direction: column;
   background: var(--brand);
-  width: 250px;
+  width: 25rem;
   height: 100vh;
 }
 
@@ -96,6 +97,19 @@ main {
   color: white;
   border: 0;
   background: var(--accent);
+  box-shadow: inset 0 -2px 0 var(--gray);
+  border-radius: 6px;
+}
+
+.simplify-btn-light {
+  width: 75%;
+  height: 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: black;
+  border: 0;
+  background: white;
   box-shadow: inset 0 -2px 0 var(--gray);
   border-radius: 6px;
 }
@@ -116,12 +130,69 @@ main {
   -moz-appearance: none;
 }
 
+.simplify-search-field {
+  width: 100%;
+  height: 1.5rem;
+  font-size: 1.25rem;
+  outline: 0;
+  border: 0;
+  border-bottom: 1px solid var(--gray);
+  background: transparent;
+}
+
+.simplify-search-field::placeholder {
+  opacity: 1;
+  color: var(--gray);
+}
+
+.simplify-search-field:focus {
+  border-bottom: 1px solid black;
+}
+
+.simplify-search-field:focus::placeholder {
+  opacity: 0;
+}
+
+.simplify-list-item {
+  width: max-content;
+  color: var(--accent);
+  font-weight: 500;
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.simplify-list-item.selected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1px;
+  background: var(--accent);
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.user-name {
+  display: flex;
+  flex-direction: row;
+}
+
+.user-name-item:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.user-name-item {
+  background: transparent;
+}
+
 .nav {
   display: flex;
   flex-wrap: wrap;
-  padding-left: 0;
   margin-bottom: 0;
   justify-content: end;
+  padding: 1rem 2rem;
 }
 
 .nav-item {
@@ -139,8 +210,9 @@ main {
 }
 
 .focus-territory {
-  margin-top: 4rem;
+  width: 100rem;
   height: 80vh;
+  margin-top: 4rem;
 }
 
 .main-frame {
@@ -149,6 +221,7 @@ main {
   column-gap: 2rem;
   z-index: 1;
   height: 100%;
+  padding: 2rem 5rem;
 }
 
 .main-frame ul {
@@ -162,7 +235,7 @@ main {
 }
 
 .right {
-  padding: 0 1rem;
+  padding-left: 1rem;
   margin-top: -1rem;
   height: 100%;
 }
@@ -172,54 +245,11 @@ main {
   height: 100%;
 }
 
-.employee-search-field {
-  width: 100%;
-  height: 1.5rem;
-  font-size: 1.25rem;
-  outline: 0;
-  border: 0;
-  border-bottom: 1px solid var(--gray);
-  background: transparent;
-}
-
-.employee-search-field::placeholder {
-  opacity: 1;
-  color: var(--gray);
-}
-
-.employee-search-field:focus {
-  border-bottom: 1px solid black;
-}
-
-.employee-search-field:focus::placeholder {
-  opacity: 0;
-}
-
 .employee-list-title {
   color: black;
   font-weight: 500;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
-}
-
-.employee-list-item {
-  width: max-content;
-  color: var(--accent);
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-  text-decoration: underline var(--accent) dashed;
-}
-
-.employee-list-item.selected {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 1px;
-  background: var(--accent);
-  color: white;
-  font-weight: 600;
-  text-decoration: none;
 }
 
 .employee-roles-body {
@@ -251,7 +281,7 @@ main {
   padding: 0 2rem;
 }
 
-.employee-create-body {
+.simplify-card-wrapper {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -259,30 +289,36 @@ main {
   height: 100%;
 }
 
-.employee-create-name {
+.simplify-card-body {
   display: flex;
-  flex-direction: row;
-}
-
-.employee-create-name-item:not(:last-child) {
-  margin-right: 0.5rem;
-}
-
-.employee-create-name-item {
-  background: transparent;
-}
-
-.employee-create-other {
-  display: flex;
-  justify-content: space-between;
   flex-direction: column;
   height: 100%;
-  margin-top: 2.5rem;
+  margin-top: 1rem;
 }
 
-.employee-create-other-item {
+.simplify-card-body-item {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.simplify-form-control {
+  display: grid;
+  grid-template-columns: 0.8fr 3fr;
+}
+
+.simplify-form-control:not(:first-child, :last-child) {
+  margin: 1rem 0;
+}
+
+.simplify-card-footer {
   display: flex;
   flex-direction: column;
+}
+
+.simplify-card-footer-item {
+  display: flex;
+  flex-direction: row;
 }
 
 .employee-create-personal-item {
@@ -294,5 +330,27 @@ main {
 .employee-create-personal-item-title {
   width: 100%;
   align-self: end;
-  margin: 0;
+}
+
+.apartment-details-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: baseline;
+}
+
+.apartment-details-number {
+  font-size: 30px;
+  font-weight: 500;
+  margin-right: 1rem;
+  color: white;
+}
+
+.apartment-details-name {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.apartment-relations p {
+  color: white;
 }

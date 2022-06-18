@@ -12,29 +12,22 @@ namespace Simplify.Project.API.Controllers;
 /// Контроллер поиска
 /// </summary>
 [ApiController]
-[Route("search")]
+[Route("api/search")]
 public class SearchController : ControllerBase
 {
 	private const double MinimalSearchScore = 0.6;
 	private readonly IClientRepository _clientRepository;
 	private readonly IApartmentRepository _apartmentRepository;
-	private readonly IHouseRepository _houseRepository;
 
 	/// <summary>
 	/// Конструктор класса <see cref="SearchController"/>
 	/// </summary>
 	/// <param name="clientRepository">Репозиторий клиентов</param>
 	/// <param name="apartmentRepository">Репозиторий квартир</param>
-	/// <param name="houseRepository">Репозиторий домов</param>
-	public SearchController(
-		IClientRepository clientRepository, 
-		IApartmentRepository apartmentRepository, 
-		IHouseRepository houseRepository 
-	)
+	public SearchController(IClientRepository clientRepository, IApartmentRepository apartmentRepository)
 	{
 		_clientRepository = clientRepository;
 		_apartmentRepository = apartmentRepository;
-		_houseRepository = houseRepository;
 	}
 
 	/// <summary>
@@ -49,20 +42,41 @@ public class SearchController : ControllerBase
 	{
 		IEnumerable<SearchResultDto> combinedRepositories = new List<SearchResultDto>();
 		
-		if (target?.Contains(HandbookSearchTypes.Clients.ToString()) ?? false)
+		if (target?.Contains(HandbookSearchType.Clients.ToString()) ?? false)
 			combinedRepositories = combinedRepositories.Concat(_clientRepository.GetClients().Adapt<SearchResultDto[]>());
 
-		if (target?.Contains(HandbookSearchTypes.Apartments.ToString()) ?? false)
+		if (target?.Contains(HandbookSearchType.Apartments.ToString()) ?? false)
 			combinedRepositories = combinedRepositories.Concat(_apartmentRepository.GetApartments()
-				.Include(x => x.Entrance)
-				.ThenInclude(x => x.House).Adapt<SearchResultDto[]>());
-
-		if (target?.Contains(HandbookSearchTypes.Houses.ToString()) ?? false)
-			combinedRepositories = combinedRepositories.Concat(_houseRepository.GetHouses().Adapt<SearchResultDto[]>());
+				.Include(apartment => apartment.Entrance)
+					.ThenInclude(house => house.House)
+				.Adapt<SearchResultDto[]>());
 
 		var result = combinedRepositories
 			.OrderByDescending(searchItem => searchItem.Score(searchString))
 			.Where(searchItem => searchItem.Score(searchString) > MinimalSearchScore);
 		return Ok(result);
-	}	
+	}
+	
+	/// <summary>
+	/// Поиск клиентов
+	/// </summary>
+	/// <param name="searchString">Строка, по которой происходит поиск</param>
+	/// <returns></returns>
+	[HttpGet]
+	[Route("client")]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<SearchResultDto>))]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+	public IActionResult GetClientResults([FromQuery] string? searchString)
+	{
+		if (string.IsNullOrEmpty(searchString))
+			return BadRequest();
+
+		var client = _clientRepository.GetClients().Adapt<SearchClientResultDto[]>();
+		
+		var result = client
+			.OrderByDescending(searchItem => searchItem.Score(searchString))
+			.Where(searchItem => searchItem.Score(searchString) > MinimalSearchScore);
+		return Ok(result);
+	}
 }

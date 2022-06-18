@@ -66,19 +66,19 @@ public class EmployeeController : ControllerBase
 	[ProducesResponseType(StatusCodes.Status204NoContent)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-	public IActionResult AddNewEmployee([FromBody] EmployeeCreateDto? employeeCreateDto)
+	public async Task<IActionResult> AddNewEmployee([FromBody] EmployeeCreateDto? employeeCreateDto)
 	{
 		if (employeeCreateDto == null)
 			return BadRequest();
 
 		var employee = employeeCreateDto.Adapt<Employee>();
-		_repository.AddEmployee(employee);
+		await _repository.AddEmployee(employee);
 		
 		return NoContent();
 	}
 
 	/// <summary>
-	/// Получить данные пользователя для изменения
+	/// Получить данные сотрудника для изменения
 	/// </summary>
 	/// <param name="id">Идентификатор сотрудника</param>
 	/// <returns>Данные сотрудника</returns>
@@ -110,19 +110,17 @@ public class EmployeeController : ControllerBase
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[ProducesResponseType(StatusCodes.Status404NotFound)]
 	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-	public IActionResult EditEmployee([FromRoute] Guid? id, [FromBody] EmployeeEditDto? employeeEditDto)
+	public async Task<IActionResult> EditEmployee([FromRoute] Guid? id, [FromBody] EmployeeEditDto? employeeEditDto)
 	{
 		if (id == null || id == Guid.Empty || employeeEditDto == null)
 			return BadRequest();
 		
-		var oldEmployee = _repository.GetEmployee(id.Value);
-		if (oldEmployee == null)
-			return NotFound(nameof(oldEmployee));
+		var employee = _repository.GetEmployee(id.Value);
+		if (employee == null)
+			return NotFound(nameof(employee));
 
-		var employee = employeeEditDto.Adapt<Employee>();
-		employee.Created = oldEmployee.Created;
-		_repository.UpdateEmployee(id.Value, employee);
-		
+		employeeEditDto.Adapt(employee);
+		await _repository.UpdateEmployee(id.Value, employee);
 		return NoContent();
 	}
     

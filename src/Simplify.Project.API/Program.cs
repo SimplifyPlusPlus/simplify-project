@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Simplify.Project.API.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,23 +10,26 @@ public static class Program
 	{
 		var builder = WebApplication.CreateBuilder(args);
 		
-		builder.Services.AddControllers();
+		builder.Services.AddControllers()
+			.AddJsonOptions(options =>
+			{
+				options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+			});
 		builder.Services.AddEndpointsApiExplorer();
 		builder.Services.AddDbContext<SimplifyContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("SimplifyContext")));
+		AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 		MapsterConfig.Config();
 
-		if (builder.Environment.IsDevelopment())
-		{
-			builder.Services.AddSwaggerGen();
-			builder.Services.AddSingleton<IClientRepository, MockClientRepository>();
-			builder.Services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
-			builder.Services.AddSingleton<IEstateRepository, MockEstateRepository>();
-			builder.Services.AddSingleton<IHouseRepository, MockHouseRepository>();
-			builder.Services.AddSingleton<IEntranceRepository, MockEntranceRepository>();
-			builder.Services.AddSingleton<IApartmentRepository, MockApartmentRepository>();
-			builder.Services.AddSingleton<IApartmentRelationRepository, MockApartmentRelationRepository>();
-		}
+		builder.Services.AddSwaggerGen();
+		builder.Services.AddScoped<IClientRepository, ClientRepository>();
+		builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+		builder.Services.AddScoped<IEstateRepository, EstateRepository>();
+		builder.Services.AddScoped<IHouseRepository, HouseRepository>();
+		builder.Services.AddScoped<IEntranceRepository, EntranceRepository>();
+		builder.Services.AddScoped<IApartmentRepository, ApartmentRepository>();
+		builder.Services.AddScoped<IApartmentRelationRepository, ApartmentRelationRepository>();
+		builder.Services.AddScoped<IEventRepository, EventRepository>();
 
 		var app = builder.Build();
 

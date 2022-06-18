@@ -3,33 +3,20 @@ namespace Simplify.Project.Shared;
 /// <summary>
 /// Тип связи клиента с квартирой
 /// </summary>
-public static class ApartmentRelationType
+public enum ApartmentRelationType
 {
-	/// <summary>
-	/// Не указано
-	/// </summary>
-	public const string Empty = "Не указано";
-	
 	/// <summary>
 	/// Собственник
 	/// </summary>
-	public const string Ownership = "Собственник";
+	Ownership = 1,
 	
 	/// <summary>
 	/// Родственник собственника
 	/// </summary>
-	public const string OwnershipFamily = "Родственник собственника";
+	OwnershipFamily = 2,
 	
 	/// <summary>
 	/// Арендатор
 	/// </summary>
-	public const string Renter = "Арендатор";
-	
-	/// <summary>
-	/// Получить связи в виде списка
-	/// </summary>
-	public static ICollection<string> ToCollection() => new List<string>()
-	{
-		Empty, Ownership, OwnershipFamily, Renter
-	};
+	Renter = 3,
 }

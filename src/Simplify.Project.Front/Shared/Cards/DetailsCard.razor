@@ -1,0 +1,61 @@
+@inject IJSRuntime _jsRuntime
+
+<style>
+	.details-card {
+	  position: absolute;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 3px 4px -2px black;
+    }
+    
+    .details-card-body {
+      padding: 1rem 3rem !important;
+    }
+</style>
+
+<div id="@Id" class="details-card" style="width: inherit; display: @_display; top: @(_positionY + 20)px;">
+	<div style="position: relative; left: @(_positionX)px; margin-bottom: -6px;">
+		<TriangleIcon UseGradientColor="@(BackgroundColor != "var(--brand)")" />
+	</div>
+	<div class="details-card-body" style="background: @(BackgroundColor ?? _backgroundColorDefault);">
+		@Body
+	</div>
+</div>
+
+@code {
+	private string _display = "none;";
+	private double _positionX = 0;
+	private double _positionY = 0;
+	
+	[Parameter]
+	public RenderFragment? Body { get; set; }
+
+	[Parameter]
+	public string? BackgroundColor { get; set; }
+	
+	private string _backgroundColorDefault = "var(--brand-gradient)";
+	
+	private Guid Id { get; set; } = Guid.NewGuid();
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+			//await _jsRuntime.InvokeVoidAsync("registerDetailsCardEvents", Id);
+	
+		await base.OnAfterRenderAsync(firstRender);
+	}
+
+	public void Open(double offsetTop, double offsetLeft)
+	{
+		_display = "flex";
+		_positionY = Convert.ToInt32(offsetTop);
+		_positionX = Convert.ToInt32(offsetLeft);
+	}
+
+	public void Close()
+	{
+		_display = "none;";
+		_positionY = 0;
+		_positionX = 0;
+	}
+}

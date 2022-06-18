@@ -14,13 +14,13 @@ public class ApartmentRelation : Entity
 	/// Квартира
 	/// </summary>
 	[Required]
-	public Apartment Apartment { get; set; } = new();
+	public virtual Apartment Apartment { get; set; } = new();
 
 	/// <summary>
 	/// Тип связи
 	/// </summary>
 	[Required] 
-	public string RelationType { get; set; } = ApartmentRelationType.Empty;
+	public ApartmentRelationType RelationType { get; set; }
 	
 	/// <summary>
 	/// Дата добавления связи
@@ -32,5 +32,5 @@ public class ApartmentRelation : Entity
 	/// Клиент
 	/// </summary>
 	[Required]
-	public Client Client { get; set; } = new();
+	public virtual Client Client { get; set; } = new();
 }
