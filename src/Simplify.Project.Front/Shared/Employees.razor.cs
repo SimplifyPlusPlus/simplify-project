@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Simplify.Project.API.Contracts;
 using Simplify.Project.API.Contracts.Employee;
 using Simplify.Project.Front.Helpers;
+using Simplify.Project.Front.Shared.Cards;
 using Simplify.Project.Shared;
 
 namespace Simplify.Project.Front.Shared;

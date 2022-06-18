@@ -3,7 +3,7 @@ using Simplify.Project.API.Contracts.Employee;
 using Simplify.Project.Front.Helpers;
 using Simplify.Project.Shared;
 
-namespace Simplify.Project.Front.Shared;
+namespace Simplify.Project.Front.Shared.Cards;
 
 public partial class EmployeeCreateCard
 {

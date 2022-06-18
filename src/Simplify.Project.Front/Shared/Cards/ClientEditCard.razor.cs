@@ -9,13 +9,26 @@ public partial class ClientEditCard
 	private DetailsCard? _detailsCard;
 	private Guid? _selectedClientId;
 	private ClientEditDto _clientEditDto = new();
-	public bool IsOpen { get; set; } = false;
+	private bool _isOpen = false;
 
 	[Inject] private HttpClient? HttpClient { get; set; }
 	
+	/// <summary>
+	/// Коллбек при закрытие карточки
+	/// </summary>
 	[Parameter]
 	public Action? OnClose { get; set; }
 
+	/// <summary>
+	/// Признак того, что карточка открыта
+	/// </summary>
+	/// <returns>True, если карточка открыта, иначе False</returns>
+	public bool IsOpen() => _isOpen;
+	
+	/// <summary>
+	/// Инициализировать карточку
+	/// </summary>
+	/// <param name="clientId">Идентификатор клиента</param>
 	public async void Init(Guid clientId)
 	{
 		_clientEditDto = new ClientEditDto();
@@ -24,19 +37,27 @@ public partial class ClientEditCard
 		StateHasChanged();
 	}
 
-	public void Close()
-	{
-		IsOpen = false;
-		_detailsCard?.Close();
-		OnClose?.Invoke();
-	}
-	
+	/// <summary>
+	/// Открыть карточку
+	/// </summary>
+	/// <param name="offsetTop">Смещение сверху</param>
+	/// <param name="offsetLeft">Смещение слева</param>
 	public void Open(double offsetTop, double offsetLeft)
 	{
-		IsOpen = true;
+		_isOpen = true;
 		_detailsCard?.Open(offsetTop, offsetLeft);
 	}
 	
+	/// <summary>
+	/// Закрыть карточку
+	/// </summary>
+	public void Close()
+	{
+		_isOpen = false;
+		_detailsCard?.Close();
+		OnClose?.Invoke();
+	}
+
 	private async Task ClientEditSaveOnClick()
 	{
 		await SendClientEditDataIntoServer(_clientEditDto);

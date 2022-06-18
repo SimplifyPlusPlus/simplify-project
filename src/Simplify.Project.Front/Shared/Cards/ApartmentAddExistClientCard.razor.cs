@@ -34,6 +34,38 @@ public partial class ApartmentAddExistClientCard
 		await base.OnInitializedAsync();
 	}
 
+	/// <summary>
+	/// Инициализировать карточку
+	/// </summary>
+	/// <param name="apartmentEditDto">Данные по квартире</param>
+	/// <param name="relationType">Тип создаваемого отношения</param>
+	public void Init(ApartmentEditDto apartmentEditDto, ApartmentRelationType relationType)
+	{
+		_apartmentEditDto = apartmentEditDto;
+		_relationType = relationType;
+		_searchResults.Clear();
+		_searchValue = string.Empty;
+		StateHasChanged();
+	}
+	
+	/// <summary>
+	/// Открыть карточку
+	/// </summary>
+	/// <param name="offsetTop">Смещение сверху</param>
+	/// <param name="offsetLeft">Смещение слева</param>
+	public void Open(double offsetTop, double offsetLeft)
+	{
+		_detailsCard?.Open(offsetTop, offsetLeft);
+	}
+
+	/// <summary>
+	/// Закрыть карточку
+	/// </summary>
+	public void Close()
+	{
+		_detailsCard?.Close();
+	}
+
 	private Action<T> DebounceEvent<T>(Action<T> action, Action callback, TimeSpan interval)
 	{
 		return Debouncer.Debounce<T>(arg =>
@@ -46,25 +78,6 @@ public partial class ApartmentAddExistClientCard
 		}, interval);
 	}
 	
-	public void Init(ApartmentEditDto apartmentEditDto, ApartmentRelationType relationType)
-	{
-		_apartmentEditDto = apartmentEditDto;
-		_relationType = relationType;
-		_searchResults.Clear();
-		_searchValue = string.Empty;
-		StateHasChanged();
-	}
-	
-	public void Open(double offsetTop, double offsetLeft)
-	{
-		_detailsCard?.Open(offsetTop, offsetLeft);
-	}
-
-	public void Close()
-	{
-		_detailsCard?.Close();
-	}
-
 	private void SelectExistClient(SearchClientResultDto resultDto)
 	{
 		if (_apartmentEditDto.Id == Guid.Empty)

@@ -17,30 +17,51 @@ public partial class ApartmentEditCard
 	private DetailsCard? _detailsCard;
 	private ApartmentEditDto _apartmentEditDto = new();
 
-	public bool IsOpen { get; set; } = false;
+	private bool _isOpen = false;
 
 	[Inject] private HttpClient? HttpClient { get; set; }
 	
 	[Inject] private IJSRuntime? JsRuntime { get; set; }
 
+	/// <summary>
+	/// Коллбек при закрытие карточки
+	/// </summary>
 	[Parameter]
 	public Action? OnClose { get; set; }
+
+	/// <summary>
+	/// Признак того, что карточка открыта
+	/// </summary>
+	/// <returns>True, если карточка открыта, иначе False</returns>
+	public bool IsOpen() => _isOpen;
 	
+	/// <summary>
+	/// Инициализировать карточку
+	/// </summary>
+	/// <param name="apartmentId">Идентификатор квартиры</param>
 	public async Task Init(Guid apartmentId)
 	{
 		_apartmentEditDto = await GetApartmentEditFromServer(apartmentId);
 		StateHasChanged();
 	}
 
+	/// <summary>
+	/// Открыть карточку
+	/// </summary>
+	/// <param name="offsetTop">Смещение сверху</param>
+	/// <param name="offsetLeft">Смещение слева</param>
 	public void Open(double offsetTop, double offsetLeft)
 	{
 		_detailsCard?.Open(offsetTop, offsetLeft);
-		IsOpen = true;
+		_isOpen = true;
 	}
 
+	/// <summary>
+	/// Закрыть карточку
+	/// </summary>
 	public void Close()
 	{
-		IsOpen = false;
+		_isOpen = false;
 		_addNewClientCard?.Close();
 		_addExistClientCard?.Close();
 		OnClose?.Invoke();
@@ -50,7 +71,6 @@ public partial class ApartmentEditCard
 	private async Task<ApartmentEditDto> GetApartmentEditFromServer(Guid apartmentId)
 	{
 		ArgumentNullException.ThrowIfNull(HttpClient, nameof(HttpClient));
-		
 		return await HttpClientHelper.GetJsonFromServer<ApartmentEditDto>(
 			HttpClient,
 			$"api/apartment/{apartmentId}/for-edit",

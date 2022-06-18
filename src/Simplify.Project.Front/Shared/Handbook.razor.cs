@@ -87,14 +87,14 @@ public partial class Handbook
 		{
 			case HandbookSearchType.Clients:
 				_clientEditCard?.Init(searchResultDto.Id);
-				if (_clientEditCard?.IsOpen == true)
+				if (_clientEditCard?.IsOpen() == true)
 					_clientEditCard?.Close();
 				else
 					_clientEditCard?.Open(coords.Y, coords.X);
 				break;
 			case HandbookSearchType.Apartments:
 				_apartmentEditCard?.Init(searchResultDto.Id);
-				if (_apartmentEditCard?.IsOpen == true)
+				if (_apartmentEditCard?.IsOpen() == true)
 					_apartmentEditCard.Close();
 				else
 					_apartmentEditCard?.Open(coords.Y, coords.X);

@@ -12,14 +12,25 @@ public partial class ApartmentAddNewClientCard
 
 	[Inject] private HttpClient? HttpClient { get; set; }
 
+	/// <summary>
+	/// Коллбек на создание связи
+	/// </summary>
 	[Parameter, EditorRequired]
 	public Action<ClientBaseDto, ApartmentRelationType> OnCreateCallback { get; set; } = null!;
 	
+	/// <summary>
+	/// Открыть карточку
+	/// </summary>
+	/// <param name="offsetTop">Смещение сверху</param>
+	/// <param name="offsetLeft">Смещение слева</param>
 	public void Open(double offsetTop, double offsetLeft)
 	{
 		_detailsCard?.Open(offsetTop, offsetLeft);
 	}
 	
+	/// <summary>
+	/// Закрыть карточку
+	/// </summary>
 	public void Close()
 	{
 		_detailsCard?.Close();

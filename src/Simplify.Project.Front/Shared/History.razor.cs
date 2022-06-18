@@ -18,7 +18,7 @@ public partial class History
 			.Select(MapEventDto)
 			.OrderByDescending(ev => ev.Created)
 			.ToList();
-		if (_eventDtos.First().Created.Year != _eventDtos.Last().Created.Year)
+		if (_eventDtos.Any() &&  _eventDtos.First().Created.Year != _eventDtos.Last().Created.Year)
 			_eventDatePattern += " yyyyг.";
 		_eventInfoForDisplay = _eventDtos;
 		await base.OnInitializedAsync();
