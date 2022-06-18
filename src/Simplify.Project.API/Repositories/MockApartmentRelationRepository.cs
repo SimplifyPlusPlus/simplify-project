@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Simplify.Project.Model;
 using Simplify.Project.Shared;
 

@@ -115,14 +115,12 @@ public class EmployeeController : ControllerBase
 		if (id == null || id == Guid.Empty || employeeEditDto == null)
 			return BadRequest();
 		
-		var oldEmployee = _repository.GetEmployee(id.Value);
-		if (oldEmployee == null)
-			return NotFound(nameof(oldEmployee));
+		var employee = _repository.GetEmployee(id.Value);
+		if (employee == null)
+			return NotFound(nameof(employee));
 
-		var employee = employeeEditDto.Adapt<Employee>();
-		employee.Created = oldEmployee.Created;
+		employeeEditDto.Adapt(employee);
 		await _repository.UpdateEmployee(id.Value, employee);
-		
 		return NoContent();
 	}
     

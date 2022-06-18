@@ -29,68 +29,6 @@ public class ApartmentController : ControllerBase
 	}
 
 	/// <summary>
-	/// Добавить новое отношение с квартирой
-	/// </summary>
-	/// <param name="apartmentRelationCreateDto"></param>
-	/// <param name="clientRepository"></param>
-	[HttpPost]
-	[Route("add-relation")]
-	[ProducesResponseType(StatusCodes.Status204NoContent)]
-	[ProducesResponseType(StatusCodes.Status400BadRequest)]
-	[ProducesResponseType(StatusCodes.Status404NotFound)]
-	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-	public async Task<IActionResult> ApartmentRelationCreate([FromBody] ApartmentRelationCreateDto? apartmentRelationCreateDto, 
-		[FromServices] IClientRepository clientRepository)
-	{
-		if (apartmentRelationCreateDto == null 
-		    || apartmentRelationCreateDto.ApartmentId == Guid.Empty 
-		    || apartmentRelationCreateDto.ClientId == Guid.Empty)
-			return BadRequest();
-
-		var apartment = _apartmentRepository.GetApartment(apartmentRelationCreateDto.ApartmentId);
-		if (apartment == null)
-			return NotFound(nameof(apartment));
-
-		var client = clientRepository.GetClient(apartmentRelationCreateDto.ClientId);
-		if (client == null)
-			return NotFound(nameof(client));
-
-		var relation = new ApartmentRelation
-		{
-			Id = Guid.NewGuid(),
-			Apartment = apartment,
-			Client = client,
-			Created = DateTime.Now,
-			RelationType = apartmentRelationCreateDto.RelationType,
-		};
-		await _apartmentRelationRepository.AddApartmentRelation(relation);
-		return NoContent();
-	}
-
-	/// <summary>
-	/// Удалить отношение с квартирой
-	/// </summary>
-	/// <param name="relationId">Идентификатор отношения с квартирой</param>
-	[HttpPost]
-	[Route("remove-relation")]
-	[ProducesResponseType(StatusCodes.Status204NoContent)]
-	[ProducesResponseType(StatusCodes.Status400BadRequest)]
-	[ProducesResponseType(StatusCodes.Status404NotFound)]
-	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-	public async Task<IActionResult> ApartmentRelationRemove([FromBody] Guid? relationId)
-	{
-		if (relationId == null || relationId == Guid.Empty)
-			return BadRequest();
-
-		var relation = _apartmentRelationRepository.GetRelation(relationId.Value);
-		if (relation == null)
-			return NotFound(nameof(relation));
-		
-		await _apartmentRelationRepository.RemoveApartmentRelation(relation);
-		return NoContent();
-	}
-	
-	/// <summary>
 	/// Получить данные квартиры для изменения
 	/// </summary>
 	/// <param name="id">Идентификатор</param>

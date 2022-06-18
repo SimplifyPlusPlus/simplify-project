@@ -62,11 +62,6 @@ public static class EventHelper
 			_ => throw new ArgumentOutOfRangeException()
 		};
 
-		if (!data.ContainsKey(EventDataKeys.Client))
-		{
-			var tt = 0;
-		}
-			
 		var client = $"<a class='events-entity-title'>{data[EventDataKeys.Client]}</a>";
 		var apartment = $"<a class='events-entity-title'>{data[EventDataKeys.Apartment]}</a>";
 		return $"<span> {action} жителя </span> {client} <span> {relation} </span> {apartment}";

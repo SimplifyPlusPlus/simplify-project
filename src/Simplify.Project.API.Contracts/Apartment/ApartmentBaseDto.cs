@@ -5,7 +5,7 @@ namespace Simplify.Project.API.Contracts.Apartment;
 /// <summary>
 /// Базовая информация по квартире
 /// </summary>
-public class  ApartmentBaseDto
+public class ApartmentBaseDto
 {
 	/// <summary>
 	/// Идентификатор

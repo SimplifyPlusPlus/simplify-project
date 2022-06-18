@@ -37,18 +37,10 @@ public class MockClientRepository : IClientRepository
 		return Task.CompletedTask;
 	}
 
+	/// <inheritdoc cref="IClientRepository.UpdateClient(Client)"/>
 	public Task UpdateClient(Client updatedClient)
 	{
 		throw new NotImplementedException();
-	}
-
-	/// <inheritdoc cref="IClientRepository.UpdateClient(Guid, Client)"/>
-	public Task UpdateClient(Guid id, Client updatedClient)
-	{
-		var client = _clients.Single(client => client.Id == id);
-		_clients.Remove(client);
-		_clients.Add(updatedClient);
-		return Task.CompletedTask;
 	}
 
 	private static List<Client> GenerateData()

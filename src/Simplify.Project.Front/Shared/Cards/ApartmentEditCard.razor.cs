@@ -61,6 +61,7 @@ public partial class ApartmentEditCard
 	{
 		await SendApartmentEditDataIntoServer(_apartmentEditDto);
 		OnClose?.Invoke();
+		Close();
 	}
 	
 	private async Task SendApartmentEditDataIntoServer(ApartmentEditDto apartmentEditDto)
