@@ -4,8 +4,17 @@ using Simplify.Project.Shared;
 
 namespace Simplify.Project.Front.Helpers;
 
+/// <summary>
+/// Помощник формирования событий
+/// </summary>
 public static class EventHelper
 {
+	/// <summary>
+	/// Формирование события из данных
+	/// </summary>
+	/// <param name="eventDto">Данные события</param>
+	/// <returns>Markup-строка с информацией о событии</returns>
+	/// <exception cref="ArgumentOutOfRangeException">Неизвестрный тип сущности</exception>
 	public static MarkupString GetMarkup(EventDto eventDto)
 	{
 		var markup = "<div>";

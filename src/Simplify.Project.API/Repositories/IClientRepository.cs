@@ -29,7 +29,6 @@ public interface IClientRepository
 	/// <summary>
 	/// Обновить данные клиента по идентификатору
 	/// </summary>
-	/// <param name="id">Идентификатор клиента</param>
 	/// <param name="updatedClient">Измененные данные клиента</param>
 	public Task UpdateClient(Client updatedClient);
 }
