@@ -1,19 +1,13 @@
+using Simplify.Project.Front;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
-namespace Simplify.Project.Front;
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<App>("#app");
+builder.RootComponents.Add<HeadOutlet>("head::after");
 
-public static class Program
-{
-	public static async Task Main(string[] args)
-	{
-		var builder = WebAssemblyHostBuilder.CreateDefault(args);
-		builder.RootComponents.Add<App>("#app");
-		builder.RootComponents.Add<HeadOutlet>("head::after");
+builder.Services.AddHttpClient("Simplify.Project.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+		
+builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Simplify.Project.ServerAPI"));
 
-		var baseAddress = builder.Configuration.GetValue<string>("BaseAddress") ?? builder.HostEnvironment.BaseAddress;
-		builder.Services.AddScoped(_ => new HttpClient {BaseAddress = new Uri(baseAddress)});
-
-		await builder.Build().RunAsync();
-	}
-}
+await builder.Build().RunAsync();

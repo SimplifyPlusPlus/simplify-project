@@ -1,57 +1,60 @@
 using System.Text.Json.Serialization;
 using Simplify.Project.API.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Simplify.Project.API;
 
-namespace Simplify.Project.API;
-
-public static class Program
-{
-	public static void Main(string[] args)
+var builder = WebApplication.CreateBuilder(args);
+		
+builder.Services.AddControllers()
+	.AddJsonOptions(options =>
 	{
-		var builder = WebApplication.CreateBuilder(args);
-		
-		builder.Services.AddControllers()
-			.AddJsonOptions(options =>
-			{
-				options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-			});
-		builder.Services.AddEndpointsApiExplorer();
-		builder.Services.AddDbContext<SimplifyContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("SimplifyContext")));
-		AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+		options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+	});
+builder.Services.AddEndpointsApiExplorer();
+var connectionString = builder.Configuration.GetConnectionString("SimplifyContext");
+builder.Services.AddDbContext<SimplifyContext>(options => options.UseNpgsql(connectionString));
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-		MapsterConfig.Config();
+MapsterConfig.Config();
 
-		builder.Services.AddSwaggerGen();
-		builder.Services.AddScoped<IClientRepository, ClientRepository>();
-		builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-		builder.Services.AddScoped<IEstateRepository, EstateRepository>();
-		builder.Services.AddScoped<IHouseRepository, HouseRepository>();
-		builder.Services.AddScoped<IEntranceRepository, EntranceRepository>();
-		builder.Services.AddScoped<IApartmentRepository, ApartmentRepository>();
-		builder.Services.AddScoped<IApartmentRelationRepository, ApartmentRelationRepository>();
-		builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IEstateRepository, EstateRepository>();
+builder.Services.AddScoped<IHouseRepository, HouseRepository>();
+builder.Services.AddScoped<IEntranceRepository, EntranceRepository>();
+builder.Services.AddScoped<IApartmentRepository, ApartmentRepository>();
+builder.Services.AddScoped<IApartmentRelationRepository, ApartmentRelationRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
 
-		var app = builder.Build();
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
-		if (app.Environment.IsDevelopment())
-		{
-			app.UseSwagger();
-			app.UseSwaggerUI();
-		}
+var app = builder.Build();
 
-		app.UseHttpsRedirection();
-
-		app.UseAuthorization();
-
-		app.MapControllers();
-
-		app.UseCors(option => option
-			.AllowAnyMethod()
-			.AllowAnyHeader()
-			.SetIsOriginAllowed(origin => true)
-			.AllowCredentials()
-		);
-		
-		app.Run();
-	}
+if (app.Environment.IsDevelopment())
+{
+	app.UseMigrationsEndPoint();
+	app.UseWebAssemblyDebugging();
 }
+else
+{
+	app.UseExceptionHandler("/Error");
+	app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+		
+app.UseBlazorFrameworkFiles();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.MapRazorPages();
+app.MapControllers();
+app.MapFallbackToFile("index.html");
+
+app.Run();

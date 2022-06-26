@@ -9,4 +9,8 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Simplify.Project.Shared\Simplify.Project.Shared.csproj" />
 	</ItemGroup>
+
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
 </Project>
