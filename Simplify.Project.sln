@@ -5,9 +5,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplify.Project.API", "src\Simplify.Project.API\Simplify.Project.API.csproj", "{83B49FD1-6C91-461D-9794-A4424CD05758}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplify.Project.Front", "src\Simplify.Project.Front\Simplify.Project.Front.csproj", "{5DF113E9-D861-4477-BC5A-198879B23489}"
-	ProjectSection(ProjectDependencies) = postProject
-		{83B49FD1-6C91-461D-9794-A4424CD05758} = {83B49FD1-6C91-461D-9794-A4424CD05758}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simplify.Project.Model", "src\Simplify.Project.Model\Simplify.Project.Model.csproj", "{B14BD917-76A5-44ED-AAD5-28C81D8CC771}"
 EndProject
