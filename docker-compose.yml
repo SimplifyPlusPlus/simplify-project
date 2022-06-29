@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  simplify.project.api:
+    image: ${DOCKER_REGISTRY-}simplifyprojectapi
+    build:
+      context: .
+      dockerfile: src/Simplify.Project.API/Dockerfile
+    networks:
+      - nw
+    depends_on:
+      - db
+  db: 
+    image: postgres:latest
+    restart: always
+    environment: 
+      - POSTGRES_DB=simplify
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 54320:5432
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks: 
+      - nw
+volumes:
+  db:
+    driver: local
+networks:
+  nw: 
+    driver: bridge
