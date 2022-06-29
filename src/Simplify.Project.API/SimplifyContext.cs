@@ -53,7 +53,11 @@ public class SimplifyContext : DbContext
 	#endregion
 
 	public SimplifyContext() { }
-	public SimplifyContext(DbContextOptions<SimplifyContext> options) : base(options) { }
+	public SimplifyContext(DbContextOptions<SimplifyContext> options) : base(options) 
+	{
+		if (Database.GetPendingMigrations().Any())
+			Database.Migrate();
+	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{

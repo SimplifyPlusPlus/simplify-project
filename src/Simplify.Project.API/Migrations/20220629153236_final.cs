@@ -4,7 +4,7 @@
 
 namespace Simplify.Project.API.Migrations
 {
-    public partial class AddVirtual : Migration
+    public partial class final : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

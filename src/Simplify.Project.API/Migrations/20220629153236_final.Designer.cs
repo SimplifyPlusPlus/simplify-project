@@ -13,8 +13,8 @@ using Simplify.Project.API;
 namespace Simplify.Project.API.Migrations
 {
     [DbContext(typeof(SimplifyContext))]
-    [Migration("20220611045720_EmptyMigration")]
-    partial class EmptyMigration
+    [Migration("20220629153236_final")]
+    partial class final
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
